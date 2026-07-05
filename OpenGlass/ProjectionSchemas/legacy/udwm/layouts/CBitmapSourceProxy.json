@@ -1,0 +1,22 @@
+{
+  "layouts": [
+    {
+      "name": "CBitmapSourceProxy_GetResource",
+      "id": "CBitmapSourceProxy_GetResource",
+      "kind": "field",
+      "type": "BYTE*",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 16,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "CBitmapSourceProxy stores its channel resource pointer at +16."
+    }
+  ]
+}

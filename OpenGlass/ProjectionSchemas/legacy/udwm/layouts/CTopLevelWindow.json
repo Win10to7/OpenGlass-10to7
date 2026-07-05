@@ -1007,6 +1007,52 @@
       "notes": "xrefs to CText::Create"
     },
     {
+      "name": "CTopLevelWindow_GetNonClientVisual_Index",
+      "id": "CTopLevelWindow_GetNonClientVisual_Index",
+      "kind": "field",
+      "type": "CCanvasVisual*",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 256,
+              "until": {
+                "build": 19041,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 264,
+              "until": {
+                "build": 22000,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 272,
+              "until": {
+                "build": 22621,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 288,
+              "until": {
+                "build": 26100,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 248,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "CTopLevelWindow::UpdateNCAreaButtonVisuals\nxrefs to CRenderDataVisual::AddInstruction"
+    },
+    {
       "name": "CTopLevelWindow_GetWindowBorder_Index",
       "id": "CTopLevelWindow_GetWindowBorder_Index",
       "kind": "field",

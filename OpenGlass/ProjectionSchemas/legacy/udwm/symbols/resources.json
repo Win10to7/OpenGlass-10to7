@@ -77,6 +77,34 @@
       "notes": "Before build 19041, CImageLegacyMilBrushProxy::Update takes resource handle IDs rather than resource-proxy pointers. Keep the public typed wrapper on the ABI-compatible CChannel::ImageLegacyMilBrushUpdate fallback for that range; the pointer-form uDWM symbol becomes active at build 19041."
     },
     {
+      "name": "Symbol_CDrawImageInstruction_Create",
+      "id": "CDrawImageInstruction::Create",
+      "bindings": [
+        {
+          "platform": null,
+          "type": "HRESULT (*)(CBitmapSource*, const RECT*, PVOID*)",
+          "ranges": [
+            {
+              "symbol_names": [
+                "public: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64",
+                "private: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64"
+              ],
+              "min_inclusive": {
+                "build": 19041,
+                "revision": 0
+              },
+              "max_exclusive": {
+                "build": 20348,
+                "revision": 0
+              }
+            }
+          ]
+        }
+      ],
+      "requirement": "optional",
+      "kind": "raw"
+    },
+    {
       "name": "Symbol_ResourceHelper_CreateGeometryFromHRGN",
       "id": "ResourceHelper::CreateGeometryFromHRGN",
       "bindings": [

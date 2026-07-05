@@ -70,6 +70,30 @@
       "kind": "projected_function"
     },
     {
+      "name": "Symbol_CTopLevelWindow_ApplyMaximizedClip",
+      "id": "CTopLevelWindow::ApplyMaximizedClip",
+      "bindings": [
+        {
+          "platform": null,
+          "target": "&CTopLevelWindow::ApplyMaximizedClip",
+          "ranges": [
+            {
+              "symbol_names": [
+                "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+                "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+                "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64",
+                "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64"
+              ],
+              "min_inclusive": null,
+              "max_exclusive": null
+            }
+          ]
+        }
+      ],
+      "requirement": "required",
+      "kind": "projected_function"
+    },
+    {
       "name": "Symbol_CTopLevelWindow_GetActualWindowRect",
       "id": "CTopLevelWindow::GetActualWindowRect",
       "bindings": [

@@ -86,6 +86,9 @@ namespace OpenGlass::Shared
 	inline float g_reflectionParallaxIntensity{};
 	inline std::wstring g_reflectionTexturePath{};
 
+	inline std::wstring g_highlightTexturePath{};
+	inline std::wstring g_sideHighlightTexturePath{};
+
 	inline float g_materialIntensity{};
 	inline std::wstring g_materialTexturePath{};
 

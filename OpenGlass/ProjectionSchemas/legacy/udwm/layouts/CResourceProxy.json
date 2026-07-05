@@ -35,6 +35,24 @@
         }
       ],
       "notes": "CResourceProxy channel resource handle consumed by legacy MIL brush fallbacks."
+    },
+    {
+      "name": "CResourceProxy_GetHandle",
+      "id": "CResourceProxy_GetHandle",
+      "kind": "field",
+      "type": "UINT",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 24,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "The channel resource proxy stores its MIL handle at +24."
     }
   ]
 }

@@ -38,6 +38,7 @@
     "udwm/layouts/CAtlasedRectsVisual.json",
     "udwm/layouts/CBaseObject.json",
     "udwm/layouts/CBitmapSource.json",
+    "udwm/layouts/CBitmapSourceProxy.json",
     "udwm/layouts/CButton.json",
     "udwm/layouts/CCompositor.json",
     "udwm/layouts/CDWriteText.json",

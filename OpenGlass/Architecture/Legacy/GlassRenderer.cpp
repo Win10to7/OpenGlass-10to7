@@ -11,6 +11,8 @@
 #include "D3DGlassRealizer.hpp"
 #include "GlassRenderTarget.hpp"
 #include "ReflectionRealizer.hpp"
+#include "HighlightRealizer.hpp"
+#include "CaptionTextRealizer.hpp"
 #include "MaterialRealizer.hpp"
 #include "D2DPrivates.hpp"
 #include "GlassCoverageSet.hpp"
@@ -55,7 +57,8 @@ namespace OpenGlass::GlassRenderer
 		RenderFlag_SolidColor,
 		RenderFlag_Backdrop,
 		RenderFlag_Material,
-		RenderFlag_Reflection
+		RenderFlag_Reflection,
+		RenderFlag_Highlight
 	};
 
 	struct CDeviceResources
@@ -63,10 +66,13 @@ namespace OpenGlass::GlassRenderer
 		winrt::com_ptr<ID2D1SolidColorBrush> m_brush{};
 		std::variant<std::monostate, CGlassRealizer, CD3DGlassRealizer> m_glassRealizer{};
 		CReflectionRealizer m_reflectionRealizer{};
+		CHighlightRealizer m_highlightRealizer{};
 		CMaterialRealizer m_materialRealizer{};
 	};
 
 	ReflectionContext g_reflectionContext{};
+
+	HighlightContext g_highlightContext{};
 
 	Shared::GlassType g_type{ Shared::GlassType::Invalid };
 	CAeroParams g_params{};
@@ -167,6 +173,10 @@ HRESULT GlassRenderer::MyCRenderData_TryDrawCommandAsDrawList(
 )
 {
 	const auto command = reinterpret_cast<const dwmcore::CDrawGeometryCommand*>(resources->data);
+	if (CaptionTextRealizer::OnTryDrawCommand(This, drawingContext, commandType, resources, succeeded))
+	{
+		return S_OK;
+	}
 	if (
 		GlassInfra::IsDrawGeometryCommand(commandType, resources) &&
 		(
@@ -368,11 +378,38 @@ HRESULT GlassRenderer::MyCDrawingContext_DrawGeometry(
 		{
 			return S_OK;
 		}
-		
-		g_reflectionContext.opacity = opacity;
-		g_reflectionContext.worldTransform = matrix;
-		g_reflectionContext.viewport = &imageBrush->GetViewport();
-		g_renderFlag.set(RenderFlag_Reflection, true);
+
+		const auto reinterpreter = GlassInfra::ImageOpacityReinterpreter(imageBrush->GetOpacityValue());
+		if (reinterpreter.GetIsValid())
+		{
+			const auto active = reinterpreter.GetIsActive();
+			const auto maximized = reinterpreter.GetIsMaximized();
+			const auto reflection = reinterpreter.GetIsReflection();
+			const auto fullOpacity = reinterpreter.GetIsFullOpacity();
+			const auto sheetOfGlass = reinterpreter.GetIsSheetOfGlass();
+
+			if (reflection)
+			{
+				g_reflectionContext.opacity = fullOpacity ? 1.f : GlassKernel::GetAdjustedReflectionIntensity(active, maximized);
+				g_reflectionContext.worldTransform = matrix;
+				g_reflectionContext.viewport = &imageBrush->GetViewport();
+				g_renderFlag.set(RenderFlag_Reflection, true);
+			}
+			else
+			{
+				// highlight goes here
+				// opacity hardcoded for now
+				g_highlightContext.opacity = maximized && Shared::g_type == Shared::GlassType::Blur ? 0.f : .75f;
+				g_highlightContext.sideOpacity = active ? 1.f : .50f;
+				g_highlightContext.sheetOfGlass = sheetOfGlass;
+				g_highlightContext.active = active;
+				g_highlightContext.worldTransform = matrix;
+				g_highlightContext.viewport = &imageBrush->GetViewport();
+				// HACK: use viewbox to get frame margins
+				g_highlightContext.viewbox = &imageBrush->GetViewbox();
+				g_renderFlag.set(RenderFlag_Highlight, true);
+			}
+		}
 	}
 
 	if (HookHelper::get_vftable_from(brush) == dwmcore::CSolidColorLegacyMilBrush::vftable)
@@ -660,6 +697,19 @@ void GlassRenderer::MyID2D1DeviceContext_FillGeometry(
 			)
 		);
 	}
+	if (g_renderFlag.test(RenderFlag_Highlight))
+	{
+		const auto primitiveBlendReflection = This->GetPrimitiveBlend();
+		This->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+		LOG_IF_FAILED(
+			g_currentDeviceResources->m_highlightRealizer.Render(
+				This,
+				g_rectangleSpan,
+				g_highlightContext
+			)
+		);
+		This->SetPrimitiveBlend(primitiveBlendReflection);
+	}
 	if (g_renderFlag.test(RenderFlag_Reflection))
 	{
 		const auto primitiveBlendReflection = This->GetPrimitiveBlend();
@@ -686,6 +736,7 @@ void GlassRenderer::MyID2D1DeviceContext_FillGeometry(
 void GlassRenderer::DestroyDeviceResources(dwmcore::CD2DContext* d2dContext)
 {
 	g_deviceResources.erase(d2dContext);
+	CaptionTextRealizer::DestroyDeviceResources();
 }
 
 void GlassRenderer::Update(GlassEngine::UpdateType type)
@@ -728,6 +779,7 @@ void GlassRenderer::Update(GlassEngine::UpdateType type)
 
 void GlassRenderer::Startup()
 {
+	CaptionTextRealizer::Startup();
 #ifdef _DEBUG
 #endif
 
@@ -743,6 +795,7 @@ void GlassRenderer::Startup()
 
 void GlassRenderer::Shutdown()
 {
+	CaptionTextRealizer::Shutdown();
 	const auto build_before_w11_21h2 = dwmcore::g_versionInfo.build < os::build_w11_21h2;
 	HookHelper::ApplyInlineHooks(
 		std::initializer_list<HookHelper::DetourInfo>

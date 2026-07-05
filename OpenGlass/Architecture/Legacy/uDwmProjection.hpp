@@ -479,6 +479,20 @@ namespace OpenGlass::uDWM
 	};
 	struct CBitmapSource : CBaseObject
 	{
+		inline UINT GetResourceHandle() const
+		{
+			const auto proxy = *CBitmapSource_GetProxy.address(this);
+			if (!proxy)
+			{
+				return 0;
+			}
+			const auto resource = *CBitmapSourceProxy_GetResource.address(proxy);
+			if (!resource)
+			{
+				return 0;
+			}
+			return CResourceProxy_GetHandle.read(resource);
+		}
 		inline MARGINS& GetNineGridMargins()
 		{
 			return CBitmapSource_GetNineGridMargins.ref(this);
@@ -961,7 +975,7 @@ namespace OpenGlass::uDWM
 		{
 			const auto& offset = GetOffset();
 
-			return offset.x == -32000 || offset.y == -32000;
+			return offset.x <= -32000 || offset.y <= -32000;
 		}
 
 		inline CWindowData* GetData() const
@@ -991,6 +1005,10 @@ namespace OpenGlass::uDWM
 		inline CCanvasVisual* GetClientBlurVisual() const
 		{
 			return *CTopLevelWindow_GetClientBlurVisual_Index.address(this);
+		}
+		inline CCanvasVisual* GetNonClientVisual() const
+		{
+			return *CTopLevelWindow_GetNonClientVisual_Index.address(this);
 		}
 		inline CWindowBorder* GetWindowBorder() const
 		{
@@ -1156,6 +1174,11 @@ namespace OpenGlass::uDWM
 			{
 				return CloneVisualTreeForLivePreview_Win11(windowFramesOnly, clonedWindow);
 			}
+		}
+		inline HRESULT ApplyMaximizedClip(HRGN region)
+		{
+			OPENGLASS_MUSTTAIL
+			return Projection::Invoke<&CTopLevelWindow::ApplyMaximizedClip>(this, region);
 		}
 		inline bool TreatAsActiveWindow()
 		{

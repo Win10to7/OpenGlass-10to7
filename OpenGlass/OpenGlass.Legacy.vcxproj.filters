@@ -24,6 +24,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CaptionTextRealizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GlassHighlightBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HighlightRealizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Architecture\Legacy\AccentOverrider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +80,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CaptionTextRealizer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassHighlightBrush.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HighlightRealizer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="WindowFrameBounds.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -211,6 +229,9 @@
       <Filter>Projection Schemas</Filter>
     </None>
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CBitmapSource.json">
+      <Filter>Projection Schemas</Filter>
+    </None>
+    <None Include="ProjectionSchemas\legacy\udwm\layouts\CBitmapSourceProxy.json">
       <Filter>Projection Schemas</Filter>
     </None>
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CButton.json">
@@ -536,6 +557,24 @@
     <ClInclude Include="wil.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <FxCompile Include="CaptionText.PS.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
+    <FxCompile Include="CaptionText.VS.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
+    <Image Include="highlight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sidehighlight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <None Include="CaptionText.PS.cso">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="CaptionText.VS.cso">
+      <Filter>Resource Files</Filter>
+    </None>
     <FxCompile Include="AeroColorizationEffect.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
