@@ -57,6 +57,8 @@ namespace OpenGlass::dwmcore
 	struct CMILMatrix;
 	struct COcclusionContext;
 	struct CResource;
+	struct CResourceTable;
+	struct CBitmapResource;
 	struct CShape;
 	struct CTreeDirty;
 	struct CVisual;

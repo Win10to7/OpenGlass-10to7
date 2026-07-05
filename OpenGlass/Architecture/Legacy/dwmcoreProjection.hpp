@@ -286,6 +286,23 @@ namespace OpenGlass::dwmcore
 	struct CImageSource : CResource
 	{
 	};
+	struct CBitmapResource : CImageSource
+	{
+		inline static PVOID* vftable{nullptr};
+	};
+	struct CResourceTable
+	{
+		inline PVOID GetEntry(UINT handle)
+		{
+			OPENGLASS_MUSTTAIL
+			return Projection::Invoke<&CResourceTable::GetEntry>(this, handle);
+		}
+		inline CResource* GetResourceFromHandle(UINT handle)
+		{
+			const auto entry = GetEntry(handle);
+			return entry ? *reinterpret_cast<CResource**>(static_cast<BYTE*>(entry) + 8) : nullptr;
+		}
+	};
 	struct CImageLegacyMilBrush : CLegacyMilBrush
 	{
 		inline static PVOID* vftable{nullptr};

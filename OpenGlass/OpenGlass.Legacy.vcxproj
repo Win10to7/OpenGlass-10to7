@@ -63,6 +63,9 @@
     <ClInclude Include="Architecture\Legacy\ReflectionRealizer.hpp" />
     <ClInclude Include="Architecture\Legacy\uDwmProjection.hpp" />
     <ClInclude Include="Architecture\Legacy\uDwmProjection.Offsets.hpp" />
+    <ClInclude Include="CaptionTextRealizer.hpp" />
+    <ClInclude Include="GlassHighlightBrush.hpp" />
+    <ClInclude Include="HighlightRealizer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Architecture\Legacy\AccentOverrider.cpp" />
@@ -82,6 +85,23 @@
     <ClCompile Include="Architecture\Legacy\GlassRenderer.cpp" />
     <ClCompile Include="Architecture\Legacy\OpenGlass.cpp" />
     <ClCompile Include="Architecture\Legacy\ReflectionRealizer.cpp" />
+    <ClCompile Include="CaptionTextRealizer.cpp" />
+    <ClCompile Include="GlassHighlightBrush.cpp" />
+    <ClCompile Include="HighlightRealizer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CaptionText.PS.cso" />
+    <None Include="CaptionText.VS.cso" />
+    <Image Include="highlight.png" />
+    <Image Include="sidehighlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="CaptionText.PS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="CaptionText.VS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="Architecture\Legacy\GlassFrameDemodernizer.Shims.asm" />

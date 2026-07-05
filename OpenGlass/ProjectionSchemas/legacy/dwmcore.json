@@ -344,6 +344,62 @@
       "type": "HRESULT (*)(CDrawingContext*, CDrawListEntryBuilder*, CImageSource*, const D2D1_RECT_F*, const D2D1_RECT_F*, float)"
     },
     {
+      "name": "Symbol_CRenderData_ProcessUpdate",
+      "id": "CRenderData::ProcessUpdate",
+      "symbol_names": [
+        "public: long __cdecl CRenderData::ProcessUpdate(class CResourceTable * __ptr64,void * __ptr64,void * __ptr64,void * __ptr64,void * __ptr64) __ptr64",
+        "private: long __cdecl CRenderData::ProcessUpdate(class CResourceTable * __ptr64,void * __ptr64,void * __ptr64,void * __ptr64,void * __ptr64) __ptr64"
+      ],
+      "requirement": "optional",
+      "min_inclusive": {
+        "build": 19041,
+        "revision": 0
+      },
+      "max_exclusive": {
+        "build": 20348,
+        "revision": 0
+      },
+      "kind": "raw",
+      "type": "HRESULT (*)(CRenderData*, CResourceTable*, PVOID, PVOID, PVOID, PVOID)"
+    },
+    {
+      "name": "Symbol_CResourceTable_GetEntry",
+      "id": "CResourceTable::GetEntry",
+      "symbol_names": [
+        "public: void * __cdecl CResourceTable::GetEntry(unsigned int) __ptr64",
+        "private: void * __cdecl CResourceTable::GetEntry(unsigned int) __ptr64"
+      ],
+      "requirement": "required",
+      "min_inclusive": {
+        "build": 19041,
+        "revision": 0
+      },
+      "max_exclusive": {
+        "build": 20348,
+        "revision": 0
+      },
+      "target": "&CResourceTable::GetEntry",
+      "kind": "projected_function"
+    },
+    {
+      "name": "Symbol_CBitmapResource_vftable",
+      "id": "CBitmapResource::`vftable'",
+      "symbol_names": [
+        "const CBitmapResource::`vftable'"
+      ],
+      "requirement": "optional",
+      "min_inclusive": {
+        "build": 19041,
+        "revision": 0
+      },
+      "max_exclusive": {
+        "build": 20348,
+        "revision": 0
+      },
+      "target": "&CBitmapResource::vftable",
+      "kind": "projected_variable"
+    },
+    {
       "name": "Symbol_CGeometry_GetShapeData",
       "id": "CGeometry::GetShapeData",
       "bindings": [
