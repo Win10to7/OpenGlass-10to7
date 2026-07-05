@@ -278,6 +278,25 @@
       "type": "HRESULT (*)(CText*)"
     },
     {
+      "name": "Symbol_CDrawImageInstruction_Create",
+      "id": "CDrawImageInstruction::Create",
+      "symbol_names": [
+        "public: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64",
+        "private: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64"
+      ],
+      "requirement": "optional",
+      "min_inclusive": {
+        "build": 19041,
+        "revision": 0
+      },
+      "max_exclusive": {
+        "build": 20348,
+        "revision": 0
+      },
+      "kind": "raw",
+      "type": "HRESULT (*)(CBitmapSource*, const RECT*, PVOID*)"
+    },
+    {
       "name": "Symbol_CText_CloneVisualTree",
       "id": "CText::CloneVisualTree",
       "bindings": [
@@ -1025,6 +1044,21 @@
       ],
       "requirement": "required",
       "target": "&CTopLevelWindow::CloneVisualTreeForLivePreview_Win11",
+      "kind": "projected_function"
+    },
+    {
+      "name": "Symbol_CTopLevelWindow_ApplyMaximizedClip",
+      "id": "CTopLevelWindow::ApplyMaximizedClip",
+      "symbol_names": [
+        "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+        "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+        "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64",
+        "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64"
+      ],
+      "requirement": "required",
+      "min_inclusive": null,
+      "max_exclusive": null,
+      "target": "&CTopLevelWindow::ApplyMaximizedClip",
       "kind": "projected_function"
     },
     {
@@ -2122,6 +2156,45 @@
       "notes": "CBitmapSource::Create stores the caller-supplied MARGINS at +0x20, while CAtlasedImage::AppendAtlasNineGrid and CDrawNineGridInstruction::Initialize independently read a second MARGINS at +0x30. Verified on uDWM 17763.719, 19041.3758, 22000.194, and 22621.6630. ButtonGlowHandler writes the theme-atlas destination margins here for the native nine-grid path; its separate size calculation uses OpenGlass-owned storage."
     },
     {
+      "name": "CBitmapSource_GetProxy",
+      "id": "CBitmapSource_GetProxy",
+      "kind": "field",
+      "type": "BYTE*",
+      "cases": [
+        {
+          "offset": "16",
+          "otherwise": true
+        }
+      ],
+      "notes": "CDrawImageInstruction::Create copies CBitmapSource+16 into its source proxy field."
+    },
+    {
+      "name": "CBitmapSourceProxy_GetResource",
+      "id": "CBitmapSourceProxy_GetResource",
+      "kind": "field",
+      "type": "BYTE*",
+      "cases": [
+        {
+          "offset": "16",
+          "otherwise": true
+        }
+      ],
+      "notes": "CBitmapSourceProxy stores its channel resource pointer at +16."
+    },
+    {
+      "name": "CResourceProxy_GetHandle",
+      "id": "CResourceProxy_GetHandle",
+      "kind": "field",
+      "type": "UINT",
+      "cases": [
+        {
+          "offset": "24",
+          "otherwise": true
+        }
+      ],
+      "notes": "The channel resource proxy stores its MIL handle at +24."
+    },
+    {
       "name": "CAtlasedRectsVisual_GetAtlasImageCount",
       "id": "CAtlasedRectsVisual_GetAtlasImageCount",
       "kind": "field",
@@ -3116,6 +3189,47 @@
         }
       ],
       "notes": "CTopLevelWindow::UpdateClientBlur\nxrefs to CRenderDataVisual::AddInstruction"
+    },
+    {
+      "name": "CTopLevelWindow_GetNonClientVisual_Index",
+      "id": "CTopLevelWindow_GetNonClientVisual_Index",
+      "kind": "field",
+      "type": "CCanvasVisual*",
+      "cases": [
+        {
+          "offset": "32 * sizeof(ULONG_PTR)",
+          "until": {
+            "build": "os::build_w10_2004",
+            "revision": "0"
+          }
+        },
+        {
+          "offset": "33 * sizeof(ULONG_PTR)",
+          "until": {
+            "build": "os::build_w11_21h2",
+            "revision": "0"
+          }
+        },
+        {
+          "offset": "34 * sizeof(ULONG_PTR)",
+          "until": {
+            "build": "os::build_w11_22h2",
+            "revision": "0"
+          }
+        },
+        {
+          "offset": "36 * sizeof(ULONG_PTR)",
+          "until": {
+            "build": "os::build_w11_24h2",
+            "revision": "0"
+          }
+        },
+        {
+          "offset": "31 * sizeof(ULONG_PTR)",
+          "otherwise": true
+        }
+      ],
+      "notes": "CTopLevelWindow::UpdateNCAreaButtonVisuals\nxrefs to CRenderDataVisual::AddInstruction"
     },
     {
       "name": "CTopLevelWindow_GetWindowBorder_Index",
