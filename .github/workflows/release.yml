@@ -76,4 +76,9 @@ jobs:
           if (-not (Test-Path $installer)) {
             throw "Installer was not produced at $installer"
           }
-          gh release create $tag $installer $archive --verify-tag --generate-notes --title $tag
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag $installer $archive --clobber
+          } else {
+            gh release create $tag $installer $archive --verify-tag --generate-notes --title $tag
+          }
