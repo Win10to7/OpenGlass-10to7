@@ -1,0 +1,70 @@
+name: Build release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Install Inno Setup
+        shell: powershell
+        run: choco install innosetup --no-progress --yes
+
+      - name: Restore and build unsigned x64 release
+        shell: powershell
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            throw "Inno Setup compiler was not found at $iscc"
+          }
+          msbuild OpenGlass.slnx `
+            /restore `
+            /m `
+            /p:Configuration=Release `
+            /p:Platform=x64 `
+            /p:RestorePackagesConfig=true `
+            "/p:OpenGlassIsccTool=$iscc"
+
+      - name: Package symbols and DLLs
+        shell: powershell
+        run: |
+          $output = "Build/x64/Release"
+          $files = @(
+            "$output/OpenGlass.dll"
+            "$output/OpenGlass.pdb"
+            "$output/OpenGlassGUI.pdb"
+            "$output/OpenGlassHost.pdb"
+          )
+          $missing = $files | Where-Object { -not (Test-Path $_) }
+          if ($missing) {
+            throw "Missing release files: $($missing -join ', ')"
+          }
+          Compress-Archive -Path $files -DestinationPath "OpenGlass-${{ github.ref_name }}-x64-symbols-and-dlls.zip"
+
+      - name: Publish GitHub release
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $installer = "Build/x64/Release/OpenGlassSetup.exe"
+          $archive = "OpenGlass-$tag-x64-symbols-and-dlls.zip"
+          if (-not (Test-Path $installer)) {
+            throw "Installer was not produced at $installer"
+          }
+          gh release create $tag $installer $archive --verify-tag --generate-notes --title $tag
