@@ -204,13 +204,8 @@ namespace OpenGlass
 		m_scRoundRectRadius->Enable(m_chRoundRectProfile->GetSelection() == 2);
 
 		// TextGlow
-		DWORD glowVal = m_config->GetDword(L"TextGlowMode", 1);
-		int glowMode = glowVal & 0xFFFF;
-		int glowSize = (glowVal >> 16) & 0xFFFF;
-
-		m_chTextGlowMode->SetSelection(std::clamp<int>(glowMode, 0, 3));
-		m_scTextGlowSize->SetValue(glowSize);
-		m_scTextGlowSize->Enable(glowMode == 3);
+		int glowMode = m_config->GetDword(L"TextGlowMode", 1) & 0xFFFF;
+		m_chTextGlowMode->SetSelection(std::clamp(glowMode, 0, 2));
 
 		m_chCaptionButtons->SetSelection(std::clamp<int>(m_config->GetDword(L"CaptionButtons", 0), 0, 3));
 		m_chCenterCaption->SetSelection(std::clamp<int>(m_config->GetDword(L"CenterCaption", 0), 0, 2));

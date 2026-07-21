@@ -1383,27 +1383,17 @@ namespace OpenGlass
 			}
 		});
 
-		auto updateGlow = [this, updateDword, deleteValue]() {
-			int mode = m_chTextGlowMode->GetSelection();
-			int size = m_scTextGlowSize->GetValue();
-			DWORD val = (DWORD)mode | ((DWORD)size << 16);
-			if (val == 1)
+		m_chTextGlowMode->Bind(wxEVT_CHOICE, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {
+			int mode = e.GetSelection();
+			if (mode == 1)
 			{
 				deleteValue(L"TextGlowMode");
 				NotifySettingsChange(ChangeType::Theme);
 			}
 			else
 			{
-				updateDword(L"TextGlowMode", val, ChangeType::Theme);
+				updateDword(L"TextGlowMode", mode, ChangeType::Theme);
 			}
-		};
-
-		m_chTextGlowMode->Bind(wxEVT_CHOICE, [this, updateGlow]([[maybe_unused]] wxCommandEvent& e) {
-			m_scTextGlowSize->Enable(e.GetSelection() == 3);
-			updateGlow();
-		});
-		m_scTextGlowSize->Bind(wxEVT_SPINCTRL, [this, updateGlow](wxSpinEvent&) {
-			updateGlow();
 		});
 
 		m_chCaptionButtons->Bind(wxEVT_CHOICE, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {

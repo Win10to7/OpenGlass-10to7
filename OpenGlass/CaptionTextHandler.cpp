@@ -125,13 +125,9 @@ namespace OpenGlass::CaptionTextHandler
 	std::unordered_map<uDWM::CVisual*, CWindowState> g_textVisualStateMap{};
 	winrt::com_ptr<ID2D1DCRenderTarget> g_textGlowRT{};
 	winrt::com_ptr<ID2D1Bitmap1> g_textGlowD2DBitmap{};
-	winrt::com_ptr<ID2D1Effect> g_textGlowEffect{};
-	winrt::com_ptr<ID2D1Effect> g_textMorphologyEffect{};
 
-	COLORREF g_textGlowColor{};
 
 	int g_textGlowSize{};
-	int g_textGlowIntensity{};
 	int g_centerCaption{ 0 };
 	// the display's ClearType extra-width (CGlyphRunMaker m_uExtraWidth base, Win7
 	// hardcoded display settings default 1); PrecontrastLevel (+1 for thin fonts) is
@@ -524,14 +520,6 @@ int WINAPI CaptionTextHandler::MyDrawTextW(
 		glowDrawRect.right += g_contentMargins.cxRightWidth;
 		glowDrawRect.bottom += g_contentMargins.cyBottomHeight;
 	}
-	else if (LOWORD(Shared::g_textGlowMode) == 3)
-	{
-		options.iGlowSize = g_textGlowSize;
-		glowDrawRect.left -= g_textGlowSize;
-		glowDrawRect.top -= g_textGlowSize;
-		glowDrawRect.right += g_textGlowSize;
-		glowDrawRect.bottom += g_textGlowSize;
-	}
 
 	const auto calcGlowClipRect = [&windowState](LPCRECT lprc, RECT& glowClipRect, bool mirrored)
 	{
@@ -646,15 +634,7 @@ int WINAPI CaptionTextHandler::MyDrawTextW(
 		}*/
 	}
 
-	// glow mode 3 generates its glow inside DrawThemeTextEx, so keep that call and
-	// overdraw the Win7-accurate text on top of it; every other mode renders the text
-	// directly (with DrawThemeTextEx as fallback should the rasterizer fail)
-	const bool themeGeneratedGlow{ LOWORD(Shared::g_textGlowMode) == 3 && g_textGlowSize != 0 };
-	bool win7TextRendered{ false };
-	if (!themeGeneratedGlow)
-	{
-		win7TextRendered = RenderWin7CaptionText(hdc, lpchText, cchText, lprc, format, options.crText, &result);
-	}
+	bool win7TextRendered{ RenderWin7CaptionText(hdc, lpchText, cchText, lprc, format, options.crText, &result) };
 	if (!win7TextRendered)
 	{
 		wil::unique_htheme hTheme{ OpenThemeData(nullptr, L"CompositedWindow::Window") };
@@ -673,10 +653,6 @@ int WINAPI CaptionTextHandler::MyDrawTextW(
 					&options
 				)
 			);
-			if (themeGeneratedGlow)
-			{
-				RenderWin7CaptionText(hdc, lpchText, cchText, lprc, format, options.crText, &result);
-			}
 		}
 		else
 		{
@@ -919,108 +895,6 @@ void CaptionTextHandler::MyID2D1DeviceContext_DrawTextLayout(
 		);
 	}
 
-	if (LOWORD(Shared::g_textGlowMode) == 3 && g_textGlowIntensity)
-	{
-		winrt::com_ptr<ID2D1BitmapRenderTarget> bitmapRT{};
-		THROW_IF_FAILED(
-			This->CreateCompatibleRenderTarget(
-				D2D1::SizeF(
-					std::ceil(metrics.left + metrics.width) + static_cast<float>(g_textGlowSize * 2),
-					std::ceil(metrics.top + metrics.height) + static_cast<float>(g_textGlowSize * 2)
-				),
-				bitmapRT.put()
-			)
-		);
-
-		bitmapRT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
-		bitmapRT->BeginDraw();
-		bitmapRT->Clear();
-		bitmapRT->DrawTextLayout(
-			D2D1::Point2F(),
-			textLayout,
-			defaultFillBrush,
-			options
-		);
-		THROW_IF_FAILED(bitmapRT->EndDraw());
-
-		winrt::com_ptr<ID2D1Bitmap> bitmap{};
-		THROW_IF_FAILED(bitmapRT->GetBitmap(bitmap.put()));
-
-		if (!g_textMorphologyEffect)
-		{
-			THROW_IF_FAILED(
-				This->CreateEffect(
-					CLSID_D2D1Morphology,
-					g_textMorphologyEffect.put()
-				)
-			);
-			THROW_IF_FAILED(
-				g_textMorphologyEffect->SetValue(
-					D2D1_MORPHOLOGY_PROP_MODE,
-					D2D1_MORPHOLOGY_MODE_DILATE
-				)
-			);
-			THROW_IF_FAILED(
-				g_textMorphologyEffect->SetValue(
-					D2D1_MORPHOLOGY_PROP_WIDTH,
-					3 + g_textGlowSize / 12
-				)
-			);
-			THROW_IF_FAILED(
-				g_textMorphologyEffect->SetValue(
-					D2D1_MORPHOLOGY_PROP_HEIGHT,
-					3 + g_textGlowSize / 12
-				)
-			);
-		}
-		if (!g_textGlowEffect)
-		{
-			THROW_IF_FAILED(
-				This->CreateEffect(
-					CLSID_D2D1Shadow,
-					g_textGlowEffect.put()
-				)
-			);
-			THROW_IF_FAILED(
-				g_textGlowEffect->SetValue(
-					D2D1_SHADOW_PROP_OPTIMIZATION,
-					D2D1_GAUSSIANBLUR_OPTIMIZATION_SPEED
-				)
-			);
-			g_textGlowEffect->SetInputEffect(0, g_textMorphologyEffect.get());
-		}
-		THROW_IF_FAILED(
-			g_textGlowEffect->SetValue(
-				D2D1_SHADOW_PROP_COLOR,
-				Color::FromAbgr(g_textGlowColor | (std::min(g_textGlowIntensity, 255) << 24), false)
-			)
-		);
-		THROW_IF_FAILED(
-			g_textGlowEffect->SetValue(
-				D2D1_SHADOW_PROP_BLUR_STANDARD_DEVIATION,
-				std::max(
-					0.f,
-					(static_cast<float>(g_textGlowSize)) / 3.f + 0.5f
-				)
-			)
-		);
-		g_textMorphologyEffect->SetInput(0, bitmap.get());
-
-		This->DrawImage(
-			g_textGlowEffect.get(),
-			&origin,
-			nullptr,
-			D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-			D2D1_COMPOSITE_MODE_SOURCE_COPY
-		);
-		This->DrawImage(
-			bitmap.get(),
-			&origin,
-			nullptr,
-			D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR
-		);
-		return;
-	}
 	if (Shared::g_textGlowMode == 1 || Shared::g_textGlowMode == 2)
 	{
 		if (!g_textGlowD2DBitmap)
@@ -1337,7 +1211,7 @@ HRESULT CaptionTextHandler::MyCDWriteText_scalar_deleting_destructor(uDWM::CDWri
 
 void CaptionTextHandler::CalculateRealizedTextGlowParams(int textGlowMode)
 {
-	if (textGlowMode == 0)
+	if (textGlowMode != 1 && textGlowMode != 2)
 	{
 		g_textGlowSize = 0;
 	}
@@ -1372,34 +1246,12 @@ void CaptionTextHandler::CalculateRealizedTextGlowParams(int textGlowMode)
 			}
 		);
 	}
-	else
-	{
-		wil::unique_htheme themeHandle{ OpenThemeData(nullptr, L"CompositedWindow::Window") };
-
-		if (g_textGlowSize = HIWORD(textGlowMode); !g_textGlowSize)
-		{
-			CustomThemeAtlasLoader::MyGetThemeInt(themeHandle.get(), static_cast<int>(DWM_WINDOW_THEME_PART::COMMON), 0, TMT_TEXTGLOWSIZE, &g_textGlowSize);
-		}
-		CustomThemeAtlasLoader::MyGetThemeInt(themeHandle.get(), static_cast<int>(DWM_WINDOW_THEME_PART::COMMON), 0, TMT_GLOWINTENSITY, &g_textGlowIntensity);
-		GetThemeColor(themeHandle.get(), static_cast<int>(DWM_WINDOW_THEME_PART::COMMON), 0, TMT_GLOWCOLOR, &g_textGlowColor);
-
-		// debug
-		//g_textGlowIntensity = 305;
-		//g_textGlowColor = 0xFFFFFF;
-	}
 }
 
 void CaptionTextHandler::DestroyDeviceResources()
 {
 	g_textGlowRT = nullptr;
 	g_textGlowD2DBitmap = nullptr;
-
-	if (uDWM::g_versionInfo.build < os::build_w11_22h2)
-	{
-		return;
-	}
-	g_textGlowEffect = nullptr;
-	g_textMorphologyEffect = nullptr;
 }
 
 void CaptionTextHandler::Update(GlassEngine::UpdateType type)

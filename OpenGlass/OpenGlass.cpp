@@ -539,6 +539,10 @@ DWORD WINAPI OpenGlass::InitializationThreadEntryPoint(PVOID)
 	THROW_IF_FAILED(SetThreadDescription(GetCurrentThread(), L"OpenGlass Initialization Thread"));
 
 	Startup();
+	if (!g_startup)
+	{
+		FreeLibraryAndExitThread(wil::GetModuleInstanceHandle(), static_cast<DWORD>(E_FAIL));
+	}
 
 	return S_OK;
 }

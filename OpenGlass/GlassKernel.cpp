@@ -812,7 +812,7 @@ void GlassKernel::Update(GlassEngine::UpdateType type)
 {
 	if (type & GlassEngine::UpdateType::Theme)
 	{
-		Shared::g_textGlowMode = GlassEngine::GetDwordFromRegistry(L"TextGlowMode", 1);
+		Shared::g_textGlowMode = std::clamp(static_cast<int>(GlassEngine::GetDwordFromRegistry(L"TextGlowMode", 1)), 0, 2);
 
 		WCHAR reflectionTexturePath[MAX_PATH]{};
 		GlassEngine::GetStringFromRegistry(L"CustomThemeReflection", reflectionTexturePath);

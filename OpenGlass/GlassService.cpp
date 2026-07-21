@@ -368,11 +368,27 @@ HRESULT GlassService::RunInjectionThread()
 				{
 					const auto& [injectionTimeStamp, processHandle] = it->second;
 
-					DWORD exitCode{ 0 };
-					LOG_IF_WIN32_BOOL_FALSE(GetExitCodeProcess(processHandle.get(), &exitCode));
-					// DWM constantly crashes or manual fast fail triggered by user
-					if (currentTimeStamp - injectionTimeStamp <= std::chrono::seconds{ 15 } || exitCode == 0xC0000409)
+					const auto waitResult = WaitForSingleObject(processHandle.get(), 0);
+					LOG_LAST_ERROR_IF(waitResult == WAIT_FAILED);
+
+					if (waitResult == WAIT_FAILED)
 					{
+						g_dwmInjectionMap.erase(it);
+					}
+					// DWM terminated shortly after injection, or manual fast fail was
+					// triggered later by the user. A running DWM means OpenGlass most
+					// likely failed during startup and unloaded itself.
+					else if (waitResult == WAIT_OBJECT_0)
+					{
+						DWORD exitCode{ 0 };
+						const auto gotExitCode = GetExitCodeProcess(processHandle.get(), &exitCode);
+						LOG_IF_WIN32_BOOL_FALSE(gotExitCode);
+
+						if (
+							currentTimeStamp - injectionTimeStamp <= std::chrono::seconds{ 15 } ||
+							(gotExitCode && exitCode == 0xC0000409)
+						)
+						{
 						auto title = Util::GetResourceStringView<IDS_STRING101>();
 						auto content = Util::GetResourceStringView<IDS_STRING109>();
 						DWORD response{ IDTIMEOUT };
@@ -402,6 +418,7 @@ HRESULT GlassService::RunInjectionThread()
 							return false;
 						}
 					}
+				}
 				}
 
 				if (const auto hresult = InjectOpenGlassDLL(processId, true); SUCCEEDED(hresult))

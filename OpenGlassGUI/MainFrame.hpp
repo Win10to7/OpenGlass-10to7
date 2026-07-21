@@ -123,7 +123,6 @@ namespace OpenGlass
 		wxSpinCtrl* m_scRoundRectRadius{ nullptr };
 		
 		wxChoice* m_chTextGlowMode{ nullptr };
-		wxSpinCtrl* m_scTextGlowSize{ nullptr }; // Added
 		
 		wxChoice* m_chCaptionButtons{ nullptr };
 		wxChoice* m_chCenterCaption{ nullptr };

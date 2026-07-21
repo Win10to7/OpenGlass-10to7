@@ -484,14 +484,8 @@ namespace OpenGlass
 			glowModes.Add(L"No glow");
 			glowModes.Add(L"Use theme atlas");
 			glowModes.Add(L"Use theme atlas (opacity)");
-			glowModes.Add(L"Composited (theme settings)");
 			m_chTextGlowMode = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, glowModes);
 			row->Add(m_chTextGlowMode, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
-
-			row->Add(new wxStaticText(panel, wxID_ANY, L"Size:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 3);
-			m_scTextGlowSize = new wxSpinCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(80, -1));
-			m_scTextGlowSize->SetRange(0, 100);
-			row->Add(m_scTextGlowSize, 0, wxALIGN_CENTER_VERTICAL);
 			AddOptionStatus(panel, row, L"TextGlowMode");
 
 			textGroup->Add(row, 0, wxEXPAND | wxALL, 2);
