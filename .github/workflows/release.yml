@@ -21,6 +21,15 @@ jobs:
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Integrate vcpkg with MSBuild
+        shell: powershell
+        run: |
+          $vcpkg = Join-Path $env:VCPKG_INSTALLATION_ROOT "vcpkg.exe"
+          if (-not (Test-Path $vcpkg)) {
+            throw "vcpkg was not found at $vcpkg"
+          }
+          & $vcpkg integrate install
+
       - name: Install Inno Setup
         shell: powershell
         run: choco install innosetup --no-progress --yes
