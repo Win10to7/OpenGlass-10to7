@@ -224,6 +224,7 @@ namespace OpenGlass::CaptionTextHandler
 		LPCRECT lprc,
 		UINT format,
 		COLORREF textColor,
+		bool useClearType,
 		int* result
 	)
 	{
@@ -297,13 +298,12 @@ namespace OpenGlass::CaptionTextHandler
 		GdiFlush();
 
 		// exact Win7 dwmcore glyph pipeline (CGlyphRunMaker::ThickenBitmap/FilterBox +
-		// the ClearType pixel shader, recovered from the checked build). Horizontally
+		// the caption text pixel shader, recovered from the checked build). Horizontally
 		// dilate the 6x mask rightward by clamp(extraWidth + PrecontrastLevel, 0, 6)
-		// samples (ThickenBitmap), then box-downsample: each R/G/B subpixel is a
-		// 6-sample popcount stepped 2 samples apart, coverage = trunc(popcount*255/6).
+		// samples (ThickenBitmap), then box-downsample. ClearType uses three 6-sample
+		// boxes stepped 2 samples apart; grayscale uses the center box for every channel.
 		// The shader's quadratic contrast curve (gamma index 9), with the text color's
-		// luma folded into its coefficients, maps coverage per channel in sRGB space;
-		// the per-channel over-blend below is then a plain lerp.
+		// luma folded into its coefficients, maps coverage in sRGB space.
 		const bool thinFont
 		{
 			_wcsicmp(captionFont.lfFaceName, L"Segoe UI") == 0 ||
@@ -398,12 +398,15 @@ namespace OpenGlass::CaptionTextHandler
 				{
 					continue;
 				}
-				// R/G/B subpixel coverage: 6-sample boxes stepped 2 samples apart
+				// ClearType uses the three subpixel taps. With font smoothing disabled,
+				// Win7's caption path keeps grayscale antialiasing by broadcasting the
+				// center tap instead of disabling smoothing entirely.
+				const UINT centerAlpha{ coverageTable[boxPopcount(x * 6)] };
 				const UINT alpha[3]
 				{
-					coverageTable[boxPopcount(x * 6 - 2)],
-					coverageTable[boxPopcount(x * 6)],
-					coverageTable[boxPopcount(x * 6 + 2)]
+					useClearType ? coverageTable[boxPopcount(x * 6 - 2)] : centerAlpha,
+					centerAlpha,
+					useClearType ? coverageTable[boxPopcount(x * 6 + 2)] : centerAlpha
 				};
 				if (!alpha[0] && !alpha[1] && !alpha[2])
 				{
@@ -634,7 +637,12 @@ int WINAPI CaptionTextHandler::MyDrawTextW(
 		}*/
 	}
 
-	bool win7TextRendered{ RenderWin7CaptionText(hdc, lpchText, cchText, lprc, format, options.crText, &result) };
+	BOOL fontSmoothingEnabled{ TRUE };
+	SystemParametersInfoW(SPI_GETFONTSMOOTHING, 0, &fontSmoothingEnabled, 0);
+	bool win7TextRendered
+	{
+		RenderWin7CaptionText(hdc, lpchText, cchText, lprc, format, options.crText, fontSmoothingEnabled, &result)
+	};
 	if (!win7TextRendered)
 	{
 		wil::unique_htheme hTheme{ OpenThemeData(nullptr, L"CompositedWindow::Window") };
