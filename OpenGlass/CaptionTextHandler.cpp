@@ -697,7 +697,10 @@ HBITMAP WINAPI CaptionTextHandler::MyCreateBitmap(
 	PVOID bits{ nullptr };
 	BITMAPINFO bitmapInfo{ {sizeof(bitmapInfo.bmiHeader), nWidth, -nHeight, 1, 32, BI_RGB} };
 	HBITMAP bitmap{ CreateDIBSection(nullptr, &bitmapInfo, DIB_RGB_COLORS, &bits, nullptr, 0) };
-	memset(bits, 0, sizeof(nWidth * nHeight * 4));
+	if (bits)
+	{
+		memset(bits, 0, static_cast<size_t>(nWidth) * nHeight * 4);
+	}
 
 	return bitmap;
 }

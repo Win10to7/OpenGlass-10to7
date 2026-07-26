@@ -97,8 +97,8 @@ bool CaptionTextRealizer::IsAvailable()
 void CaptionTextRealizer::RegisterPayload(const void* owner, UINT resourceHandle, CoveragePayload&& payload)
 {
 	const auto lock = g_payloadLock.lock_exclusive();
-	// a revalidation allocates a fresh bitmap/handle; drop the owner's stale entry
-	std::erase_if(g_payloads, [owner](const auto& pair) { return pair.second.owner == owner; });
+	// Keep the previous bitmap alive until the replacement has actually reached the
+	// render thread. Dropping it here leaves in-flight draw commands without text.
 	g_payloads[resourceHandle] = PayloadEntry{ owner, ++g_payloadGeneration, std::move(payload) };
 }
 
@@ -341,9 +341,10 @@ HRESULT CaptionTextRealizer::DrawCaptionText(
 	UINT handle
 )
 {
-	// snapshot the payload metrics and text color under the lock
+	// snapshot the payload metrics, owner, generation, and text color under the lock
 	LONG bitmapWidth{}, bitmapHeight{}, x{}, y{}, width{}, height{};
 	COLORREF textColor{};
+	const void* owner{};
 	UINT generation{};
 	{
 		const auto lock = g_payloadLock.lock_shared();
@@ -359,6 +360,7 @@ HRESULT CaptionTextRealizer::DrawCaptionText(
 		width = it->second.payload.width;
 		height = it->second.payload.height;
 		textColor = it->second.payload.textColor;
+		owner = it->second.owner;
 		generation = it->second.generation;
 	}
 	if (width <= 0 || height <= 0 || bitmapWidth <= 0 || bitmapHeight <= 0)
@@ -492,6 +494,24 @@ HRESULT CaptionTextRealizer::DrawCaptionText(
 	context->PSSetSamplers(0, 1, samplers);
 
 	context->Draw(4, 0);
+
+	// The replacement is now visible. Older bitmaps for this visual can no longer
+	// be referenced by a future render update, so retire their CPU and GPU data.
+	{
+		const auto lock = g_payloadLock.lock_exclusive();
+		for (auto it = g_payloads.begin(); it != g_payloads.end();)
+		{
+			if (it->second.owner == owner && it->second.generation < generation)
+			{
+				g_textures.erase(it->first);
+				it = g_payloads.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 
 	return S_OK;
 }
