@@ -557,6 +557,7 @@ DWORD WINAPI OpenGlass::UnInitializationThreadEntryPoint(PVOID)
 	FreeLibraryAndExitThread(wil::GetModuleInstanceHandle(), S_OK);
 }
 
+
 void OpenGlass::Startup()
 {
 	if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
@@ -564,8 +565,23 @@ void OpenGlass::Startup()
 		return;
 	}
 
-	// just wait patiently, in case the dwm notification window is not ready...
-	while (!(g_notificationWindow = FindWindowW(L"DWM", nullptr))) { Sleep(50); }
+	// Give up if the notification window is delayed so the service can unload
+	// the DLL and retry injection instead of treating a stuck startup as loaded.
+	const auto notificationWindowDeadline = std::chrono::steady_clock::now() + std::chrono::seconds{ 10 };
+	do
+	{
+		g_notificationWindow = FindWindowW(L"DWM", nullptr);
+		if (g_notificationWindow)
+		{
+			break;
+		}
+		Sleep(50);
+	}
+	while (std::chrono::steady_clock::now() < notificationWindowDeadline);
+	if (!g_notificationWindow)
+	{
+		return;
+	}
 
 	wil::SetResultLoggingCallback([](const wil::FailureInfo& failure) static noexcept
 	{
