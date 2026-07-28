@@ -402,32 +402,9 @@ bool OpenGlass::InitializeProjectionBySymbols()
 			}
 			if (FAILED(hr))
 			{
-				const auto contentTemplate = g_symbolRequiresDownloading && !g_symbolDownloadCompleted ? Util::GetResourceStringView<IDS_STRING106>() : Util::GetResourceStringView<IDS_STRING107>();
-				const auto buffSize = contentTemplate.size() + 8ull;
-				const auto content = std::make_unique_for_overwrite<WCHAR[]>(buffSize);
-				swprintf_s(
-					content.get(),
-					buffSize,
-					contentTemplate.data(),
-					hr
-				);
-
 				g_status = DownloaderStatus::Error;
-				config.hwndParent = g_symbolDownloaderHwnd;
-				config.pszContent = content.get();
-				config.pszExpandedInformation = g_detailsInfo.c_str();
-				THROW_IF_FAILED(
-					TaskDialogIndirect(
-						&config,
-						&result,
-						nullptr,
-						nullptr
-					)
-				);
-				if (result != IDRETRY)
-				{
-					return false;
-				}
+				LOG_IF_FAILED(hr);
+				return false;
 			}
 			else
 			{
@@ -467,32 +444,9 @@ bool OpenGlass::InitializeProjectionBySymbols()
 			}
 			if (FAILED(hr))
 			{
-				const auto contentTemplate = g_symbolRequiresDownloading && !g_symbolDownloadCompleted ? Util::GetResourceStringView<IDS_STRING106>() : Util::GetResourceStringView<IDS_STRING107>();
-				const auto buffSize = contentTemplate.size() + 8ull;
-				const auto content = std::make_unique_for_overwrite<WCHAR[]>(buffSize);
-				swprintf_s(
-					content.get(),
-					buffSize,
-					contentTemplate.data(),
-					hr
-				);
-
 				g_status = DownloaderStatus::Error;
-				config.hwndParent = g_symbolDownloaderHwnd;
-				config.pszContent = content.get();
-				config.pszExpandedInformation = g_detailsInfo.c_str();
-				THROW_IF_FAILED(
-					TaskDialogIndirect(
-						&config,
-						&result,
-						nullptr,
-						nullptr
-					)
-				);
-				if (result != IDRETRY)
-				{
-					return false;
-				}
+				LOG_IF_FAILED(hr);
+				return false;
 			}
 			else
 			{
@@ -565,23 +519,8 @@ void OpenGlass::Startup()
 		return;
 	}
 
-	// Give up if the notification window is delayed so the service can unload
-	// the DLL and retry injection instead of treating a stuck startup as loaded.
-	const auto notificationWindowDeadline = std::chrono::steady_clock::now() + std::chrono::seconds{ 10 };
-	do
-	{
-		g_notificationWindow = FindWindowW(L"DWM", nullptr);
-		if (g_notificationWindow)
-		{
-			break;
-		}
-		Sleep(50);
-	}
-	while (std::chrono::steady_clock::now() < notificationWindowDeadline);
-	if (!g_notificationWindow)
-	{
-		return;
-	}
+	// just wait patiently, in case the dwm notification window is not ready...
+	while (!(g_notificationWindow = FindWindowW(L"DWM", nullptr))) { Sleep(50); }
 
 	wil::SetResultLoggingCallback([](const wil::FailureInfo& failure) static noexcept
 	{
