@@ -368,55 +368,46 @@ HRESULT GlassService::RunInjectionThread()
 				{
 					const auto& [injectionTimeStamp, processHandle] = it->second;
 
-					const auto waitResult = WaitForSingleObject(processHandle.get(), 0);
-					LOG_LAST_ERROR_IF(waitResult == WAIT_FAILED);
-
-					if (waitResult == WAIT_FAILED)
-					{
-						g_dwmInjectionMap.erase(it);
-					}
-					// DWM terminated shortly after injection, or manual fast fail was
-					// triggered later by the user. A running DWM means OpenGlass most
-					// likely failed during startup and unloaded itself.
-					else if (waitResult == WAIT_OBJECT_0)
-					{
-						DWORD exitCode{ 0 };
-						const auto gotExitCode = GetExitCodeProcess(processHandle.get(), &exitCode);
-						LOG_IF_WIN32_BOOL_FALSE(gotExitCode);
-
-						if (
+					DWORD exitCode{ 0 };
+					LOG_IF_WIN32_BOOL_FALSE(GetExitCodeProcess(processHandle.get(), &exitCode));
+					// DWM constantly crashes or manual fast fail triggered by user.
+					// If DWM is still alive, the previous load most likely failed during
+					// OpenGlass startup and unloaded itself before completing.
+					if (
+						exitCode != STILL_ACTIVE &&
+						(
 							currentTimeStamp - injectionTimeStamp <= std::chrono::seconds{ 15 } ||
-							(gotExitCode && exitCode == 0xC0000409)
+							exitCode == 0xC0000409
 						)
-						{
-							auto title = Util::GetResourceStringView<IDS_STRING101>();
-							auto content = Util::GetResourceStringView<IDS_STRING109>();
-							DWORD response{ IDTIMEOUT };
-							WTSSendMessageW(
-								WTS_CURRENT_SERVER_HANDLE,
-								sessionId,
-								const_cast<LPWSTR>(title.data()),
-								static_cast<DWORD>(title.size() * sizeof(WCHAR)),
-								const_cast<LPWSTR>(content.data()),
-								static_cast<DWORD>(content.size() * sizeof(WCHAR)),
-								MB_ICONERROR | MB_ABORTRETRYIGNORE,
-								0,
-								&response,
-								TRUE
-							);
-							g_injectionThreadStatus = response == IDABORT ? ThreadStatus::Stopped : ThreadStatus::Running;
+					)
+					{
+						auto title = Util::GetResourceStringView<IDS_STRING101>();
+						auto content = Util::GetResourceStringView<IDS_STRING109>();
+						DWORD response{ IDTIMEOUT };
+						WTSSendMessageW(
+							WTS_CURRENT_SERVER_HANDLE,
+							sessionId,
+							const_cast<LPWSTR>(title.data()),
+							static_cast<DWORD>(title.size() * sizeof(WCHAR)),
+							const_cast<LPWSTR>(content.data()),
+							static_cast<DWORD>(content.size() * sizeof(WCHAR)),
+							MB_ICONERROR | MB_ABORTRETRYIGNORE,
+							0,
+							&response,
+							TRUE
+						);
+						g_injectionThreadStatus = response == IDABORT ? ThreadStatus::Stopped : ThreadStatus::Running;
 
-							if (g_injectionThreadStatus == ThreadStatus::Stopped)
-							{
-								hr = E_ABORT;
-								return false;
-							}
-							if (response == IDIGNORE)
-							{
-								g_dwmInjectionMap.erase(it);
-								g_dwmInjectionBlackList.emplace(processId);
-								return false;
-							}
+						if (g_injectionThreadStatus == ThreadStatus::Stopped)
+						{
+							hr = E_ABORT;
+							return false;
+						}
+						if (response == IDIGNORE)
+						{
+							g_dwmInjectionMap.erase(it);
+							g_dwmInjectionBlackList.emplace(processId);
+							return false;
 						}
 					}
 				}

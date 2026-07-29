@@ -291,44 +291,13 @@ void OpenGlass::SymbolDownloaderCallback(const CDownloadProgress& progress)
 
 bool OpenGlass::InitializeProjectionBySymbols()
 {
-	const auto mainInstruction = Util::GetResourceStringView<IDS_STRING101>();
-	const auto expandText = Util::GetResourceStringView<IDS_STRING103>();
-	const auto collapseText = Util::GetResourceStringView<IDS_STRING104>();
-	int result{ 0 };
-	TASKDIALOGCONFIG config
-	{
-		sizeof(TASKDIALOGCONFIG),
-		nullptr,
-		nullptr,
-		TDF_SIZE_TO_CONTENT | TDF_EXPAND_FOOTER_AREA | TDF_ALLOW_DIALOG_CANCELLATION,
-		TDCBF_RETRY_BUTTON | TDCBF_CANCEL_BUTTON,
-		nullptr,
-		{.pszMainIcon{TD_ERROR_ICON}},
-		mainInstruction.data(),
-		nullptr,
-		0,
-		nullptr,
-		0,
-		0,
-		nullptr,
-		0,
-		nullptr,
-		nullptr,
-		collapseText.data(),
-		expandText.data(),
-		{},
-		nullptr,
-		nullptr,
-		0,
-		0
-	};
 
 	{
 		const auto asyncUICleanup = wil::scope_exit([]
 		{
 			if (g_symbolDownloaderHwnd)
 			{
-				SendMessageW(g_symbolDownloaderHwnd, WM_SYSCOMMAND, SC_CLOSE, 0);
+				LOG_IF_WIN32_BOOL_FALSE(PostMessageW(g_symbolDownloaderHwnd, WM_SYSCOMMAND, SC_CLOSE, 0));
 			}
 		});
 
@@ -462,25 +431,8 @@ bool OpenGlass::InitializeProjectionBySymbols()
 	{
 		missingFunctionsOrVariables.pop_back();
 		missingFunctionsOrVariables.append(std::string_view{ "\0", 1 });
-		const auto content = Util::GetResourceStringView<IDS_STRING108>();
-
-		std::unique_ptr<WCHAR[]> convertedMissingInfo{};
-		THROW_IF_FAILED(Util::MB2WC(convertedMissingInfo, missingFunctionsOrVariables.c_str(), static_cast<int>(missingFunctionsOrVariables.size())));
-
-		config.hwndParent = nullptr;
-		config.pszMainInstruction = mainInstruction.data();
-		config.pszContent = content.data();
-		config.pszExpandedInformation = convertedMissingInfo.get();
-		config.dwCommonButtons = TDCBF_CLOSE_BUTTON;
-		THROW_IF_FAILED(
-			TaskDialogIndirect(
-				&config,
-				&result,
-				nullptr,
-				nullptr
-			)
-		);
-
+		OutputDebugStringA(missingFunctionsOrVariables.c_str());
+		LOG_HR(HRESULT_FROM_WIN32(ERROR_NOT_SUPPORTED));
 		return false;
 	}
 
@@ -519,8 +471,23 @@ void OpenGlass::Startup()
 		return;
 	}
 
-	// just wait patiently, in case the dwm notification window is not ready...
-	while (!(g_notificationWindow = FindWindowW(L"DWM", nullptr))) { Sleep(50); }
+	// Give up if the notification window is delayed so the service can unload
+	// the DLL and retry injection instead of treating a stuck startup as loaded.
+	const auto notificationWindowDeadline = std::chrono::steady_clock::now() + std::chrono::seconds{ 10 };
+	do
+	{
+		g_notificationWindow = FindWindowW(L"DWM", nullptr);
+		if (g_notificationWindow)
+		{
+			break;
+		}
+		Sleep(50);
+	}
+	while (std::chrono::steady_clock::now() < notificationWindowDeadline);
+	if (!g_notificationWindow)
+	{
+		return;
+	}
 
 	wil::SetResultLoggingCallback([](const wil::FailureInfo& failure) static noexcept
 	{
