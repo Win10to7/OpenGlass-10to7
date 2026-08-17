@@ -1629,6 +1629,18 @@ namespace OpenGlass
 				updateDword(Settings::Id::CenterCaption, sel, ChangeType::Theme);
 			}
 		});
+		m_chCaptionTextAliasing->Bind(wxEVT_CHOICE, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {
+			int sel = e.GetSelection();
+			if (sel == 0)
+			{
+				deleteValue(L"CaptionTextAliasing");
+				NotifySettingsChange(ChangeType::Theme);
+			}
+			else
+			{
+				updateDword(L"CaptionTextAliasing", sel, ChangeType::Theme);
+			}
+		});
 		m_chkDisableModernBorders->Bind(wxEVT_CHECKBOX, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {
 			if (!e.IsChecked())
 			{
