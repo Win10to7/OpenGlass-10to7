@@ -92,7 +92,6 @@ jobs:
               throw "Invalid runner image identity: $identity"
           }
           "value=$identity" >> $env:GITHUB_OUTPUT
-
       # Keep a fresh writable key per image, but let vcpkg's ABI hashes decide
       # which packages from older images or manifests are still reusable.
       - name: Restore vcpkg binary packages
