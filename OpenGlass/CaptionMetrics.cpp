@@ -35,19 +35,23 @@ SIZE CaptionMetrics::CalculateButtonSize(CaptionButtons style, int cySize, int b
 
 	SIZE buttonSize = { 0, static_cast<LONG>(std::round(static_cast<float>(cySize) * heightRatio)) };
 
+	// Vista/Win7 scale widths from caption height; Win8 uses the rounded button height.
+	// CTopLevelWindow::UpdateNCAreaButton uses this order in 8102, 8400, 9200 and 9600.
+	const float widthBase{ static_cast<float>(style == CaptionButtons::Windows8 ? buttonSize.cy : cySize) };
+
 	switch (buttonType)
 	{
 	case CloseButton:
-		buttonSize.cx = static_cast<LONG>(std::round(static_cast<float>(cySize) * closeWidthRatio));
+		buttonSize.cx = static_cast<LONG>(std::round(widthBase * closeWidthRatio));
 		break;
 	case MaxButton:
-		buttonSize.cx = static_cast<LONG>(std::round(static_cast<float>(cySize) * maxWidthRatio));
+		buttonSize.cx = static_cast<LONG>(std::round(widthBase * maxWidthRatio));
 		break;
 	case MinButton:
-		buttonSize.cx = static_cast<LONG>(std::round(static_cast<float>(cySize) * minWidthRatio));
+		buttonSize.cx = static_cast<LONG>(std::round(widthBase * minWidthRatio));
 		break;
 	case LoneButton:
-		buttonSize.cx = static_cast<LONG>(std::round(static_cast<float>(cySize) * loneWidthRatio));
+		buttonSize.cx = static_cast<LONG>(std::round(widthBase * loneWidthRatio));
 		break;
 	default:
 		break;

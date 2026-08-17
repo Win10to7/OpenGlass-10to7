@@ -87,6 +87,13 @@ HRESULT CaptionMetricsTweaker::MyCTopLevelWindow_UpdateNCAreaPositionsAndSizes(u
 	if (toolWindow)
 	{
 		int cySmSize = GetSystemMetricsForDpi(SM_CYSMSIZE, data->GetWindowDPI());
+		// Win8 runs the small-caption metric through the same height ratio before making
+		// the button square; Win7/Vista use it raw. Passing -1 hits CalculateButtonSize's
+		// default case, so only the height is computed.
+		if (g_captionButtons == CaptionButtons::Windows8)
+		{
+			cySmSize = CaptionMetrics::CalculateButtonSize(g_captionButtons, cySmSize, -1).cy;
+		}
 		SIZE toolButtonSize = { cySmSize , cySmSize };
 
 		offsetTop = (borderMargins.cyTopHeight - toolButtonSize.cy - 4 > offsetTop) ? borderMargins.cyTopHeight - toolButtonSize.cy - 4 : offsetTop;
