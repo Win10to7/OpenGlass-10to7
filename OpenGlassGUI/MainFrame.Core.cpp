@@ -431,5 +431,4 @@ namespace OpenGlass
 		}
 	}
 
-
 }
