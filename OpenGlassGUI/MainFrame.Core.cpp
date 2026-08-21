@@ -1633,12 +1633,12 @@ namespace OpenGlass
 			int sel = e.GetSelection();
 			if (sel == 0)
 			{
-				deleteValue(L"CaptionTextAliasing");
+				deleteValue(Settings::Id::CaptionTextAliasing);
 				NotifySettingsChange(ChangeType::Theme);
 			}
 			else
 			{
-				updateDword(L"CaptionTextAliasing", sel, ChangeType::Theme);
+				updateDword(Settings::Id::CaptionTextAliasing, sel, ChangeType::Theme);
 			}
 		});
 		m_chkDisableModernBorders->Bind(wxEVT_CHECKBOX, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {

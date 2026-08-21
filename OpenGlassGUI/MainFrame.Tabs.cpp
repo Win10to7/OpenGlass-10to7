@@ -683,7 +683,7 @@ namespace OpenGlass
 			aliasingStyles.Add(L"Windows 8 style");
 			m_chCaptionTextAliasing = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, aliasingStyles);
 			row->Add(m_chCaptionTextAliasing, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
-			AddOptionStatus(panel, row, L"CaptionTextAliasing");
+			AddOptionStatus(panel, row, Settings::Id::CaptionTextAliasing);
 			textGroup->Add(row, 0, wxEXPAND | wxALL, 2);
 		}
 
