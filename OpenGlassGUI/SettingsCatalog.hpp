@@ -163,7 +163,7 @@ namespace OpenGlass::Settings
 		// Raw Windows recovery identity; presets keep the ColorizationOpaqueBlend field.
 		{ Id::EnableTransparency, L"EnableTransparency", ValueType::Dword, AssetRole::None, UpdateType::Backdrop, 1, false },
 		{ Id::EnableUxMitigation, L"EnableUxMitigation", ValueType::Dword, AssetRole::None, UpdateType::Backdrop, 3 },
-		{ Id::CaptionTextAliasing, L"CaptionTextAliasing", ValueType::Dword, AssetRole::None, UpdateType::Theme, 3 },
+		{ Id::CaptionTextAliasing, L"CaptionTextAliasing", ValueType::Dword, AssetRole::None, UpdateType::Theme },
 	}};
 
 	consteval bool IsValidCatalog()
