@@ -303,6 +303,10 @@ namespace OpenGlass::dwmcore
 			return entry ? *reinterpret_cast<CResource**>(static_cast<BYTE*>(entry) + 8) : nullptr;
 		}
 	};
+	inline PVOID Fallback_CResourceTable_GetEntry(CResourceTable*, UINT)
+	{
+		return nullptr;
+	}
 	struct CImageLegacyMilBrush : CLegacyMilBrush
 	{
 		inline static PVOID* vftable{nullptr};

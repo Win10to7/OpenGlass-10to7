@@ -369,7 +369,7 @@
         "public: void * __cdecl CResourceTable::GetEntry(unsigned int) __ptr64",
         "private: void * __cdecl CResourceTable::GetEntry(unsigned int) __ptr64"
       ],
-      "requirement": "required",
+      "requirement": "optional",
       "min_inclusive": {
         "build": 19041,
         "revision": 0
@@ -379,6 +379,7 @@
         "revision": 0
       },
       "target": "&CResourceTable::GetEntry",
+      "fallback": "&Fallback_CResourceTable_GetEntry",
       "kind": "projected_function"
     },
     {
