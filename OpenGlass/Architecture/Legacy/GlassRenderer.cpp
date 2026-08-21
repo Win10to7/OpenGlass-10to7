@@ -58,7 +58,8 @@ namespace OpenGlass::GlassRenderer
 		RenderFlag_Backdrop,
 		RenderFlag_Material,
 		RenderFlag_Reflection,
-		RenderFlag_Highlight
+		RenderFlag_Highlight,
+		RenderFlag_Count
 	};
 
 	struct CDeviceResources
@@ -85,7 +86,7 @@ namespace OpenGlass::GlassRenderer
 	std::unordered_map<dwmcore::CD2DContext*, CDeviceResources> g_deviceResources{};
 	CDeviceResources* g_currentDeviceResources{};
 	dwmcore::CDrawingContext* g_drawingContextNoRef{};
-	std::bitset<4> g_renderFlag{};
+	std::bitset<RenderFlag_Count> g_renderFlag{};
 	bool g_colorIsOpaque{};
 	bool g_shapeIsRectangles{};
 	bool g_renderTargetIgnoresAlpha{};
