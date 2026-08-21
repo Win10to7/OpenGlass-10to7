@@ -258,6 +258,7 @@
         {
           "platform": null,
           "target": "&CResourceTable::GetEntry",
+          "fallback": "&Fallback_CResourceTable_GetEntry",
           "ranges": [
             {
               "symbol_names": [
@@ -276,7 +277,7 @@
           ]
         }
       ],
-      "requirement": "required",
+      "requirement": "optional",
       "kind": "projected_function"
     },
     {
