@@ -34,7 +34,7 @@ namespace OpenGlass::CaptionTextRealizer
 		dwmcore::CResource* rectResource
 	);
 
-	Projection::Detour<dwmcore::Symbol_CRenderData_ProcessUpdate, decltype(&MyCRenderData_ProcessUpdate)> g_CRenderData_ProcessUpdate_Org{};
+	Projection::Detour<dwmcore::Symbol_CRenderData_ProcessUpdate, &MyCRenderData_ProcessUpdate> g_CRenderData_ProcessUpdate_Org{};
 	decltype(&MyCDrawingContext_DrawImage) g_CDrawingContext_DrawImage_Org{ nullptr };
 	decltype(&MyCDrawingContext_DrawImage)* g_CDrawingContext_DrawImage_Org_Address{ nullptr };
 	HookHelper::PointerHook<&MyCDrawingContext_DrawImage> g_CDrawingContext_DrawImage_Hook;
@@ -544,7 +544,7 @@ void CaptionTextRealizer::Startup()
 	HookHelper::ApplyInlineHooks(
 		std::initializer_list<HookHelper::DetourInfo>
 		{
-			{ &g_CRenderData_ProcessUpdate_Org, &MyCRenderData_ProcessUpdate, hasProcessUpdate }
+			{ &g_CRenderData_ProcessUpdate_Org, hasProcessUpdate }
 		},
 		true
 	);
@@ -557,7 +557,7 @@ void CaptionTextRealizer::Shutdown()
 		HookHelper::ApplyInlineHooks(
 			std::initializer_list<HookHelper::DetourInfo>
 			{
-				{ &g_CRenderData_ProcessUpdate_Org, &MyCRenderData_ProcessUpdate }
+				{ &g_CRenderData_ProcessUpdate_Org }
 			},
 			false
 		);
