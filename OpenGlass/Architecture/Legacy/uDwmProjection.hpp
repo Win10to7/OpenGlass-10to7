@@ -9,6 +9,11 @@
 namespace OpenGlass::uDWM
 {
 	using namespace DWM;
+	struct CTopLevelWindow;
+	inline HRESULT Fallback_CTopLevelWindow_ApplyMaximizedClip(CTopLevelWindow*, HRGN)
+	{
+		return S_OK;
+	}
 	inline const auto g_moduleHandle{GetModuleHandleW(L"uDWM.dll")};
 	inline const auto g_versionInfo{Util::GetModuleVersionInfo(g_moduleHandle)};
 
