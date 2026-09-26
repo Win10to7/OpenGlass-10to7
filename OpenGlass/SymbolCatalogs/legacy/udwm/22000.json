@@ -14,7 +14,7 @@
         "age": 1,
         "sha256": "210b2964927ac7a5db0c12f5d7dbc209f1aced4642128f501249c4a9fe43210a"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -168,6 +168,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x452A0"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE4990"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE4AF4"
@@ -303,7 +307,7 @@
         "age": 1,
         "sha256": "44630d81a34ad74e480a1358011645fee3e56aa8362d3a49ab190cff5d63f7ac"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -457,6 +461,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x452D0"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE4CE0"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE4E44"
@@ -592,7 +600,7 @@
         "age": 1,
         "sha256": "dfea487a19670d36d442f5373fb15eb68e7f8e3d2a1094257c41e538a04cf38c"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -746,6 +754,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x102B0"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE4280"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE43E4"
@@ -881,7 +893,7 @@
         "age": 1,
         "sha256": "a6528cf9a4167839b90e55b05cb1422ec6593807cd58c45bb4053a628ad44743"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -1034,6 +1046,10 @@
         "CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage": {
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x10230"
+        },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE44D0"
         },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
@@ -1170,7 +1186,7 @@
         "age": 1,
         "sha256": "3f15ab101c9216d6820a26e7ffbb907d0ed7f98ed0588fb7fb40622462399f9d"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -1324,6 +1340,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x10230"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE44D0"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE4634"
@@ -1459,7 +1479,7 @@
         "age": 1,
         "sha256": "2328050722d058eb41dbbfdb6809885160decf047c90b77cff6ec05ccc11f727"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -1613,6 +1633,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x10330"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE44F0"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE4654"
@@ -1748,7 +1772,7 @@
         "age": 1,
         "sha256": "65e107bbf3036fef222beb615aedfb09e82a060e69f9224478ca68b86e33323a"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -1902,6 +1926,10 @@
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x103F0"
         },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE45F0"
+        },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
           "rva": "0xE4754"
@@ -2037,7 +2065,7 @@
         "age": 1,
         "sha256": "327292619db850ddd37cae975d15930018ab76e8650740fd4ecd744c0b3afb7f"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -2190,6 +2218,10 @@
         "CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage": {
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x10350"
+        },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE4240"
         },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",
@@ -2326,7 +2358,7 @@
         "age": 1,
         "sha256": "0c7affd61fa15a844017712c609c40b73e2e97dc5ee19de2babd4bd6b45aee5e"
       },
-      "resolution_contract": "e3211cd4255d2a7c1abad6f465bc1ed6c31b0ba3fba367b0106919f0db891d03",
+      "resolution_contract": "a09d0d8daa534672b46480c004be16a7b40009f737eeb5eda6a08f126abb6c6a",
       "symbols": {
         "CAccent::SetClipRegion": {
           "name": "public: void __cdecl CAccent::SetClipRegion(class CBaseGeometryProxy * __ptr64) __ptr64",
@@ -2479,6 +2511,10 @@
         "CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage": {
           "name": "protected: virtual bool __cdecl CTopLevelAtlasedRectsVisual::ShouldCloneAtlasImage(class CAtlasedImage const * __ptr64,enum CloneOptions) __ptr64",
           "rva": "0x10350"
+        },
+        "CTopLevelWindow::ApplyMaximizedClip": {
+          "name": "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+          "rva": "0xE4240"
         },
         "CTopLevelWindow::CloneVisualTreeForLivePreview": {
           "name": "public: long __cdecl CTopLevelWindow::CloneVisualTreeForLivePreview(bool,bool,bool,class CTopLevelWindow * __ptr64 * __ptr64) __ptr64",

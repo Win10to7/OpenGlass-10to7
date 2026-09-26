@@ -234,6 +234,16 @@
     {
       "module": "dwmcore",
       "version": {
+        "build": 19041,
+        "revision": 7663
+      },
+      "expected_sha256": "1938e2972604abaa533fec371ac0e510fee9365729b7ab1230e29c46b7309356",
+      "returned_sha256": "b7b4a22fd6543ce1670e0810ff18da6463f7f8fd1b7932cb0ce171a80ca7b7e4",
+      "symbol_server_key": "6F793204376000"
+    },
+    {
+      "module": "dwmcore",
+      "version": {
         "build": 22000,
         "revision": 282
       },
@@ -930,6 +940,16 @@
       "expected_sha256": "9fd9c40c1568f959823228c964ba2680543790611d4140b0941d45649a168e7a",
       "returned_sha256": "c06f06f8d7faa36ff453f2155df8259b12c4a08afdd6b320bb2e3ddd6b100202",
       "symbol_server_key": "92963762fe000"
+    },
+    {
+      "module": "udwm",
+      "version": {
+        "build": 19041,
+        "revision": 7663
+      },
+      "expected_sha256": "c6eec2e5ce7d0f6b3f2eae8facc1a29e2f62ea5d2e80b5ca48f3c6d3afb7f397",
+      "returned_sha256": "b6eb573a9eeac76c54507a93934c02b677e8d36ec6ec48b79fd428f3dfcd1182",
+      "symbol_server_key": "E163C083fe000"
     },
     {
       "module": "udwm",
