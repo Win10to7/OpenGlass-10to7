@@ -280,19 +280,23 @@
     {
       "name": "Symbol_CDrawImageInstruction_Create",
       "id": "CDrawImageInstruction::Create",
-      "symbol_names": [
-        "public: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64",
-        "private: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64"
+      "bindings": [
+        {
+          "symbol_names": [
+            "public: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64",
+            "private: static long __cdecl CDrawImageInstruction::Create(class CBitmapSource * __ptr64,struct tagRECT const * __ptr64,void * __ptr64 * __ptr64) __ptr64"
+          ],
+          "min_inclusive": {
+            "build": 19041,
+            "revision": 0
+          },
+          "max_exclusive": {
+            "build": 20348,
+            "revision": 0
+          }
+        }
       ],
       "requirement": "optional",
-      "min_inclusive": {
-        "build": 19041,
-        "revision": 0
-      },
-      "max_exclusive": {
-        "build": 20348,
-        "revision": 0
-      },
       "kind": "raw",
       "type": "HRESULT (*)(CBitmapSource*, const RECT*, PVOID*)"
     },
@@ -1049,15 +1053,19 @@
     {
       "name": "Symbol_CTopLevelWindow_ApplyMaximizedClip",
       "id": "CTopLevelWindow::ApplyMaximizedClip",
-      "symbol_names": [
-        "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
-        "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
-        "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64",
-        "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64"
+      "bindings": [
+        {
+          "symbol_names": [
+            "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+            "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HRGN__ * __ptr64) __ptr64",
+            "public: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64",
+            "private: long __cdecl CTopLevelWindow::ApplyMaximizedClip(struct HGDIOBJ__ * __ptr64) __ptr64"
+          ],
+          "min_inclusive": null,
+          "max_exclusive": null
+        }
       ],
       "requirement": "required",
-      "min_inclusive": null,
-      "max_exclusive": null,
       "target": "&CTopLevelWindow::ApplyMaximizedClip",
       "kind": "projected_function"
     },

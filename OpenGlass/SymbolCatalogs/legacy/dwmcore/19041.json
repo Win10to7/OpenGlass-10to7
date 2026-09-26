@@ -14,11 +14,15 @@
         "age": 1,
         "sha256": "ea64d15f29c2664e04523b2ae53b6350f8182959b908b6516328741444cf9555"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD9C0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F8C0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -147,11 +151,15 @@
         "age": 1,
         "sha256": "96204e8a92ca1ea3449b020439139ed854d67e626982826e5d72dad8458c6650"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD020"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271260"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -280,11 +288,15 @@
         "age": 1,
         "sha256": "b3e7caf43e5ea139520127f89056043b1349975dd36ee8498cd559019fabe52e"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAFEE0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2710C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -413,11 +425,15 @@
         "age": 1,
         "sha256": "b3da188c491316f5baedc23c379b8f40963f16928849ee884672f6d5dd5dae9c"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAFEB0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2710C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -546,11 +562,15 @@
         "age": 1,
         "sha256": "887a2cef1d925798f82a6d7f8c5d367ef81733347c6ad3b2ac2839064c0ca6a5"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAFF70"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271FA0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -679,11 +699,15 @@
         "age": 1,
         "sha256": "813ff72182563c66cf348f370815f9e000b1dec385d819a4344471a54f824a81"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB03A0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272FA0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -812,11 +836,15 @@
         "age": 1,
         "sha256": "970582726cbda4ac5c03de9639ffed0a8c1fb6689e43fd37eb2d1ef221d2dcf4"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA89F0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272BB0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -945,11 +973,15 @@
         "age": 1,
         "sha256": "cce3949c5495500eab3980e7366de697869c3a596f815746f07bc112f1da44ab"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA8EE0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272BB0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1078,11 +1110,15 @@
         "age": 1,
         "sha256": "8adfdbb8b5895f871990cbf710b8dca3f667d9f207c2b10942521b6085ca7fb9"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA8EF0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272BB0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1211,11 +1247,15 @@
         "age": 1,
         "sha256": "5f37ff443d69ca4458eb7b7bf99b48c5ce8875d633a086860dee0d3c77cc6720"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA8EE0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272BB0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1344,11 +1384,15 @@
         "age": 1,
         "sha256": "8fce50d12185061e0b4306c9f6b63d94fb0724e1c3e9d31e59735ecf8f29f153"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA8EE0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272BB0"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1477,11 +1521,15 @@
         "age": 1,
         "sha256": "9e73e2b67a6b92c9f01c152a5b5ddfd1d42f0e60ddb82050d83b2c7b19ba0405"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAC330"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x273EE8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1610,11 +1658,15 @@
         "age": 1,
         "sha256": "a17ab777e2d73318ce76688b9e9e71c3d233a0c4763962a87956b1163d08fbdb"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA72D0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272A90"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1743,11 +1795,15 @@
         "age": 1,
         "sha256": "b1dc88c761121e5efa546ee853fe24bb96a68762f28719d1f16653b84b919970"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA7280"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272A90"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -1876,11 +1932,15 @@
         "age": 1,
         "sha256": "9495f8a10a32a1517f64a99c7d4f73908a8e8b8c216c9eb4cca10bf94cbe0279"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAA650"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270A00"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2009,11 +2069,15 @@
         "age": 1,
         "sha256": "88f4111e0146d5f75134471308d7c03b31fa035643ace93a4015329e4ebf1826"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAA650"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270A00"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2142,11 +2206,15 @@
         "age": 1,
         "sha256": "a5b65e338b9fdaa343e9721fc61fda76a1d92579bfd3d01f5ecb4e77664de672"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAA650"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26FA00"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2275,11 +2343,15 @@
         "age": 1,
         "sha256": "eb65e5053af9be574d40ca3e8b80df5b037f3dc5ef9a3f734a0dc7714e79feb8"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA60B0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270640"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2408,11 +2480,15 @@
         "age": 1,
         "sha256": "6c77444183c9019b7a0b9d231ebf33d03228e91cfdb728704cd1f3daab4a19f4"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA60B0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270640"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2541,11 +2617,15 @@
         "age": 1,
         "sha256": "1c11b5d3a6b29087ce38ac3f6ffc8a8f23de4e47970d8440cb2e14c77b3bc800"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA60B0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270640"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2674,11 +2754,15 @@
         "age": 1,
         "sha256": "87b33c27914ed147b3f3c75e12aecb362f43cdeb6fef383ccc77c44435ffdba0"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA60B0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270640"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2807,11 +2891,15 @@
         "age": 1,
         "sha256": "27ba84118519d5f6991e731e16f37092f15f949e00c51234771bbfc2affba4b3"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA6110"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270510"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -2940,11 +3028,15 @@
         "age": 1,
         "sha256": "1a09b3a9adc34242da97f2fba5bedf8b280c12c1af8f7d1144c36788e9f127be"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA7180"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26FCE8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3073,11 +3165,15 @@
         "age": 1,
         "sha256": "bf73864f36ba53c8c3b7f654979d3c7f1f4b79bba98af1382cbf1fb7dc34dd95"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0x9EFE0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26E920"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3206,11 +3302,15 @@
         "age": 1,
         "sha256": "1e108effd5811cac2ba10be8c2c423f54b51ecf85e75c808b7a28b92e5133309"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0x9F010"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26E920"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3339,11 +3439,15 @@
         "age": 1,
         "sha256": "55cd03dfb63fc35e88756faca908d7cce9becb80ca4bcf2fbbb5a217a44fa17c"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0x9F010"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26E920"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3472,11 +3576,15 @@
         "age": 1,
         "sha256": "4c0fc03243d8b48cc1bbfd9e3d9fdfc7020788758e0242a02e1e6acfb34538ba"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0x9F010"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26E920"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3605,11 +3713,15 @@
         "age": 1,
         "sha256": "cdbd0388466cef8cef74c9a8523e8ffdfea0455cc69dab8674f96664cd4d0801"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39E0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F210"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3738,11 +3850,15 @@
         "age": 1,
         "sha256": "9751b6fbf7420be9eae3f0a077892eda76441610ade10f721462e8b9e7303eae"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39A0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F210"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -3871,11 +3987,15 @@
         "age": 1,
         "sha256": "e36de7c05ffa32f5a0b4fc7d048c49430e575a4d18a78453d5aa2ff25ffc2dc9"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB3A10"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4004,11 +4124,15 @@
         "age": 1,
         "sha256": "0b89eef24db005087f77ed9a21bc4ae6a932de28cebabdc4d9c33512d338e042"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39D0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4137,11 +4261,15 @@
         "age": 1,
         "sha256": "e6e715b9d0033ee3bc828d1de35e83bfa214bd807ccdb6a2c055c386f2dcddec"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39D0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4270,11 +4398,15 @@
         "age": 1,
         "sha256": "9625b25ed33498adddfc33e8b4dc3adda129b0ab891fa165be1bb0db9345ca75"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39E0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4403,11 +4535,15 @@
         "age": 1,
         "sha256": "be65c1e06148edbbcd3ec43c215ac7092ecf739b6eedd6037ecf8a23724873d0"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB39F0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x26F228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4536,11 +4672,15 @@
         "age": 1,
         "sha256": "4651b83cd9da638c76c55f92211172292b2e89f37d0e579a262e5cbbba330e51"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB3DC0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270228"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4669,11 +4809,15 @@
         "age": 1,
         "sha256": "259b89ee4259d0ba7ce855bc458182424488f0407678bb2c79fcf662df71eb54"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xB40D0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x270298"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4802,11 +4946,15 @@
         "age": 1,
         "sha256": "d6b976e7a98a6cc2dfa43d4c1a4ceedaf34d2150cf3a32ada1a7f4e07ae4c5be"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA9E30"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x272408"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -4935,11 +5083,15 @@
         "age": 1,
         "sha256": "d819a61675ee589f4fd425b56481bb813243a8a54d57272f51e2713757092a82"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xA0AD0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2728F8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5068,11 +5220,15 @@
         "age": 1,
         "sha256": "7ef309b473cd26def7b1a31fc56f8fbf5ba772d210941ce8dabe855ae0a3fafd"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD420"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5201,11 +5357,15 @@
         "age": 1,
         "sha256": "7b4657e8aea6a22bcb587dfa19a12da1db84e0ff2d2afe2a1a2ff21dbb4fa2df"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD490"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5334,11 +5494,15 @@
         "age": 1,
         "sha256": "06994dbb0645f25c7e6e5fe7262ad5f638cf6f1e1933ff47cd0cd25c70f75418"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD490"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5467,11 +5631,15 @@
         "age": 1,
         "sha256": "b295e4205a0d0d826c189e03953fb90527e23d51db521e23018a502b60b2043a"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD440"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5600,11 +5768,15 @@
         "age": 1,
         "sha256": "1a6b7e79a7416b2141fdcc73c20cdfc8933fd11e4f036d49a1071626eb1cacf5"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD440"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5733,11 +5905,15 @@
         "age": 1,
         "sha256": "96387fd9be51806a8d993ca0573cbe830ab967a629a2e414c6a349dda7f9f7d0"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD440"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5866,11 +6042,15 @@
         "age": 1,
         "sha256": "0214cb65ecb621d93815f460db6d28eedf90df94c3d3afb1e419f6e411d593b3"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD440"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271788"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -5999,11 +6179,15 @@
         "age": 1,
         "sha256": "b50c1cbc74d320dcd4f53f6ecd7ab62f74ed74dc9a0f6b25fdc5538a187f026f"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD4A0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6132,11 +6316,15 @@
         "age": 1,
         "sha256": "c45f86f8d6a80d95c9ab0ef5b929edd72527a8c63daaaf29741b14baf3b490bb"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD4A0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6265,11 +6453,15 @@
         "age": 1,
         "sha256": "9d354647838e22b425e865e379bd3b09c1f3db4b83279186b7cf30cdc36083ce"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD680"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6398,11 +6590,15 @@
         "age": 1,
         "sha256": "627533f87e0a6142b042379399343fd8fd2cabe9f664229327723b851a2658ba"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD510"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2727C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6531,11 +6727,15 @@
         "age": 1,
         "sha256": "d9eb77dc61bb69c51984c6eee44276dd020b89a50b869dc4ec9bb1eb6126dbcc"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD390"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2727C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6664,11 +6864,15 @@
         "age": 1,
         "sha256": "b8de782c7c38936055260f12de2adb6e5304d47781fe450766f63cd99757e474"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD1B0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6797,11 +7001,15 @@
         "age": 1,
         "sha256": "d5ae31345e1248ac60441c6177d621046d11cfcce1f66fa8de6a3bf5d5002701"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD200"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -6930,11 +7138,15 @@
         "age": 1,
         "sha256": "6cfaec3b924f88002f757a5443283b851afcb466b976f06b57380facbfc96324"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD210"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2717C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -7063,11 +7275,15 @@
         "age": 1,
         "sha256": "b3593dc426882681e271a3992db5ad30ad1067801d6e3dd466dcb4ea28530f68"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD330"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2727C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -7196,11 +7412,15 @@
         "age": 1,
         "sha256": "bf0893f733c3fe7457a5482102f151c9be9c5047d782e6a275ec2d398181f9ab"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAD320"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x2727C8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -7329,11 +7549,15 @@
         "age": 1,
         "sha256": "4b3ba2094c6550126d1770e8e8d6ed2bee18f0053195e0879890d571a37e9a07"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAE400"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271AE8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
@@ -7450,139 +7674,6 @@
       }
     },
     {
-      "revision": 7663,
-      "image": {
-        "time_date_stamp": 1870213636,
-        "size_of_image": 3629056,
-        "sha256": "1938e2972604abaa533fec371ac0e510fee9365729b7ab1230e29c46b7309356"
-      },
-      "pdb": {
-        "name": "dwmcore.pdb",
-        "guid": "03663aee-8908-66dd-aca8-50992b829951",
-        "age": 1,
-        "sha256": "1c26f32becef75ce839a722ea639ba7ddb584df3a14b416231df3c010904c5ef"
-      },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
-      "symbols": {
-        "CArrayBasedCoverageSet::IsCovered.pre26100": {
-          "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
-          "rva": "0xAE400"
-        },
-        "CChannel::MatrixTransformUpdate": {
-          "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
-          "rva": "0xD02D0"
-        },
-        "CD2DContext::DestroyDeviceResources": {
-          "name": "protected: long __cdecl CD2DContext::DestroyDeviceResources(void) __ptr64",
-          "rva": "0x40970"
-        },
-        "CD2DContext::EnsureBeginDraw": {
-          "name": "private: void __cdecl CD2DContext::EnsureBeginDraw(void) __ptr64",
-          "rva": "0x910E8"
-        },
-        "CDirtyRegion::GetUnOccludedDirtyRect": {
-          "name": "public: class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> __cdecl CDirtyRegion::GetUnOccludedDirtyRect(unsigned int,class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,bool,class gsl::span<class CVisual const * __ptr64,-1> const & __ptr64,class COcclusionContext const * __ptr64)const __ptr64",
-          "rva": "0x92C14"
-        },
-        "CDrawingContext::ApplyRenderStateInternal": {
-          "name": "private: long __cdecl CDrawingContext::ApplyRenderStateInternal(bool) __ptr64",
-          "rva": "0x81370"
-        },
-        "CDrawingContext::DrawVisualTree.19041": {
-          "name": "public: long __cdecl CDrawingContext::DrawVisualTree(class CVisualTree const * __ptr64,class TMil3DRect<float,class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded>,struct Mil3DRectF,struct RectUniqueness::NotNeeded> const & __ptr64,class COcclusionContext const * __ptr64,enum ClearMode::Enum,bool) __ptr64",
-          "rva": "0x76110"
-        },
-        "CDrawingContext::FillShapeWithBrush": {
-          "name": "public: long __cdecl CDrawingContext::FillShapeWithBrush(class CShape const & __ptr64,struct ID2D1Brush * __ptr64) __ptr64",
-          "rva": "0x178600"
-        },
-        "CDrawingContext::FlushD2D": {
-          "name": "public: long __cdecl CDrawingContext::FlushD2D(void) __ptr64",
-          "rva": "0x31354"
-        },
-        "CDrawingContext::GetClipBoundsWorld": {
-          "name": "public: void __cdecl CDrawingContext::GetClipBoundsWorld(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> * __ptr64)const __ptr64",
-          "rva": "0x6C938"
-        },
-        "CDrawingContext::GetUnOccludedWorldShape": {
-          "name": "private: long __cdecl CDrawingContext::GetUnOccludedWorldShape(class CShape const & __ptr64,int,class CShape * __ptr64 * __ptr64) __ptr64",
-          "rva": "0x8DEC4"
-        },
-        "CGeometry::GetShapeData": {
-          "name": "public: long __cdecl CGeometry::GetShapeData(struct D2D_SIZE_F const * __ptr64,class CShapePtr * __ptr64) __ptr64",
-          "rva": "0x81000"
-        },
-        "CImageLegacyMilBrush::`vftable'": {
-          "name": "const CImageLegacyMilBrush::`vftable'",
-          "rva": "0x272CA0"
-        },
-        "CMILMatrix::Identity": {
-          "name": "public: static class CMILMatrix_IdentityType const CMILMatrix::Identity",
-          "rva": "0x347720"
-        },
-        "CMatrixStack::GetTopByReference": {
-          "name": "public: class CMILMatrix const * __ptr64 __cdecl CMatrixStack::GetTopByReference(void)const __ptr64",
-          "rva": "0x8DE28"
-        },
-        "COcclusionContext::CheckAndRecordOverlayCandidate.19041": {
-          "name": "public: long __cdecl COcclusionContext::CheckAndRecordOverlayCandidate(class CVisual * __ptr64,class CCompositionSurfaceInfo * __ptr64,class CMILMatrix const * __ptr64,class CShape const * __ptr64,struct TMILFlagsEnum<enum MilSourceModification::FlagsEnum>) __ptr64",
-          "rva": "0x69554"
-        },
-        "COcclusionContext::CollectRectangleForOcclusion.pre20348": {
-          "name": "private: long __cdecl COcclusionContext::CollectRectangleForOcclusion(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const * __ptr64,bool,class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> * __ptr64) __ptr64",
-          "rva": "0x77320"
-        },
-        "COcclusionContext::Compute.19041": {
-          "name": "protected: long __cdecl COcclusionContext::Compute(class CVisualTree const * __ptr64,class gsl::span<class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const ,-1> const & __ptr64,float,class gsl::span<class COverlayContext * __ptr64,-1> const & __ptr64) __ptr64",
-          "rva": "0x77C04"
-        },
-        "COcclusionContext::IsOccluded.pre22000": {
-          "name": "public: bool __cdecl COcclusionContext::IsOccluded(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,bool,int)const __ptr64",
-          "rva": "0x6C31C"
-        },
-        "COcclusionContext::PageInPixelsRectToDeviceRect": {
-          "name": "private: bool __cdecl COcclusionContext::PageInPixelsRectToDeviceRect(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> * __ptr64)const __ptr64",
-          "rva": "0x184F24"
-        },
-        "COcclusionContext::SetDeviceTransform": {
-          "name": "public: long __cdecl COcclusionContext::SetDeviceTransform(class CMILMatrix const * __ptr64)const __ptr64",
-          "rva": "0x77A08"
-        },
-        "COcclusionContext::~COcclusionContext": {
-          "name": "public: __cdecl COcclusionContext::~COcclusionContext(void) __ptr64",
-          "rva": "0x31170"
-        },
-        "CRectangleGeometry::`vftable'": {
-          "name": "const CRectangleGeometry::`vftable'",
-          "rva": "0x270610"
-        },
-        "CRenderData::DrawImageResource_FillMode.19041": {
-          "name": "private: long __cdecl CRenderData::DrawImageResource_FillMode(class CDrawingContext * __ptr64,class CDrawListEntryBuilder * __ptr64,bool,class CImageSource * __ptr64,struct D2D_RECT_F const * __ptr64,struct D2D_RECT_F const * __ptr64,float) __ptr64",
-          "rva": "0xC68BC"
-        },
-        "CRenderData::TryDrawCommandAsDrawList.pre22000": {
-          "name": "private: long __cdecl CRenderData::TryDrawCommandAsDrawList(class CDrawingContext * __ptr64,class CDrawListCache * __ptr64,class CDrawListEntryBuilder * __ptr64,bool,unsigned int,class gsl::span<unsigned char const ,-1>,bool * __ptr64) __ptr64",
-          "rva": "0x6A92C"
-        },
-        "CRenderDataBuilder::DrawGeometry": {
-          "name": "public: virtual long __cdecl CRenderDataBuilder::DrawGeometry(unsigned int,unsigned int) __ptr64",
-          "rva": "0xD7110"
-        },
-        "CShape::CopyShape": {
-          "name": "public: long __cdecl CShape::CopyShape(class CMILMatrix const * __ptr64,class CShape * __ptr64 * __ptr64)const __ptr64",
-          "rva": "0x81A40"
-        },
-        "CSolidColorLegacyMilBrush::`vftable'": {
-          "name": "const CSolidColorLegacyMilBrush::`vftable'",
-          "rva": "0x272870"
-        },
-        "GetCurrentFrameId": {
-          "name": "unsigned __int64 __cdecl GetCurrentFrameId(void)",
-          "rva": "0x90344"
-        }
-      }
-    },
-    {
       "revision": 7725,
       "image": {
         "time_date_stamp": 4053850564,
@@ -7595,11 +7686,15 @@
         "age": 1,
         "sha256": "311e741b1450c9ae3341cea6ad28366407faf5949c9e7f555137d626b77e0940"
       },
-      "resolution_contract": "af1834a9826da8b52a4e7fbc7d9a33e3ffb531b14e6c5723f592314b786fabed",
+      "resolution_contract": "1e2d67d617db263aa2522fe24bd4831a54bbaec5874ae60c17e39ab263915c46",
       "symbols": {
         "CArrayBasedCoverageSet::IsCovered.pre26100": {
           "name": "private: bool __cdecl CArrayBasedCoverageSet::IsCovered(class TMilRect_<float,struct MilRectF,struct Mil3DRectF,struct MilPointAndSizeF,struct RectUniqueness::NotNeeded> const & __ptr64,int,bool)const __ptr64",
           "rva": "0xAE3F0"
+        },
+        "CBitmapResource::`vftable'": {
+          "name": "const CBitmapResource::`vftable'",
+          "rva": "0x271AE8"
         },
         "CChannel::MatrixTransformUpdate": {
           "name": "public: virtual long __cdecl CChannel::MatrixTransformUpdate(unsigned int,struct _MilMatrix3x2D const & __ptr64) __ptr64",
