@@ -94,6 +94,7 @@ jobs:
             /p:Configuration=Release `
             /p:Platform=x64 `
             /p:RestorePackagesConfig=true `
+            "/p:RestoreRepositoryPath=$env:GITHUB_WORKSPACE\packages" `
             /p:ForceImportBeforeCppProps=$env:VCPKG_ROOT\scripts\buildsystems\msbuild\vcpkg.props `
             /p:ForceImportAfterCppTargets=$env:VCPKG_ROOT\scripts\buildsystems\msbuild\vcpkg.targets `
             "/p:OpenGlassIsccTool=$iscc"
