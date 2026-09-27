@@ -113,6 +113,9 @@ namespace OpenGlass
 
 		GetSizer()->Add(m_notebook, 1, wxEXPAND | wxALL, 5);
 		CreateStatusBar();
+		SetStatusText(m_editScope == Settings::Scope::Machine
+			? wxString(L"Editing HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\DWM (all users; HKCU values take precedence)")
+			: L"Editing HKEY_USERS\\" + m_targetUserSid + L"\\SOFTWARE\\Microsoft\\Windows\\DWM");
 	}
 
 	void MainFrame::CreateBottomControls(wxSizer* parentSizer)
@@ -430,6 +433,5 @@ namespace OpenGlass
 			Refresh();
 		}
 	}
-
 
 }

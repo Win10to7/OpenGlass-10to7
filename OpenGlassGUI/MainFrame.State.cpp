@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "MainFrame.hpp"
 #include "WrappingLayout.hpp"
-#include "ColorPresetList.hpp"
 #include "BlurSettings.hpp"
 
 namespace OpenGlass
@@ -195,6 +194,10 @@ namespace OpenGlass
 		m_chkEnableTransparency->SetValue(m_systemTransparency
 			? m_userConfig->GetDword(L"EnableTransparency", 0) != 0
 			: m_config->GetDword(L"ColorizationOpaqueBlend", 0) == 0);
+		m_cpColorizationColor->SetColour(dwordToColor(m_config->GetDword(L"ColorizationColorOverride",
+			m_config->GetDword(L"ColorizationColor", 0xFF000000))));
+		m_cpAfterglow->SetColour(dwordToColor(m_config->GetDword(L"ColorizationAfterglowOverride",
+			m_config->GetDword(L"ColorizationAfterglow", 0))));
 
 		m_slColorIntensity->SetRange(
 			ColorizationPresets::ClassicIntensityMinimum,
@@ -297,15 +300,15 @@ namespace OpenGlass
 
 	void MainFrame::LoadColorizationBalances()
 	{
-		auto load = [this](wxSlider* slider, Settings::Id id, DWORD defaultValue)
+		auto load = [this](wxSlider* slider, Settings::Id overrideId, Settings::Id baseId, DWORD fallback)
 		{
-			const auto value = std::min<DWORD>(m_config->GetDword(std::wstring(Settings::Get(id).name), defaultValue), 100);
-			slider->SetValue(value);
+			const DWORD base = m_config->GetDword(std::wstring(Settings::Get(baseId).name), fallback);
+			slider->SetValue(std::min<DWORD>(m_config->GetDword(std::wstring(Settings::Get(overrideId).name), base), 100));
 			slider->SetToolTip(wxString::Format(L"%d", slider->GetValue()));
 		};
-		load(m_slColorBalance, Settings::Id::ColorizationColorBalanceOverride, 10);
-		load(m_slAfterglowBalance, Settings::Id::ColorizationAfterglowBalanceOverride, 10);
-		load(m_slBlurBalance, Settings::Id::ColorizationBlurBalanceOverride, 50);
+		load(m_slColorBalance, Settings::Id::ColorizationColorBalanceOverride, Settings::Id::ColorizationColorBalance, 10);
+		load(m_slAfterglowBalance, Settings::Id::ColorizationAfterglowBalanceOverride, Settings::Id::ColorizationAfterglowBalance, 10);
+		load(m_slBlurBalance, Settings::Id::ColorizationBlurBalanceOverride, Settings::Id::ColorizationBlurBalance, 50);
 	}
 
 	void MainFrame::UpdateUIVisibility()
@@ -313,11 +316,6 @@ namespace OpenGlass
 		// 0 = Vista blur, 1 = Win7 blur
 		bool isVista = (m_rbGlassType->GetSelection() == 0);
 		m_compositionParametersPane->Show(!isVista);
-
-		if (m_colorPresetList)
-		{
-			m_colorPresetList->SetFamily(isVista ? ColorizationPresets::Family::Vista : ColorizationPresets::Family::Windows7);
-		}
 
 		// IMPORTANT: m_rbGlassType->GetContainingSizer() is the *row* that hosts the radiobox,
 		// not the page root sizer. Use the Glass Colors page for visibility changes.
@@ -328,6 +326,5 @@ namespace OpenGlass
 
 		UpdateOptionStatusIcons();
 		UpdatePathWarningIcons();
-		UpdateColorizationPresetSelection();
 	}
 }

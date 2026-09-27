@@ -12,7 +12,6 @@
 
 namespace OpenGlass
 {
-	class ColorPresetList;
 
 
 	class MainFrame : public wxFrame
@@ -61,12 +60,6 @@ namespace OpenGlass
 		void AddPathWarningIcon(wxWindow* parent, wxBoxSizer* row, wxFilePickerCtrl* picker, wxCheckBox* checkbox, const wxString& title);
 		void UpdatePathWarningIcons();
 		void ApplyColorizationBalances(DWORD argb);
-		void ApplyColorizationColor(std::optional<DWORD> argb, ColorizationPresets::Family family);
-		void ApplyColorizationPreset(const ColorizationPresets::Preset& preset);
-		void UpdateColorizationPresetSelection();
-		void QueueColorizationRefresh();
-		WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override;
-		bool m_colorizationRefreshPending{};
 		void NotifySettingsChange(Settings::UpdateType impact = Settings::UpdateType::Backdrop | Settings::UpdateType::Theme);
 		void UpdateUIVisibility();
 		void OnClose(wxCloseEvent& event);
@@ -226,9 +219,8 @@ namespace OpenGlass
 		// Glass Colors Tab
 		wxScrolledWindow* m_glassColorsPanel{ nullptr };
 		wxRadioBox* m_rbGlassType{ nullptr };
-		wxStaticBoxSizer* m_colorPresetsGroupSizer{ nullptr };
-		ColorPresetList* m_colorPresetList{ nullptr };
-		bool m_customColorsInitialized{ false };
+		wxColourPickerCtrl* m_cpColorizationColor{ nullptr };
+		wxColourPickerCtrl* m_cpAfterglow{ nullptr };
 		wxCheckBox* m_chkEnableTransparency{ nullptr };
 		wxSlider* m_slColorIntensity{ nullptr };
 		wxCollapsiblePane* m_compositionParametersPane{ nullptr };

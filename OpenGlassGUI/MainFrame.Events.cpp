@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "MainFrame.hpp"
-#include "ColorPresetList.hpp"
 #include "BlurSettings.hpp"
 
 namespace OpenGlass
@@ -8,11 +7,6 @@ namespace OpenGlass
 	void MainFrame::BindEvents()
 	{
 		Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
-		Bind(wxEVT_ACTIVATE, [this](wxActivateEvent& event)
-		{
-			if (event.GetActive()) QueueColorizationRefresh();
-			event.Skip();
-		});
 		Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& e) {
 			const int keyCode = e.GetKeyCode();
 			if ((e.ControlDown() && (keyCode == 'S' || keyCode == 's')) || keyCode == WXK_F2)
@@ -487,58 +481,24 @@ namespace OpenGlass
 			LoadSettings();
 		});
 
-		m_colorPresetList->Bind(wxEVT_COLOR_PRESET_INVOKED, [this](wxCommandEvent& event) {
-			const auto index = event.GetInt();
-			const auto family = m_rbGlassType->GetSelection() == 0
-				? ColorizationPresets::Family::Vista
-				: ColorizationPresets::Family::Windows7;
-			if (index == 0)
+		auto bindColorOverride = [this, updateDword](wxColourPickerCtrl* picker, Settings::Id id, Settings::Id baseId)
+		{
+			picker->Bind(wxEVT_COLOURPICKER_CHANGED, [this, updateDword, id, baseId](wxColourPickerEvent& event)
 			{
-				ApplyColorizationColor(std::nullopt, family);
-			}
-			else if (const auto* preset = m_colorPresetList->GetPreset(index))
-			{
-				ApplyColorizationPreset(*preset);
-			}
-			else if (index == m_colorPresetList->GetCustomIndex())
-			{
-				ApplyColorizationColor(m_colorPresetList->GetCustomColor(), family);
-			}
-			UpdateColorizationPresetSelection();
-		});
-
-		m_colorPresetList->Bind(wxEVT_CUSTOM_COLOR_EDIT_REQUESTED, [this](wxCommandEvent&) {
-			wxColourData colorData;
-			colorData.SetChooseFull(true);
-			colorData.SetChooseAlpha(false);
-			const DWORD currentValue = m_colorPresetList->GetCustomColor();
-			colorData.SetColour(wxColour(
-				(currentValue >> 16) & 0xFF,
-				(currentValue >> 8) & 0xFF,
-				currentValue & 0xFF
-			));
-
-			wxColourDialog dialog(this, &colorData);
-			if (dialog.ShowModal() == wxID_OK)
-			{
-				const wxColour selected = dialog.GetColourData().GetColour();
-				const DWORD alpha = ColorizationPresets::CalculateIntensityAlpha(m_slColorIntensity->GetValue()) << 24;
-				const DWORD argb = alpha
-					| (static_cast<DWORD>(selected.Red()) << 16)
-					| (static_cast<DWORD>(selected.Green()) << 8)
-					| static_cast<DWORD>(selected.Blue());
-				const auto family = m_rbGlassType->GetSelection() == 0
-					? ColorizationPresets::Family::Vista
-					: ColorizationPresets::Family::Windows7;
-				m_colorPresetList->SetCustomColor(argb);
-				ApplyColorizationColor(argb, family);
-			}
-			// Cancellation and failed operations restore the actual configuration's selection.
-			UpdateColorizationPresetSelection();
-		});
+				const auto& color = event.GetColour();
+				const DWORD current = m_config->GetDword(std::wstring(Settings::Get(id).name),
+					m_config->GetDword(std::wstring(Settings::Get(baseId).name), 0xFF000000));
+				updateDword(id, (current & 0xFF000000)
+					| (static_cast<DWORD>(color.Red()) << 16)
+					| (static_cast<DWORD>(color.Green()) << 8)
+					| static_cast<DWORD>(color.Blue()));
+			});
+		};
+		bindColorOverride(m_cpColorizationColor, Settings::Id::ColorizationColorOverride, Settings::Id::ColorizationColor);
+		bindColorOverride(m_cpAfterglow, Settings::Id::ColorizationAfterglowOverride, Settings::Id::ColorizationAfterglow);
 
 		m_chkEnableTransparency->Bind(wxEVT_CHECKBOX, [this](wxCommandEvent& e) {
-			RunPreview([&]
+			if (RunPreview([&]
 			{
 				if (m_systemTransparency)
 				{
@@ -556,18 +516,18 @@ namespace OpenGlass
 				}
 				if (m_rbGlassType->GetSelection() == 1)
 					ApplyColorizationBalances(ColorizationPresets::CalculateIntensityAlpha(m_slColorIntensity->GetValue()) << 24);
-			}, Settings::UpdateType::Backdrop);
+			}, Settings::UpdateType::Backdrop)) LoadSettings();
 		});
 
 		m_slColorIntensity->Bind(wxEVT_SLIDER, [this](wxCommandEvent& e) {
-			RunPreview([&]
+			if (RunPreview([&]
 			{
 				const DWORD intensity = static_cast<DWORD>(e.GetInt());
 				TrackSettingChange(Settings::Id::GlassOpacity);
 				THROW_IF_FAILED(m_config->SetDword(L"GlassOpacity", intensity));
 				if (m_rbGlassType->GetSelection() == 1)
 					ApplyColorizationBalances(ColorizationPresets::CalculateIntensityAlpha(intensity) << 24);
-			}, Settings::UpdateType::Backdrop);
+			}, Settings::UpdateType::Backdrop)) LoadSettings();
 			m_slColorIntensity->SetToolTip(wxString::Format(L"%d", m_slColorIntensity->GetValue()));
 		});
 

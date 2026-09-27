@@ -21,9 +21,6 @@
     <ClCompile Include="ColorPreference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColorPresetList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ConfigurationMigration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColorPreference.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorPresetList.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ColorizationPresets.hpp">

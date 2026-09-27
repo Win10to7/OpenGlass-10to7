@@ -27,6 +27,8 @@ OpenGlass supports only the listed x64 General Availability releases, with exper
 
 Starting in v3.1.0, the configuration window opens in the shared HKLM view, which sets ordinary defaults for the computer. Personal HKCU settings override ordinary settings for that account. See the [configuration guide](https://github.com/ALTaleX531/OpenGlass/wiki/Configuration-and-registry-reference) to choose or switch views, and see the [preset library guide](https://github.com/ALTaleX531/OpenGlass/wiki/Preset-packages) for saved looks and recovery behavior.
 
+This branch asks which DWM hive to edit at startup. Use `--scope=hkcu` or `--scope=hklm` to skip that dialog. It keeps direct color, afterglow and balance controls instead of the built-in color swatches, and leaves the preset notebook page hidden. Preset setting imports and exports use the selected hive; package accent colors remain Windows state for the original interactive user.
+
 > [!TIP]
 > **Emergency Exit:** Hold <kbd>Ctrl</kbd>+<kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>Q</kbd> to terminate DWM if the system becomes unresponsive.
 

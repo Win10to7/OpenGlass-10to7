@@ -217,7 +217,6 @@ namespace OpenGlass
 			// a newly selected Custom mode). Whole-configuration operations reload explicitly.
 			UpdateOptionStatusIcons();
 			UpdatePathWarningIcons();
-			UpdateColorizationPresetSelection();
 			if (!m_isDirty) m_presetProvenance.Revert();
 			m_resources.CommitAttempt();
 			if (m_resources.TakeCleanupWarning()) wxMessageBox(L"Configuration was updated, but temporary-file cleanup is pending. It will be retried on the next operation.", L"Configuration cleanup", wxOK | wxICON_INFORMATION, this);

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "MainFrame.hpp"
 #include "WrappingLayout.hpp"
-#include "ColorPresetList.hpp"
 #include "Symbols.hpp"
 #include "UiControls.hpp"
 #include "BlurSettings.hpp"
@@ -755,10 +754,33 @@ namespace OpenGlass
 			sizer->Add(row, 0, wxALL, 5);
 		}
 
-		m_colorPresetsGroupSizer = new wxStaticBoxSizer(wxVERTICAL, panel, L"Color presets");
-		m_colorPresetList = new ColorPresetList(panel);
-		m_colorPresetsGroupSizer->Add(m_colorPresetList, 0, wxEXPAND | wxALL, 2);
-		sizer->Add(m_colorPresetsGroupSizer, 0, wxEXPAND | wxALL, 2);
+		auto addOverrideReset = [this](wxWindow* parent, wxBoxSizer* row, Settings::Id id)
+		{
+			auto* reset = new wxButton(parent, wxID_ANY, L"Reset", wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+			reset->SetToolTip(L"Remove the Override value in the selected hive and use the inherited value.");
+			reset->Bind(wxEVT_BUTTON, [this, id](wxCommandEvent&)
+			{
+				if (RunPreview([&]
+				{
+					TrackSettingChange(id);
+					THROW_IF_FAILED(m_config->DeleteValue(std::wstring(Settings::Get(id).name)));
+				}, Settings::Get(id).impact)) LoadSettings();
+			});
+			row->Add(reset, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 5);
+			AddOptionStatus(parent, row, id);
+		};
+		auto addColorOverride = [&](wxWindow* parent, wxSizer* target, wxColourPickerCtrl*& picker,
+			const wxString& label, Settings::Id id)
+		{
+			auto* row = new wxBoxSizer(wxHORIZONTAL);
+			row->Add(new wxStaticText(parent, wxID_ANY, label, wxDefaultPosition, FromDIP(wxSize(150, -1))),
+				0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+			picker = new wxColourPickerCtrl(parent, wxID_ANY);
+			row->Add(picker, 1, wxALIGN_CENTER_VERTICAL);
+			addOverrideReset(parent, row, id);
+			target->Add(row, 0, wxEXPAND | wxALL, 8);
+		};
+		addColorOverride(panel, sizer, m_cpColorizationColor, L"Color:", Settings::Id::ColorizationColorOverride);
 
 		// Keep the frequently used controls visible, matching the original
 		// Vista/Windows 7 control-panel flow.
@@ -797,11 +819,17 @@ namespace OpenGlass
 		auto* balancesPanel = m_compositionParametersPane->GetPane();
 		FollowSystemColours(balancesPanel, wxSYS_COLOUR_WINDOW);
 		auto* balancesSizer = new wxBoxSizer(wxVERTICAL);
+		addColorOverride(balancesPanel, balancesSizer, m_cpAfterglow, L"Afterglow:", Settings::Id::ColorizationAfterglowOverride);
 		auto addBalance = [&](wxSlider*& slider, const wxString& label, int value, Settings::Id id)
 		{
+			auto* row = new wxBoxSizer(wxHORIZONTAL);
+			row->Add(new wxStaticText(balancesPanel, wxID_ANY, label, wxDefaultPosition, FromDIP(wxSize(150, -1))),
+				0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
 			slider = new wxSlider(balancesPanel, wxID_ANY, value, 0, 100,
 				wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_AUTOTICKS);
-			AddProperty(balancesPanel, balancesSizer, label, slider, id);
+			row->Add(slider, 1, wxALIGN_CENTER_VERTICAL);
+			addOverrideReset(balancesPanel, row, id);
+			balancesSizer->Add(row, 0, wxEXPAND | wxALL, 8);
 		};
 		addBalance(m_slColorBalance, L"Color balance:", 10, Settings::Id::ColorizationColorBalanceOverride);
 		addBalance(m_slAfterglowBalance, L"Afterglow balance:", 10, Settings::Id::ColorizationAfterglowBalanceOverride);
