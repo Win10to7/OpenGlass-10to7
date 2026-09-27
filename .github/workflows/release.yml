@@ -10,7 +10,11 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    # The projects require PlatformToolset v145.
+    runs-on: windows-2025-vs2026
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}\.ci-cache\vcpkg-binary-cache
+      VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}\.ci-cache\vcpkg-binary-cache,readwrite
 
     steps:
       - name: Check out source
@@ -21,60 +25,95 @@ jobs:
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Integrate vcpkg with MSBuild
-        shell: powershell
+      - name: Resolve vcpkg root
+        shell: pwsh
         run: |
-          $vcpkg = Join-Path $env:VCPKG_INSTALLATION_ROOT "vcpkg.exe"
-          if (-not (Test-Path $vcpkg)) {
-            throw "vcpkg was not found at $vcpkg"
+          $candidates = @($env:VCPKG_INSTALLATION_ROOT, 'C:\vcpkg') | Where-Object { $_ }
+          $root = $candidates | Where-Object {
+            Test-Path -LiteralPath (Join-Path $_ 'scripts\buildsystems\msbuild\vcpkg.props')
+          } | Select-Object -First 1
+          if (-not $root) {
+            throw "vcpkg MSBuild integration not found in: $($candidates -join ', ')"
           }
-          & $vcpkg integrate install
+          "VCPKG_ROOT=$root" >> $env:GITHUB_ENV
 
-      - name: Install Inno Setup
-        shell: powershell
-        run: choco install innosetup --no-progress --yes
+      - name: Cache NuGet packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~\.nuget\packages
+            ${{ github.workspace }}\packages
+          key: ${{ runner.os }}-${{ runner.arch }}-nuget-${{ hashFiles('**/packages.config', 'Common/NuGet.props', 'Common/NuGet.targets') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-nuget-
+
+      - name: Determine vcpkg cache identity
+        id: vcpkg_cache_identity
+        shell: pwsh
+        run: |
+          $identity = "$env:ImageOS-$env:ImageVersion"
+          if ($identity -notmatch '^[A-Za-z0-9._-]+$') {
+            throw "Invalid runner image identity: $identity"
+          }
+          "value=$identity" >> $env:GITHUB_OUTPUT
+
+      - name: Cache vcpkg binary packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}\.ci-cache\vcpkg-binary-cache
+          key: ${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkg_cache_identity.outputs.value }}-v145-x64-windows-static-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json', 'ports/**') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkg_cache_identity.outputs.value }}-v145-x64-windows-static-
+
+      - name: Initialize vcpkg cache
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path $env:VCPKG_DEFAULT_BINARY_CACHE | Out-Null
+
+      - name: Install Inno Setup if needed
+        shell: pwsh
+        run: |
+          if (-not (Test-Path -LiteralPath "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --no-progress --yes
+            if ($LASTEXITCODE -ne 0) {
+              throw "Inno Setup installation failed with exit code $LASTEXITCODE"
+            }
+          }
 
       - name: Restore and build unsigned x64 release
-        shell: powershell
+        shell: pwsh
         run: |
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
           if (-not (Test-Path $iscc)) {
             throw "Inno Setup compiler was not found at $iscc"
           }
-          msbuild OpenGlass.slnx `
+          # The setup project references exactly the two DLLs, Host and GUI.
+          # Leave the render benchmark and unit tests to CI.
+          msbuild Scripts/OpenGlassSetup.vcxproj `
             /restore `
             /m `
             /p:Configuration=Release `
             /p:Platform=x64 `
             /p:RestorePackagesConfig=true `
+            /p:ForceImportBeforeCppProps=$env:VCPKG_ROOT\scripts\buildsystems\msbuild\vcpkg.props `
+            /p:ForceImportAfterCppTargets=$env:VCPKG_ROOT\scripts\buildsystems\msbuild\vcpkg.targets `
             "/p:OpenGlassIsccTool=$iscc"
-
-      - name: Package symbols and DLLs
-        shell: powershell
-        run: |
-          $output = "Build/x64/Release"
-          $files = @(
-            "$output/OpenGlass.dll"
-            "$output/OpenGlass.pdb"
-            "$output/OpenGlassGUI.pdb"
-            "$output/OpenGlassHost.pdb"
-          )
-          $missing = $files | Where-Object { -not (Test-Path $_) }
-          if ($missing) {
-            throw "Missing release files: $($missing -join ', ')"
+          if ($LASTEXITCODE -ne 0) {
+            throw "Release build failed with exit code $LASTEXITCODE"
           }
-          Compress-Archive -Path $files -DestinationPath "OpenGlass-${{ github.ref_name }}-x64-symbols-and-dlls.zip"
 
       - name: Publish GitHub release
-        shell: powershell
+        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = "${{ github.ref_name }}"
+          $tag = $env:GITHUB_REF_NAME
           $installer = "Build/x64/Release/OpenGlassSetup.exe"
-          $archive = "OpenGlass-$tag-x64-symbols-and-dlls.zip"
-          if (-not (Test-Path $installer)) {
-            throw "Installer was not produced at $installer"
+          $archive = "Build/x64/Release/OpenGlassSymbols.zip"
+          foreach ($path in @($installer, $archive)) {
+            $item = Get-Item -LiteralPath $path -ErrorAction Stop
+            if ($item.Length -eq 0) {
+              throw "Release artifact is empty: $path"
+            }
           }
           gh release view $tag *> $null
           if ($LASTEXITCODE -eq 0) {
