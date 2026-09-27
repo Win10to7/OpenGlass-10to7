@@ -6,7 +6,6 @@
 #include "ThemeAtlasLayout.hpp"
 #include "../OpenGlassGUI/ColorizationPresets.hpp"
 #include "../Common/SettingsCatalog.hpp"
-#include "../Common/ConfigurationMigrationPolicy.hpp"
 #include "../OpenGlassGUI/PresetPackage.hpp"
 #include "HookHelper.hpp"
 #include "Util.hpp"
@@ -1212,7 +1211,6 @@ namespace
 	void TestSettingsCatalog()
 	{
 		std::vector<std::wstring_view> names;
-		std::size_t userSettings{};
 		for (std::size_t index = 0; index < Settings::Catalog.size(); ++index)
 		{
 			const auto& spec = Settings::Catalog[index];
@@ -1222,30 +1220,12 @@ namespace
 			Check(std::find(names.begin(), names.end(), spec.name) == names.end());
 			names.push_back(spec.name);
 			Check(Settings::Find(spec.name) == &spec);
-			if (spec.scope == Settings::Scope::User)
-			{
-				++userSettings;
-				Check(spec.type == Settings::ValueType::Dword);
-				Check(spec.assetRole == Settings::AssetRole::None);
-				Check(spec.name == L"ColorizationColor"
-					|| spec.name == L"ColorizationColorOverride"
-					|| spec.name == L"ColorizationAfterglow"
-					|| spec.name == L"ColorizationAfterglowOverride"
-					|| spec.name == L"ColorizationColorBalance"
-					|| spec.name == L"ColorizationColorBalanceOverride"
-					|| spec.name == L"ColorizationAfterglowBalance"
-					|| spec.name == L"ColorizationAfterglowBalanceOverride"
-					|| spec.name == L"ColorizationBlurBalance"
-					|| spec.name == L"ColorizationBlurBalanceOverride");
-			}
 			if (spec.type == Settings::ValueType::String)
 			{
-				Check(spec.scope == Settings::Scope::Machine);
 				Check(spec.assetRole != Settings::AssetRole::None);
 				Check(spec.sensitive);
 			}
 		}
-		Check(userSettings == 10);
 		Check(!Settings::Get(Settings::Id::DisableGlassOnBattery).sensitive);
 		Check(Settings::Get(Settings::Id::GlassOverrideAccent).impact == Settings::UpdateImpact::Colorization);
 		Check(Settings::Get(Settings::Id::GlassSafetyZoneMode).impact == Settings::UpdateImpact::Colorization);
@@ -1259,24 +1239,6 @@ namespace
 		Check(Settings::Find(L"NotAnOpenGlassSetting") == nullptr);
 	}
 
-	void TestConfigurationMigrationPolicy()
-	{
-		using Raw = std::variant<std::monostate, DWORD, std::wstring>;
-		using ConfigurationMigrationPolicy::Canonicalize;
-		using ConfigurationMigrationPolicy::HiveValues;
-		const auto missing = [](const Raw& value) { return std::holds_alternative<std::monostate>(value); };
-
-		auto result = Canonicalize(Settings::Scope::User, HiveValues<Raw>{ std::monostate{}, DWORD{ 10 } });
-		Check(std::get<DWORD>(result.user) == 10 && missing(result.machine));
-		result = Canonicalize(Settings::Scope::User, HiveValues<Raw>{ DWORD{ 20 }, DWORD{ 10 } });
-		Check(std::get<DWORD>(result.user) == 20 && missing(result.machine));
-		result = Canonicalize(Settings::Scope::Machine, HiveValues<Raw>{ DWORD{ 20 }, DWORD{ 10 } });
-		Check(missing(result.user) && std::get<DWORD>(result.machine) == 20);
-		result = Canonicalize(Settings::Scope::Machine, HiveValues<Raw>{ std::monostate{}, DWORD{ 10 } });
-		Check(missing(result.user) && std::get<DWORD>(result.machine) == 10);
-		result = Canonicalize(Settings::Scope::Machine, HiveValues<Raw>{ std::wstring(L"user"), std::wstring(L"machine") });
-		Check(missing(result.user) && std::get<std::wstring>(result.machine) == L"user");
-	}
 
 	void TestPresetPackageRoundTrip()
 	{
@@ -1559,7 +1521,6 @@ int main()
 	TestColorizationPresets();
 	TestBlurSettings();
 	TestSettingsCatalog();
-	TestConfigurationMigrationPolicy();
 	TestPresetPackageRoundTrip();
 	return g_failures;
 }

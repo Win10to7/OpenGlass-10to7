@@ -384,18 +384,6 @@ namespace OpenGlass
 		if (m_glassColorsGroupSizer && m_vistaOpacitySizer)
 			m_glassColorsGroupSizer->Show(m_vistaOpacitySizer, isVista, true);
 
-		if (m_colorPresetsGroupSizer)
-		{
-			if (m_vistaPresetSizer)
-			{
-				m_colorPresetsGroupSizer->Show(m_vistaPresetSizer, isVista, true);
-			}
-			if (m_windows7PresetSizer)
-			{
-				m_colorPresetsGroupSizer->Show(m_windows7PresetSizer, !isVista, true);
-			}
-		}
-
 		// IMPORTANT: m_rbGlassType->GetContainingSizer() is the *row* that hosts the radiobox,
 		// not the page root sizer. Use the Glass Colors page/root sizer for visibility changes.
 		wxWindow* page = m_glassColorsPanel;
@@ -418,6 +406,5 @@ namespace OpenGlass
 
 		UpdateOptionStatusIcons();
 		UpdatePathWarningIcons();
-		UpdateColorizationPresetSelection();
 	}
 }

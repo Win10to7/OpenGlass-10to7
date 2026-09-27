@@ -2,7 +2,6 @@
 #include "OpenGlassGUI.hpp"
 #include "MainFrame.hpp"
 #include "Elevation.hpp"
-#include "ConfigurationMigration.hpp"
 #include <wx/cmdline.h>
 
 // IMPLEMENT_APP must be in global scope
@@ -33,13 +32,9 @@ namespace OpenGlass
 			return false;
 		}
 
-		// Machine settings and the schema migration are shared; do not allow two
-		// target-user editors to race in the same interactive session.
+		// Keep one editor per interactive session so Save/Revert cannot race.
 		m_singleInstanceChecker.Create(L"OpenGlassGUI.SingleInstance");
 		if (m_singleInstanceChecker.IsAnotherRunning())
-			return false;
-
-		if (!ConfigurationMigration::EnsureCanonicalConfiguration(startup.userSid))
 			return false;
 
 		MainFrame* frame = new MainFrame(L"Aero Glass for Win10+", startup.userSid);

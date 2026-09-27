@@ -47,8 +47,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
 	<ClInclude Include="ColorizationPresets.hpp" />
-	<ClInclude Include="ColorSwatchButton.hpp" />
-    <ClInclude Include="ConfigurationMigration.hpp" />
     <ClInclude Include="Elevation.hpp" />
     <ClInclude Include="Diagnostics.hpp" />
     <ClInclude Include="OpenGlassGUI.hpp" />
@@ -70,8 +68,6 @@
 	<ClCompile Include="..\Common\ThemeAtlasLayout.cpp">
 	  <PrecompiledHeader>NotUsing</PrecompiledHeader>
 	</ClCompile>
-	<ClCompile Include="ColorSwatchButton.cpp" />
-    <ClCompile Include="ConfigurationMigration.cpp" />
     <ClCompile Include="Elevation.cpp" />
     <ClCompile Include="Diagnostics.cpp" />
     <ClCompile Include="OpenGlassGUI.cpp" />

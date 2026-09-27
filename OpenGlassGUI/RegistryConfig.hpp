@@ -9,7 +9,6 @@ namespace OpenGlass
 	public:
 		enum class Mode
 		{
-			Canonical,
 			User,
 			Machine
 		};
@@ -28,8 +27,6 @@ namespace OpenGlass
 		[[nodiscard]] bool HasValue(const std::wstring& valueName) const;
 		[[nodiscard]] bool HasKey() const;
 
-		[[nodiscard]] Mode GetMode() const noexcept { return m_mode; }
-		[[nodiscard]] Settings::Scope ScopeFor(const std::wstring& valueName) const noexcept;
 
 	private:
 		wil::unique_hkey OpenKey(const std::wstring& valueName, bool readOnly) const;

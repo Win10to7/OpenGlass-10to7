@@ -102,7 +102,7 @@ namespace OpenGlass
 				DWORD current{};
 				return !config.TryGetDword(name, current) || current != *dword;
 			}
-			// The final canonical path is known only after immutable deployment.
+			// Asset paths are resolved only after the package has been deployed.
 			return true;
 		}
 
@@ -143,10 +143,25 @@ namespace OpenGlass
 			return result;
 		}
 
+		std::wstring ShadowedUserSettings(const PresetPackages::Package& package, const RegistryConfig& userConfig)
+		{
+			std::wstring names;
+			for (const auto& setting : package.settings)
+			{
+				const auto& spec = Settings::Get(setting.first);
+				if (!userConfig.HasValue(std::wstring(spec.name))) continue;
+				if (!names.empty()) names += L", ";
+				names += spec.name;
+			}
+			return names;
+		}
+
 		PresetPreviewAction ShowPresetPreview(
 			wxWindow* parent,
 			const PresetPackages::Package& package,
 			const RegistryConfig& config,
+			Settings::Scope scope,
+			const RegistryConfig& userConfig,
 			bool importing
 		)
 		{
@@ -164,9 +179,10 @@ namespace OpenGlass
 				licenseName
 			)), 0, wxEXPAND | wxALL, 10);
 
-			std::wstring details =
-				L"Application scope: system-wide OpenGlass configuration; Windows colorization values remain specific to the current user.\r\n\r\n"
-				L"Configuration changes if applied (complete Replace):\r\n";
+			std::wstring details = scope == Settings::Scope::Machine
+				? L"Application scope: HKLM DWM. Existing HKCU DWM values are left untouched and may take precedence.\r\n\r\n"
+				: L"Application scope: the original user's HKCU DWM. HKLM DWM values are left untouched.\r\n\r\n";
+			details += L"Configuration changes if applied (complete Replace in the selected hive):\r\n";
 			bool hasSensitive{};
 			bool restartRequired{};
 			for (const auto& [id, value] : package.settings)
@@ -184,6 +200,11 @@ namespace OpenGlass
 				);
 				hasSensitive |= spec.sensitive && changes;
 				restartRequired |= spec.impact == Settings::UpdateImpact::RestartRequired && changes;
+			}
+			if (scope == Settings::Scope::Machine)
+			{
+				const auto shadowed = ShadowedUserSettings(package, userConfig);
+				if (!shadowed.empty()) details += L"\r\nHKCU values may override these HKLM changes: " + shadowed + L".\r\n";
 			}
 			AppendIgnoredSettings(details, package);
 			details += L"\r\nAssets:\r\n";
@@ -388,7 +409,8 @@ namespace OpenGlass
 				const wxString& defaultHomepage,
 				bool includeLicense,
 				const wxString& licenseText,
-				bool installAfterCreate
+				bool installAfterCreate,
+				Settings::Scope scope
 			)
 				: wxDialog(parent, wxID_ANY, L"Create preset ZIP", wxDefaultPosition, wxSize(650, 700), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 			{
@@ -396,7 +418,9 @@ namespace OpenGlass
 				auto* scopeNote = new wxStaticText(
 					this,
 					wxID_ANY,
-					L"Captures the current preview, including unsaved changes; Save is not required. Preset packs apply system-wide except for Windows colorization."
+					scope == Settings::Scope::Machine
+						? L"Captures the current HKLM preview, including unsaved changes. HKCU values are not included and may take precedence."
+						: L"Captures the original user's current HKCU preview, including unsaved changes. HKLM values are not included."
 				);
 				scopeNote->Wrap(610);
 				root->Add(scopeNote, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
@@ -574,10 +598,10 @@ namespace OpenGlass
 		auto* scopeNote = new wxStaticText(
 			panel,
 			wxID_ANY,
-			L"Preset packs: colorization is per-user; all other settings are system-wide."
+			L"Preset packs apply to the currently selected HKCU or HKLM DWM hive. The other hive is unchanged."
 		);
 		scopeNote->SetToolTip(
-			L"The OpenGlass GUI and preset packs target a single-user PC. Only Windows colorization remains independent for each user."
+			L"When editing HKLM, existing HKCU values may take precedence. Creating a pack captures only the selected hive."
 		);
 		root->Add(scopeNote, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 8);
 		auto* content = new wxBoxSizer(wxHORIZONTAL);
@@ -611,7 +635,8 @@ namespace OpenGlass
 		root->Add(buttons, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 		panel->SetSizer(root);
 		panel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-		m_notebook->AddPage(panel, L"Preset packs");
+		// Package handling still uses these controls, but this page is not part of the notebook.
+		panel->Hide();
 
 		m_lstPresetPackages->Bind(wxEVT_LIST_ITEM_SELECTED, [this](wxListEvent&) { UpdatePresetPackageDetails(); });
 		m_lstPresetPackages->Bind(wxEVT_SIZE, [this](wxSizeEvent& event)
@@ -748,13 +773,14 @@ namespace OpenGlass
 		std::wstring heading = package.metadata.name;
 		if (!package.metadata.description.empty()) heading += L"\r\n\r\n" + package.metadata.description;
 		std::wstring details = wxString::Format(
-			L"%s\n\nUUID: %s\nCatalog version: %u\nAuthor: %s\nHomepage: %s\nLicense: %s\n\nApplication scope: system-wide, except Windows colorization values for the current user\nConfigured settings: %zu\nAssets: %zu\nSensitive settings: %zu",
+			L"%s\n\nUUID: %s\nCatalog version: %u\nAuthor: %s\nHomepage: %s\nLicense: %s\n\nApplication scope: selected %s DWM hive\nConfigured settings: %zu\nAssets: %zu\nSensitive settings: %zu",
 			heading,
 			wxString::FromUTF8(package.metadata.uuid),
 			package.catalogVersion,
 			package.metadata.authorName,
 			package.metadata.authorHomepage,
 			licenseName,
+			SelectedScope() == Settings::Scope::Machine ? L"HKLM" : L"HKCU",
 			configured,
 			package.assetSummary.size(),
 			sensitive
@@ -903,7 +929,7 @@ namespace OpenGlass
 		try
 		{
 			auto package = PresetPackages::LoadArchive(path);
-			const auto action = ShowPresetPreview(this, package, *m_config, true);
+			const auto action = ShowPresetPreview(this, package, *m_config, SelectedScope(), *m_userConfig, true);
 			if (action == PresetPreviewAction::Cancel) return;
 			if (action == PresetPreviewAction::Apply)
 			{
@@ -968,7 +994,7 @@ namespace OpenGlass
 	bool MainFrame::ApplyPresetPackage(const PresetPackages::Package& inputPackage, bool previewAccepted)
 	{
 		if (!previewAccepted
-			&& ShowPresetPreview(this, inputPackage, *m_config, false) != PresetPreviewAction::Apply)
+			&& ShowPresetPreview(this, inputPackage, *m_config, SelectedScope(), *m_userConfig, false) != PresetPreviewAction::Apply)
 		{
 			return false;
 		}
@@ -1014,29 +1040,25 @@ namespace OpenGlass
 			{
 				const auto& spec = Settings::Get(id);
 				const std::wstring name(spec.name);
-				for (const auto scope : { Settings::Scope::User, Settings::Scope::Machine })
+				if (spec.type == Settings::ValueType::Dword)
 				{
-					auto* config = GetConfigForScope(scope);
-					if (spec.type == Settings::ValueType::Dword)
-					{
-						DWORD current{};
-						previousValues.emplace(
-							TrackedSetting{ scope, id },
-							config->TryGetDword(name, current)
-								? decltype(previousValues)::mapped_type{ current }
-								: decltype(previousValues)::mapped_type{ std::monostate{} }
-						);
-					}
-					else
-					{
-						std::wstring current;
-						previousValues.emplace(
-							TrackedSetting{ scope, id },
-							config->TryGetString(name, current)
-								? decltype(previousValues)::mapped_type{ std::move(current) }
-								: decltype(previousValues)::mapped_type{ std::monostate{} }
-						);
-					}
+					DWORD current{};
+					previousValues.emplace(
+						TrackedSetting{ SelectedScope(), id },
+						m_config->TryGetDword(name, current)
+							? decltype(previousValues)::mapped_type{ current }
+							: decltype(previousValues)::mapped_type{ std::monostate{} }
+					);
+				}
+				else
+				{
+					std::wstring current;
+					previousValues.emplace(
+						TrackedSetting{ SelectedScope(), id },
+						m_config->TryGetString(name, current)
+							? decltype(previousValues)::mapped_type{ std::move(current) }
+							: decltype(previousValues)::mapped_type{ std::monostate{} }
+					);
 				}
 			}
 			registryMutationStarted = true;
@@ -1045,10 +1067,7 @@ namespace OpenGlass
 				const auto& spec = Settings::Get(id);
 				restartRequired |= spec.impact == Settings::UpdateImpact::RestartRequired && PackageValueWouldChange(spec, value, *m_config);
 				const std::wstring name(spec.name);
-				const auto wrongScope = spec.scope == Settings::Scope::User ? Settings::Scope::Machine : Settings::Scope::User;
-				TrackSettingChange(spec.scope, id);
-				TrackSettingChange(wrongScope, id);
-				THROW_IF_FAILED(GetConfigForScope(wrongScope)->DeleteValue(name));
+				TrackSettingChange(id);
 				if (std::holds_alternative<std::monostate>(value))
 				{
 					THROW_IF_FAILED(m_config->DeleteValue(name));
@@ -1136,7 +1155,8 @@ namespace OpenGlass
 			m_lastPresetAuthorHomepage,
 			m_lastPresetIncludeLicense,
 			wxString::FromUTF8(m_lastPresetLicenseText),
-			m_lastPresetInstallAfterCreate
+			m_lastPresetInstallAfterCreate,
+			SelectedScope()
 		);
 		if (dialog.ShowModal() != wxID_OK) return;
 		auto metadata = dialog.Metadata();
@@ -1263,24 +1283,20 @@ namespace OpenGlass
 		for (const auto& spec : Settings::Catalog)
 		{
 			if (!Settings::IsPresetPackSetting(spec)) continue;
-			for (const auto scope : { Settings::Scope::User, Settings::Scope::Machine })
+			if (spec.type == Settings::ValueType::Dword)
 			{
-				auto* config = GetConfigForScope(scope);
-				if (spec.type == Settings::ValueType::Dword)
+				DWORD value{};
+				if (m_config->TryGetDword(std::wstring(spec.name), value))
 				{
-					DWORD value{};
-					if (config->TryGetDword(std::wstring(spec.name), value))
-					{
-						snapshots.push_back({ { scope, spec.id }, value });
-					}
+					snapshots.push_back({ { SelectedScope(), spec.id }, value });
 				}
-				else
+			}
+			else
+			{
+				std::wstring value;
+				if (m_config->TryGetString(std::wstring(spec.name), value))
 				{
-					std::wstring value;
-					if (config->TryGetString(std::wstring(spec.name), value))
-					{
-						snapshots.push_back({ { scope, spec.id }, std::move(value) });
-					}
+					snapshots.push_back({ { SelectedScope(), spec.id }, std::move(value) });
 				}
 			}
 		}
@@ -1288,7 +1304,7 @@ namespace OpenGlass
 		if (snapshots.empty())
 		{
 			wxMessageBox(
-				L"All preset-pack settings are already using their default or inherited values.",
+				L"No preset-pack settings are stored in the selected hive.",
 				L"Reset all settings",
 				wxOK | wxICON_INFORMATION,
 				this
@@ -1297,9 +1313,10 @@ namespace OpenGlass
 		}
 		if (wxMessageBox(
 			wxString::Format(
-				L"Delete %zu stored preset-pack value(s) and return every packaged setting to its default or inherited value?\n\n"
-				L"This includes Windows colorization values for the target user and system-wide OpenGlass settings. The change is immediate; use Revert to restore the current values before saving.",
-				snapshots.size()
+				L"Delete %zu stored preset-pack value(s) from the selected %s DWM hive?\n\n"
+				L"The other hive will not be changed. HKCU values may take precedence over HKLM values. The change is immediate; use Revert to restore these values before saving.",
+				snapshots.size(),
+				SelectedScope() == Settings::Scope::Machine ? L"HKLM" : L"HKCU"
 			),
 			L"Reset all settings",
 			wxYES_NO | wxNO_DEFAULT | wxICON_WARNING,
@@ -1312,17 +1329,19 @@ namespace OpenGlass
 		const auto previousDirtyKeys = m_dirtyKeys;
 		const auto previousBackups = m_backupSettings;
 		HRESULT failure{ S_OK };
+		std::size_t attempted{};
 		for (const auto& snapshot : snapshots)
 		{
-			TrackSettingChange(snapshot.setting.scope, snapshot.setting.id);
-			failure = GetConfigForScope(snapshot.setting.scope)->DeleteValue(std::wstring(Settings::Get(snapshot.setting.id).name));
+			++attempted;
+			TrackSettingChange(snapshot.setting.id);
+			failure = m_config->DeleteValue(std::wstring(Settings::Get(snapshot.setting.id).name));
 			if (FAILED(failure)) break;
 		}
 
 		if (FAILED(failure))
 		{
 			HRESULT rollbackFailure{ S_OK };
-			for (const auto& snapshot : snapshots)
+			for (const auto& snapshot : std::span(snapshots).first(attempted))
 			{
 				auto* config = GetConfigForScope(snapshot.setting.scope);
 				const std::wstring name(Settings::Get(snapshot.setting.id).name);
@@ -1331,8 +1350,11 @@ namespace OpenGlass
 					: config->SetString(name, std::get<std::wstring>(snapshot.value));
 				if (SUCCEEDED(rollbackFailure) && FAILED(result)) rollbackFailure = result;
 			}
-			m_dirtyKeys = previousDirtyKeys;
-			m_backupSettings = previousBackups;
+			if (SUCCEEDED(rollbackFailure))
+			{
+				m_dirtyKeys = previousDirtyKeys;
+				m_backupSettings = previousBackups;
+			}
 			SetDirty(!m_dirtyKeys.empty());
 			NotifySettingsChange(ChangeType::Both);
 			LoadSettings(false);
@@ -1362,12 +1384,15 @@ namespace OpenGlass
 			for (const auto& spec : Settings::Catalog)
 			{
 				if (spec.assetRole == Settings::AssetRole::None) continue;
-				std::wstring path;
-				if (m_config->TryGetString(std::wstring(spec.name), path)
-					&& PathIsWithin(path, package.source))
+				for (const auto scope : { Settings::Scope::User, Settings::Scope::Machine })
 				{
-					wxMessageBox(L"This package is still referenced by the active configuration. Apply another preset or clear its assets before removing it.", L"Remove preset", wxOK | wxICON_WARNING, this);
-					return;
+					std::wstring path;
+					if (GetConfigForScope(scope)->TryGetString(std::wstring(spec.name), path)
+						&& PathIsWithin(path, package.source))
+					{
+						wxMessageBox(L"This package is still referenced by HKCU or HKLM DWM. Apply another preset or clear its assets before removing it.", L"Remove preset", wxOK | wxICON_WARNING, this);
+						return;
+					}
 				}
 			}
 			if (wxMessageBox(L"Remove the selected deployed preset package?", L"Remove preset", wxYES_NO | wxNO_DEFAULT | wxICON_WARNING, this) != wxYES) return;

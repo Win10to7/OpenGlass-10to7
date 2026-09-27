@@ -24,13 +24,7 @@
 		<ClInclude Include="Elevation.hpp">
 			<Filter>Header Files</Filter>
 		</ClInclude>
-		<ClInclude Include="ConfigurationMigration.hpp">
-			<Filter>Header Files</Filter>
-		</ClInclude>
 		<ClInclude Include="PresetPackage.hpp">
-			<Filter>Header Files</Filter>
-		</ClInclude>
-		<ClInclude Include="ColorSwatchButton.hpp">
 			<Filter>Header Files</Filter>
 		</ClInclude>
 		<ClInclude Include="Diagnostics.hpp">
@@ -59,13 +53,7 @@
 		</ClInclude>
 	</ItemGroup>
 	<ItemGroup>
-		<ClCompile Include="ColorSwatchButton.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
 		<ClCompile Include="Elevation.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
-		<ClCompile Include="ConfigurationMigration.cpp">
 			<Filter>Source Files</Filter>
 		</ClCompile>
 		<ClCompile Include="PresetPackage.cpp">

@@ -9,7 +9,6 @@
 
 namespace OpenGlass
 {
-	class ColorSwatchButton;
 
 	enum class ChangeType {
 		Colorization,
@@ -60,14 +59,12 @@ namespace OpenGlass
 		void UpdateOptionStatusIcons();
 		void AddPathWarningIcon(wxWindow* parent, wxBoxSizer* row, wxFilePickerCtrl* picker, wxCheckBox* checkbox, const wxString& title);
 		void UpdatePathWarningIcons();
-		void ApplyColorizationColor(DWORD argb, ColorizationPresets::Family family);
-		void ApplyColorizationPreset(const ColorizationPresets::Preset& preset);
 		[[nodiscard]] const ColorizationPresets::Preset* FindMatchingWindows7Preset(bool opaque) const;
-		void UpdateColorizationPresetSelection();
 		bool NotifySettingsChange(ChangeType type = ChangeType::Both);
 		void UpdateUIVisibility();
 		void OnClose(wxCloseEvent& event);
 		[[nodiscard]] RegistryConfig* GetConfigForSetting(Settings::Id id) const;
+		[[nodiscard]] Settings::Scope SelectedScope() const noexcept { return m_selectedScope; }
 		[[nodiscard]] RegistryConfig* GetConfigForScope(Settings::Scope scope) const;
 		[[nodiscard]] ResolvedRegistryValue<DWORD> ResolveOverridableDword(
 			Settings::Id setting,
@@ -107,7 +104,7 @@ namespace OpenGlass
 		void RemoveSelectedPresetPackage();
 		bool ApplyPresetPackage(const PresetPackages::Package& package, bool previewAccepted = false);
 		
-		// Save/Revert identity includes the canonical registry scope and stable catalog ID.
+		// Save/Revert identity includes the selected registry scope and stable catalog ID.
 		struct TrackedSetting
 		{
 			Settings::Scope scope;
@@ -220,12 +217,6 @@ namespace OpenGlass
 		wxScrolledWindow* m_glassColorsPanel{ nullptr };
 		wxSizer* m_glassColorsRootSizer{ nullptr };
 		wxRadioBox* m_rbGlassType{ nullptr };
-		wxStaticBoxSizer* m_colorPresetsGroupSizer{ nullptr };
-		wxWrapSizer* m_vistaPresetSizer{ nullptr };
-		wxWrapSizer* m_windows7PresetSizer{ nullptr };
-		std::vector<std::pair<const ColorizationPresets::Preset*, ColorSwatchButton*>> m_presetButtons;
-		std::vector<ColorSwatchButton*> m_customColorButtons;
-		bool m_customColorsInitialized{ false };
 		wxCheckBox* m_chkEnableTransparency{ nullptr };
 		wxSlider* m_slColorIntensity{ nullptr };
 		wxSizer* m_detailedColorizationSizer{ nullptr };
@@ -299,6 +290,7 @@ namespace OpenGlass
 		{
 			wxStaticBitmap* overrideIcon{};
 			wxButton* resetOverrideButton{};
+			wxStaticBitmap* userPrecedenceIcon{};
 			Settings::Id setting{};
 			std::optional<Settings::Id> overrideSetting;
 			bool vistaIrrelevant{ false };
@@ -317,9 +309,10 @@ namespace OpenGlass
 			bool initialized{ false };
 		};
 		std::vector<PathWarningStatus> m_pathWarnings;
-		std::unique_ptr<RegistryConfig> m_config;
+		RegistryConfig* m_config{ nullptr };
 		std::unique_ptr<RegistryConfig> m_userConfig;
 		std::unique_ptr<RegistryConfig> m_systemConfig;
+		Settings::Scope m_selectedScope{ Settings::Scope::User };
 		bool m_isAdmin{ false };
 		bool m_isDirty{ false };
 		wxString m_baseTitle;

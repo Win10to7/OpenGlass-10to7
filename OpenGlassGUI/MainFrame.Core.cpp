@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "MainFrame.hpp"
-#include "ColorSwatchButton.hpp"
 #include "Symbols.hpp"
 #include "BlurSettings.hpp"
 
@@ -50,11 +49,22 @@ namespace OpenGlass
 		m_isAdmin = true;
 		SetTitle(title + L" (Administrator)");
 		m_baseTitle = GetTitle();
-		m_config = std::make_unique<RegistryConfig>(RegistryConfig::Mode::Canonical, userSid);
 		m_userConfig = std::make_unique<RegistryConfig>(RegistryConfig::Mode::User, userSid);
 		m_systemConfig = std::make_unique<RegistryConfig>(RegistryConfig::Mode::Machine, userSid);
 		m_targetUserLabel = FormatTargetUser(userSid);
 		m_targetUserSid = userSid;
+
+		wxArrayString scopes;
+		scopes.Add(L"Current user (HKCU)");
+		scopes.Add(L"Local machine (HKLM)");
+		wxSingleChoiceDialog scopeDialog(this, L"Choose the DWM registry hive to edit.", L"Configuration scope", scopes);
+		if (scopeDialog.ShowModal() != wxID_OK)
+		{
+			m_initCanceled = true;
+			return;
+		}
+		m_selectedScope = scopeDialog.GetSelection() == 1 ? Settings::Scope::Machine : Settings::Scope::User;
+		m_config = GetConfigForScope(m_selectedScope);
 
 		SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_FRAMEBK));
 
@@ -85,11 +95,7 @@ namespace OpenGlass
 		m_notebook->SetSelection(2);
 
 		GetSizer()->Add(m_notebook, 1, wxEXPAND | wxALL, 5);
-		auto* statusBar = CreateStatusBar();
-		statusBar->SetToolTip(
-			L"Windows colorization is stored for this user (SID: " + m_targetUserSid
-			+ L"). All other OpenGlass GUI settings apply system-wide."
-		);
+		CreateStatusBar();
 	}
 
 	void MainFrame::CreateBottomControls(wxSizer* parentSizer)
@@ -169,7 +175,9 @@ namespace OpenGlass
 		{
 			return;
 		}
-		SetStatusText(L"Colorization user: " + m_targetUserLabel + L"; other settings apply system-wide");
+		SetStatusText(m_selectedScope == Settings::Scope::Machine
+			? wxString(L"Editing HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\DWM (all users; HKCU values take precedence)")
+			: L"Editing " + m_targetUserLabel + L" (HKEY_USERS\\" + m_targetUserSid + L"\\SOFTWARE\\Microsoft\\Windows\\DWM)");
 	}
 
 	void MainFrame::StartSymbolDownload()
@@ -544,7 +552,7 @@ namespace OpenGlass
 
 	RegistryConfig* MainFrame::GetConfigForSetting([[maybe_unused]] Settings::Id id) const
 	{
-		return m_config.get();
+		return m_config;
 	}
 
 	RegistryConfig* MainFrame::GetConfigForScope(Settings::Scope scope) const
@@ -577,23 +585,21 @@ namespace OpenGlass
 			settingName,
 			overrideName,
 			defaultValue,
-			makeReader(m_userConfig.get()),
+			makeReader(m_selectedScope == Settings::Scope::User ? m_userConfig.get() : nullptr),
 			makeReader(m_systemConfig.get())
 		);
 	}
 
 	void MainFrame::ResetOverridableDword([[maybe_unused]] Settings::Id setting, Settings::Id overrideSetting)
 	{
-		const auto& overrideSpec = Settings::Get(overrideSetting);
-		const std::wstring overrideName(overrideSpec.name);
-		RegistryConfig* config = GetConfigForScope(overrideSpec.scope);
-		if (!config || !config->HasValue(overrideName))
+		const std::wstring overrideName(Settings::Get(overrideSetting).name);
+		if (!m_config || !m_config->HasValue(overrideName))
 		{
 			return;
 		}
 
 		TrackSettingChange(overrideSetting);
-		if (!CheckRegistryWrite(config->DeleteValue(overrideName), overrideName)) return;
+		if (!CheckRegistryWrite(m_config->DeleteValue(overrideName), overrideName)) return;
 		SetDirty(true);
 		NotifySettingsChange(ChangeType::Colorization);
 		LoadSettings(false);
@@ -624,7 +630,7 @@ namespace OpenGlass
 
 	void MainFrame::TrackSettingChange(Settings::Id id)
 	{
-		TrackSettingChange(Settings::Get(id).scope, id);
+		TrackSettingChange(SelectedScope(), id);
 	}
 
 	void MainFrame::TrackSettingChange(Settings::Scope scope, Settings::Id id)
@@ -770,11 +776,14 @@ namespace OpenGlass
 		const wxBitmap infoBmp = wxArtProvider::GetBitmap(wxART_INFORMATION, wxART_MESSAGE_BOX, iconSize);
 		auto* info = new wxStaticBitmap(parent, wxID_ANY, infoBmp);
 		wxButton* reset = nullptr;
+		auto* userPrecedence = new wxStaticBitmap(parent, wxID_ANY, wxArtProvider::GetBitmap(wxART_WARNING, wxART_MESSAGE_BOX, iconSize));
+		userPrecedence->SetToolTip(L"The current user's HKCU value takes precedence over this HKLM setting.");
+		userPrecedence->Hide();
 		if (overrideSetting)
 		{
 			reset = new wxButton(parent, wxID_ANY, L"↶", wxDefaultPosition, wxSize(28, -1), wxBU_EXACTFIT);
 			reset->SetName(L"Reset Override");
-			reset->SetToolTip(L"Remove the per-user Override value and use the per-user base value or default.");
+			reset->SetToolTip(L"Remove the Override value in the selected hive and use the next inherited value.");
 			reset->Hide();
 			reset->Bind(wxEVT_BUTTON, [this, setting, overrideSetting](wxCommandEvent&)
 			{
@@ -790,6 +799,7 @@ namespace OpenGlass
 		{
 			row->Add(reset, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxLEFT, 2);
 		}
+		row->Add(userPrecedence, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxLEFT, 2);
 
 		const std::wstring_view name = Settings::Get(setting).name;
 		const bool vistaIrrelevant = name.find(L"Afterglow") != std::wstring_view::npos
@@ -797,7 +807,7 @@ namespace OpenGlass
 		const bool win7Irrelevant = setting == Settings::Id::GlassOpacityInactive
 			|| setting == Settings::Id::ColorizationColorInactive
 			|| setting == Settings::Id::GlassOpacity;
-		m_optionStatus.push_back({ info, reset, setting, overrideSetting, vistaIrrelevant, win7Irrelevant });
+		m_optionStatus.push_back({ info, reset, userPrecedence, setting, overrideSetting, vistaIrrelevant, win7Irrelevant });
 	}
 
 	void MainFrame::UpdateOptionStatusIcons()
@@ -811,6 +821,7 @@ namespace OpenGlass
 
 		const bool isVista = (m_rbGlassType && m_rbGlassType->GetSelection() == 0);
 		std::unordered_map<Settings::Id, bool> activeHasValueCache;
+		std::unordered_map<Settings::Id, bool> userHasValueCache;
 
 		for (auto& item : m_optionStatus)
 		{
@@ -840,6 +851,11 @@ namespace OpenGlass
 				if (item.resetOverrideButton && item.resetOverrideButton->IsShown())
 				{
 					item.resetOverrideButton->Show(false);
+					needLayout = true;
+				}
+				if (item.userPrecedenceIcon->IsShown())
+				{
+					item.userPrecedenceIcon->Show(false);
 					needLayout = true;
 				}
 				continue;
@@ -902,6 +918,23 @@ namespace OpenGlass
 					item.resetOverrideButton->Show(show);
 					needLayout = true;
 				}
+			}
+			bool userTakesPrecedence = false;
+			if (m_selectedScope == Settings::Scope::Machine)
+			{
+				auto hasUserValue = [this, &userHasValueCache](Settings::Id id)
+				{
+					auto [it, inserted] = userHasValueCache.try_emplace(id, false);
+					if (inserted) it->second = m_userConfig->HasValue(std::wstring(Settings::Get(id).name));
+					return it->second;
+				};
+				userTakesPrecedence = hasUserValue(item.setting)
+					|| (item.overrideSetting && hasUserValue(*item.overrideSetting));
+			}
+			if (item.userPrecedenceIcon->IsShown() != userTakesPrecedence)
+			{
+				item.userPrecedenceIcon->Show(userTakesPrecedence);
+				needLayout = true;
 			}
 		}
 
@@ -1044,7 +1077,6 @@ namespace OpenGlass
 		auto updateOverridableDword = [this, updateDword](Settings::Id overrideSetting, DWORD value) {
 			updateDword(overrideSetting, value, ChangeType::Colorization);
 			UpdateOptionStatusIcons();
-			UpdateColorizationPresetSelection();
 		};
 
 		auto colorToDwordBgr = [](const wxColour& c) -> DWORD {
@@ -1667,56 +1699,6 @@ namespace OpenGlass
 			LoadSettings(false);
 		});
 
-		for (const auto& [preset, button] : m_presetButtons)
-		{
-			button->Bind(wxEVT_TOGGLEBUTTON, [this, preset](wxCommandEvent& event) {
-				ApplyColorizationPreset(*preset);
-				event.Skip();
-			});
-		}
-
-		for (auto* button : m_customColorButtons)
-		{
-			button->Bind(wxEVT_TOGGLEBUTTON, [this, button](wxCommandEvent&) {
-				const auto family = m_rbGlassType->GetSelection() == 0
-					? ColorizationPresets::Family::Vista
-					: ColorizationPresets::Family::Windows7;
-				ApplyColorizationColor(button->GetColor(), family);
-			});
-			button->Bind(wxEVT_LEFT_DCLICK, [this, button](wxMouseEvent&) {
-				wxColourData colorData;
-				colorData.SetChooseFull(true);
-				colorData.SetChooseAlpha(false);
-				const DWORD currentValue = button->GetColor();
-				colorData.SetColour(wxColour(
-					(currentValue >> 16) & 0xFF,
-					(currentValue >> 8) & 0xFF,
-					currentValue & 0xFF
-				));
-
-				wxColourDialog dialog(this, &colorData);
-				if (dialog.ShowModal() != wxID_OK)
-				{
-					UpdateColorizationPresetSelection();
-					return;
-				}
-
-				const wxColour selected = dialog.GetColourData().GetColour();
-				const DWORD alpha = ColorizationPresets::CalculateIntensityAlpha(
-					m_slColorIntensity->GetValue()
-				) << 24;
-				const DWORD argb = alpha
-					| (static_cast<DWORD>(selected.Red()) << 16)
-					| (static_cast<DWORD>(selected.Green()) << 8)
-					| static_cast<DWORD>(selected.Blue());
-				const auto family = m_rbGlassType->GetSelection() == 0
-					? ColorizationPresets::Family::Vista
-					: ColorizationPresets::Family::Windows7;
-				button->SetColor(argb);
-				ApplyColorizationColor(argb, family);
-			});
-		}
-
 		m_chkEnableTransparency->Bind(wxEVT_CHECKBOX, [this](wxCommandEvent& e) {
 			RegistryConfig* config = GetConfigForSetting(Settings::Id::ColorizationOpaqueBlend);
 			if (!config)
@@ -1809,7 +1791,6 @@ namespace OpenGlass
 				}
 				setSliderTooltipValue(m_slColorIntensity, val);
 				updateInheritance();
-				UpdateColorizationPresetSelection();
 				return;
 			}
 
@@ -1859,7 +1840,6 @@ namespace OpenGlass
 			setSliderTooltipValue(m_slAfterglowBalance, parameters.afterglowBalance);
 			setSliderTooltipValue(m_slBlurBalance, parameters.blurBalance);
 			UpdateOptionStatusIcons();
-			UpdateColorizationPresetSelection();
 		});
 
 		m_chkEnableInactiveOpacity->Bind(wxEVT_CHECKBOX, [this, updateDword, updateInheritance, deleteValue]([[maybe_unused]] wxCommandEvent& e) {

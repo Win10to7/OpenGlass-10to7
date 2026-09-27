@@ -14,26 +14,10 @@ namespace OpenGlass
 	{
 	}
 
-	Settings::Scope RegistryConfig::ScopeFor(const std::wstring& valueName) const noexcept
-	{
-		if (m_mode == Mode::User)
-		{
-			return Settings::Scope::User;
-		}
-		if (m_mode == Mode::Machine)
-		{
-			return Settings::Scope::Machine;
-		}
-		if (const auto spec = Settings::Find(valueName))
-		{
-			return spec->scope;
-		}
-		return Settings::Scope::Machine;
-	}
 
-	std::pair<HKEY, std::wstring> RegistryConfig::GetLocation(const std::wstring& valueName) const
+	std::pair<HKEY, std::wstring> RegistryConfig::GetLocation(const std::wstring& /*valueName*/) const
 	{
-		if (ScopeFor(valueName) == Settings::Scope::Machine)
+		if (m_mode == Mode::Machine)
 		{
 			return { HKEY_LOCAL_MACHINE, DwmSubKey };
 		}
