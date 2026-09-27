@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "MainFrame.hpp"
 #include "WrappingLayout.hpp"
-#include "ColorSwatchButton.hpp"
 #include "Symbols.hpp"
 #include "UiControls.hpp"
 #include "BlurSettings.hpp"
@@ -748,73 +747,29 @@ namespace OpenGlass
 			sizer->Add(row, 0, wxALL, 5);
 		}
 
-		// Built-in Vista and Windows 7 color presets. Both groups are created once;
-		// UpdateUIVisibility shows only the family selected above.
-		m_colorPresetsGroupSizer = new wxStaticBoxSizer(wxVERTICAL, panel, L"Color presets");
-		m_vistaPresetSizer = new wxWrapSizer(wxHORIZONTAL, wxREMOVE_LEADING_SPACES);
-		m_windows7PresetSizer = new wxWrapSizer(wxHORIZONTAL, wxREMOVE_LEADING_SPACES);
-
-		auto addPresetButtons = [this, panel](
-			wxWrapSizer* presetSizer,
-			std::span<const ColorizationPresets::Preset> presets
-		) {
-			auto* automatic = new ColorSwatchButton(panel, wxID_ANY, L"Automatic", 0, true);
-			auto* automaticCaption = new wxStaticText(panel, wxID_ANY, L"Automatic",
-				wxDefaultPosition, FromDIP(wxSize(64, -1)), wxALIGN_CENTER_HORIZONTAL);
-			auto* automaticCell = new wxBoxSizer(wxVERTICAL);
-			automaticCell->Add(automatic, 0, wxALIGN_CENTER_HORIZONTAL);
-			automaticCell->Add(automaticCaption, 0, wxEXPAND | wxTOP, 2);
-			presetSizer->Add(automaticCell, 0, wxALL, 1);
-			m_automaticColorButtons.push_back(automatic);
-			for (const auto& preset : presets)
-			{
-				const wxString label{ preset.name.data(), preset.name.size() };
-				auto* button = new ColorSwatchButton(
-					panel,
-					wxID_ANY,
-					label,
-					preset.argb
-				);
-				auto* caption = new wxStaticText(
-					panel,
-					wxID_ANY,
-					label,
-					wxDefaultPosition,
-					FromDIP(wxSize(64, -1)),
-					wxALIGN_CENTER_HORIZONTAL
-				);
-				auto* cell = new wxBoxSizer(wxVERTICAL);
-				cell->Add(button, 0, wxALIGN_CENTER_HORIZONTAL);
-				cell->Add(caption, 0, wxEXPAND | wxTOP, 2);
-				presetSizer->Add(cell, 0, wxALL, 1);
-				m_presetButtons.emplace_back(&preset, button);
-			}
+		auto addOverrideReset = [this](wxWindow* parent, wxBoxSizer* row, Settings::Id id) {
+			auto* reset = new wxButton(parent, wxID_ANY, L"Reset", wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+			reset->SetToolTip(L"Remove the Override value in the selected hive and use the inherited value.");
+			reset->Bind(wxEVT_BUTTON, [this, id](wxCommandEvent&) {
+				if (RunPreview([&] {
+					TrackSettingChange(id);
+					THROW_IF_FAILED(m_config->DeleteValue(std::wstring(Settings::Get(id).name)));
+				}, Settings::UpdateImpact::Colorization)) LoadSettings();
+			});
+			row->Add(reset, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 5);
+			AddOptionStatus(parent, row, id);
 		};
-
-		addPresetButtons(m_vistaPresetSizer, ColorizationPresets::Get(ColorizationPresets::Family::Vista));
-		addPresetButtons(m_windows7PresetSizer, ColorizationPresets::Get(ColorizationPresets::Family::Windows7));
-		auto addCustomColorButton = [this, panel](wxWrapSizer* presetSizer) {
-			constexpr DWORD InitialColor = 0xFF000000;
-			auto* button = new ColorSwatchButton(panel, wxID_ANY, L"Custom", InitialColor);
-			auto* caption = new wxStaticText(
-				panel,
-				wxID_ANY,
-				L"Custom",
-				wxDefaultPosition,
-				FromDIP(wxSize(64, -1)),
-				wxALIGN_CENTER_HORIZONTAL
-			);
-			auto* cell = new wxBoxSizer(wxVERTICAL);
-			cell->Add(button, 0, wxALIGN_CENTER_HORIZONTAL);
-			cell->Add(caption, 0, wxEXPAND | wxTOP, 2);
-			presetSizer->Add(cell, 0, wxALL, 1);
-			m_customColorButtons.push_back(button);
+		auto addColorOverride = [&](wxWindow* parent, wxSizer* target, wxColourPickerCtrl*& picker,
+			const wxString& label, Settings::Id id) {
+			auto* row = new wxBoxSizer(wxHORIZONTAL);
+			row->Add(new wxStaticText(parent, wxID_ANY, label, wxDefaultPosition, FromDIP(wxSize(150, -1))),
+				0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+			picker = new wxColourPickerCtrl(parent, wxID_ANY);
+			row->Add(picker, 1, wxALIGN_CENTER_VERTICAL);
+			addOverrideReset(parent, row, id);
+			target->Add(row, 0, wxEXPAND | wxALL, 8);
 		};
-		addCustomColorButton(m_vistaPresetSizer);
-		addCustomColorButton(m_windows7PresetSizer);
-		m_colorPresetsGroupSizer->Add(m_vistaPresetSizer, 0, wxEXPAND | wxALL, 2);
-		m_colorPresetsGroupSizer->Add(m_windows7PresetSizer, 0, wxEXPAND | wxALL, 2);
-		sizer->Add(m_colorPresetsGroupSizer, 0, wxEXPAND | wxALL, 2);
+		addColorOverride(panel, sizer, m_cpColorizationColor, L"Color:", Settings::Id::ColorizationColorOverride);
 
 		// Keep the frequently used controls visible, matching the original
 		// Vista/Windows 7 control-panel flow.
@@ -857,6 +812,22 @@ namespace OpenGlass
 		wxWindow* advancedPanel = advancedColorizationPane->GetPane();
 		auto* advancedSizer = new wxBoxSizer(wxVERTICAL);
 		
+		m_win7ColorizationSizer = new wxBoxSizer(wxVERTICAL);
+		addColorOverride(advancedPanel, m_win7ColorizationSizer, m_cpAfterglow, L"Afterglow:", Settings::Id::ColorizationAfterglowOverride);
+		auto addBalance = [&](wxSlider*& slider, const wxString& label, Settings::Id id, int value) {
+			auto* row = new wxBoxSizer(wxHORIZONTAL);
+			row->Add(new wxStaticText(advancedPanel, wxID_ANY, label, wxDefaultPosition, FromDIP(wxSize(150, -1))),
+				0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+			slider = new NativeSlider(advancedPanel, wxID_ANY, value, 0, 100);
+			row->Add(slider, 1, wxALIGN_CENTER_VERTICAL);
+			addOverrideReset(advancedPanel, row, id);
+			m_win7ColorizationSizer->Add(row, 0, wxEXPAND | wxALL, 8);
+		};
+		addBalance(m_slColorBalance, L"Color balance:", Settings::Id::ColorizationColorBalanceOverride, 10);
+		addBalance(m_slAfterglowBalance, L"Afterglow balance:", Settings::Id::ColorizationAfterglowBalanceOverride, 10);
+		addBalance(m_slBlurBalance, L"Blur balance:", Settings::Id::ColorizationBlurBalanceOverride, 50);
+		advancedSizer->Add(m_win7ColorizationSizer, 0, wxEXPAND);
+
 		auto addBlurBase = [&](wxChoice*& ch, wxColourPickerCtrl*& cp, wxSpinCtrl*& sc, const wxString& label) {
 			wxBoxSizer* row = new wxBoxSizer(wxHORIZONTAL);
 			row->Add(new wxStaticText(advancedPanel, wxID_ANY, label, wxDefaultPosition, wxSize(260, -1)), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);

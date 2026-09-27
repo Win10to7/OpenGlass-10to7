@@ -12,7 +12,6 @@
 
 namespace OpenGlass
 {
-	class ColorSwatchButton;
 
 
 	class MainFrame : public wxFrame
@@ -55,13 +54,7 @@ namespace OpenGlass
 		void AddPathWarningIcon(wxWindow* parent, wxBoxSizer* row, wxFilePickerCtrl* picker, wxCheckBox* checkbox, const wxString& title);
 		void UpdatePathWarningIcons();
 		void ApplyColorizationBalances(DWORD intensity);
-		void ApplyColorizationColor(std::optional<DWORD> argb, ColorizationPresets::Family family);
-		void ApplyColorizationPreset(const ColorizationPresets::Preset& preset);
-		[[nodiscard]] const ColorizationPresets::Preset* FindMatchingWindows7Preset(bool opaque) const;
-		void UpdateColorizationPresetSelection();
-		void QueueColorizationRefresh();
 		WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override;
-		bool m_colorizationRefreshPending{};
 		bool m_systemColorChangePending{};
 		void NotifySettingsChange(Settings::UpdateImpact impact = Settings::UpdateImpact::Colorization | Settings::UpdateImpact::Theme);
 		void UpdateUIVisibility();
@@ -216,13 +209,12 @@ namespace OpenGlass
 		// Glass Colors Tab
 		wxScrolledWindow* m_glassColorsPanel{ nullptr };
 		wxRadioBox* m_rbGlassType{ nullptr };
-		wxStaticBoxSizer* m_colorPresetsGroupSizer{ nullptr };
-		wxWrapSizer* m_vistaPresetSizer{ nullptr };
-		wxWrapSizer* m_windows7PresetSizer{ nullptr };
-		std::vector<std::pair<const ColorizationPresets::Preset*, ColorSwatchButton*>> m_presetButtons;
-		std::vector<ColorSwatchButton*> m_customColorButtons;
-		std::vector<ColorSwatchButton*> m_automaticColorButtons;
-		bool m_customColorsInitialized{ false };
+		wxColourPickerCtrl* m_cpColorizationColor{ nullptr };
+		wxColourPickerCtrl* m_cpAfterglow{ nullptr };
+		wxBoxSizer* m_win7ColorizationSizer{ nullptr };
+		wxSlider* m_slColorBalance{ nullptr };
+		wxSlider* m_slAfterglowBalance{ nullptr };
+		wxSlider* m_slBlurBalance{ nullptr };
 		wxCheckBox* m_chkEnableTransparency{ nullptr };
 		wxSlider* m_slColorIntensity{ nullptr };
 

@@ -27,6 +27,8 @@ Only the General Availability releases listed above are supported. Insider build
 
 See the [configuration guide](https://github.com/ALTaleX531/OpenGlass/wiki/Configuration-and-registry-reference) and [preset library guide](https://github.com/ALTaleX531/OpenGlass/wiki/Preset-packages) for editing scopes, color options, presets and recovery behavior.
 
+This branch asks which DWM hive to edit at startup. Use `--scope=hkcu` or `--scope=hklm` to skip that dialog. It keeps direct color, afterglow and balance controls instead of the built-in color swatches, and leaves the preset notebook page hidden. Preset setting imports and exports use the selected hive; package accent colors remain Windows state for the original interactive user.
+
 > [!TIP]
 > **Emergency Exit:** Hold <kbd>Ctrl</kbd>+<kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>Q</kbd> to terminate DWM if the system becomes unresponsive.
 

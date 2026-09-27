@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "MainFrame.hpp"
-#include "ColorSwatchButton.hpp"
 #include "EffectiveConfiguration.hpp"
 #include <wx/imagpng.h>
 #include <wx/dcbuffer.h>
@@ -10,6 +9,50 @@ namespace OpenGlass
 {
 	namespace
 	{
+		void DrawAutomaticColorSwatch(wxGraphicsContext& context, const wxRect2DDouble& bounds, bool compact)
+		{
+			const bool dark = wxSystemSettings::GetAppearance().IsDark();
+			context.PushState();
+			if (!compact)
+			{
+				context.SetPen(*wxTRANSPARENT_PEN);
+				context.SetBrush(wxBrush(dark ? wxColour(53, 53, 53) : wxColour(241, 241, 241)));
+				context.DrawRectangle(bounds.m_x, bounds.m_y, bounds.m_width, bounds.m_height);
+			}
+
+			// A fixed color-card fan denotes the mode, not the current accent color.
+			context.Translate(bounds.m_x, bounds.m_y);
+			context.Scale(bounds.m_width / 40, bounds.m_height / 40);
+			const wxColour colors[] = {
+				wxColour(83, 145, 213), wxColour(154, 112, 190), wxColour(223, 105, 111),
+				wxColour(236, 187, 80), wxColour(100, 177, 135)
+			};
+			const size_t count = compact ? 3 : std::size(colors);
+			for (size_t index = 0; index < count; ++index)
+			{
+				context.PushState();
+				context.Translate(20, compact ? 29 : 28);
+				context.Rotate(compact
+					? (static_cast<double>(index) - 1) * 0.6981317007977318 // 40 degrees
+					: (static_cast<double>(index) - 2) * 0.4363323129985824); // 25 degrees
+				context.SetPen(wxPen(dark ? wxColour(53, 53, 53) : wxColour(255, 255, 255), 1));
+				const size_t colorIndex = compact ? (index == 0 ? 0 : index + 1) : index;
+				context.SetBrush(wxBrush(colors[colorIndex]));
+				if (compact) context.DrawRoundedRectangle(-4.5, -25, 9, 28, 1.2);
+				else context.DrawRoundedRectangle(-3.5, -21, 7, 24, 1.2);
+				context.PopState();
+			}
+			if (!compact)
+			{
+				context.SetPen(*wxTRANSPARENT_PEN);
+				context.SetBrush(wxBrush(dark ? wxColour(221, 221, 221) : wxColour(255, 255, 255)));
+				context.DrawEllipse(18, 26, 4, 4);
+				context.SetBrush(wxBrush(wxColour(120, 120, 120)));
+				context.DrawEllipse(19.2, 27.2, 1.6, 1.6);
+			}
+			context.PopState();
+		}
+
 		constexpr std::size_t MaximumBatchPackageCount = 32;
 		// WM_COPYGLOBALDATA is intentionally undocumented but is part of the
 		// WM_DROPFILES transfer used by Explorer across an integrity boundary.
@@ -169,11 +212,24 @@ namespace OpenGlass
 			}
 		};
 
+		std::wstring ShadowedUserSettings(const PresetPackages::Package& package, const RegistryConfig& userConfig)
+		{
+			std::wstring names;
+			for (const auto& setting : package.settings)
+			{
+				const auto& spec = Settings::Get(setting.first);
+				if (!userConfig.ReadRaw(std::wstring(spec.name)).present) continue;
+				if (!names.empty()) names += L", ";
+				names += std::wstring(spec.name);
+			}
+			return names;
+		}
+
 		PresetPreviewAction ShowPresetPreview(
 			wxWindow* parent,
 			const PresetPackages::Package& package,
 			const RegistryConfig& config,
-			bool importing, const RegistryConfig& user, const RegistryConfig& machine
+			bool importing, const RegistryConfig& user
 		)
 		{
 			wxDialog dialog(parent, wxID_ANY, importing ? L"Import preset" : L"Preset properties", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
@@ -255,14 +311,22 @@ namespace OpenGlass
 
 			ConfigurationResources resources; resources.Initialize(PresetPackages::GetPresetRoot().parent_path() / L"Configuration", user.UserSid());
 			const auto scope = config.GetMode() == RegistryConfig::Mode::User ? Settings::Scope::User : Settings::Scope::Machine;
-			const auto plan = EffectiveConfiguration::Plan(EffectiveConfiguration::Read(user), EffectiveConfiguration::Read(machine), PackageModel(package, resources, scope), scope, package.catalogVersion);
+			const auto local = EffectiveConfiguration::Read(config);
+			const auto plan = EffectiveConfiguration::Plan(scope == Settings::Scope::User ? local : EffectiveConfiguration::Layer{},
+				scope == Settings::Scope::Machine ? local : EffectiveConfiguration::Layer{},
+				PackageModel(package, resources, scope), scope, package.catalogVersion);
 			std::wstring changes = scope == Settings::Scope::User
 				? L"Applies to HKCU; HKLM configuration is preserved.\r\n"
-				: L"Applies to HKLM; conflicting HKCU values for customized settings are removed.\r\n";
+				: L"Applies to HKLM; existing HKCU values are preserved and may take precedence.\r\n";
 			changes += L"Default settings remove customization in this layer and allow inheritance.\r\n";
 			changes += package.accentColor ? std::format(L"\r\nSet the original user's accent color to #{:06X}.\r\n", *package.accentColor)
 				: L"\r\nEnable automatic accent coloring from the original user's wallpaper.\r\n";
-			changes += L"Both layers' color Overrides are removed. Balance Overrides follow the editing scope.\r\n";
+			changes += L"Color Overrides are removed in the selected hive. Balance Overrides follow the editing scope.\r\n";
+			if (scope == Settings::Scope::Machine)
+			{
+				const auto shadowed = ShadowedUserSettings(package, user);
+				if (!shadowed.empty()) changes += L"HKCU values may override these HKLM changes: " + shadowed + L".\r\n";
+			}
 			const bool restartRequired = std::ranges::any_of(plan, [](const auto& change) { return Settings::Get(change.id).impact == Settings::UpdateImpact::RestartRequired; });
 			if (restartRequired) changes += L"Some settings take effect after restarting DWM or signing out; applying does not restart DWM.\r\n";
 			changes += L"\r\nRegistry changes:\r\n" + (plan.empty() ? std::wstring(L"None.\r\n") : PlanSummary(plan));
@@ -299,7 +363,7 @@ namespace OpenGlass
 			return dialog.ShowModal() == wxID_OK && importing ? PresetPreviewAction::ImportOnly : PresetPreviewAction::Cancel;
 		}
 
-		bool ShowBatchImportPreview(wxWindow* parent, std::span<const PresetPackages::Package> packages, const RegistryConfig& config, const RegistryConfig& user, const RegistryConfig& machine)
+		bool ShowBatchImportPreview(wxWindow* parent, std::span<const PresetPackages::Package> packages, const RegistryConfig& config, const RegistryConfig& user)
 		{
 			wxDialog dialog(parent, wxID_ANY, L"Import presets", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 			dialog.SetClientSize(dialog.FromDIP(wxSize(740, 440)));
@@ -330,7 +394,7 @@ namespace OpenGlass
 				{
 					const auto package = PresetPackages::LoadArchive(packages[row].source);
 					THROW_HR_IF(HRESULT_FROM_WIN32(ERROR_FILE_INVALID), package.digest != packages[row].digest);
-					ShowPresetPreview(&dialog, package, config, false, user, machine);
+					ShowPresetPreview(&dialog, package, config, false, user);
 				}
 				catch (...)
 				{
@@ -432,13 +496,16 @@ namespace OpenGlass
 				const wxString& defaultHomepage,
 				bool includeLicense,
 				const wxString& licenseText,
-				bool includeAccentColor
+				bool includeAccentColor,
+				Settings::Scope scope
 			)
 				: wxDialog(parent, wxID_ANY, L"New preset", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 			{
 				auto* root = new wxBoxSizer(wxVERTICAL);
 				auto* scopeNote = new wxStaticText(this, wxID_ANY,
-					L"Extracts the saved effective HKCU + HKLM configuration into a local preset.");
+					scope == Settings::Scope::User
+						? L"Captures the original user's current HKCU settings, including unsaved preview changes. HKLM settings are not included."
+						: L"Captures current HKLM settings, including unsaved preview changes. HKCU settings are not included and may take precedence.");
 				scopeNote->Wrap(FromDIP(610));
 				root->Add(scopeNote, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
 
@@ -643,7 +710,9 @@ namespace OpenGlass
 		root->Add(new wxStaticText(panel, wxID_ANY, wxString::Format(L"Apply to %s. Double-click to preview; Save accepts and Revert restores your checkpoint.", m_editScope == Settings::Scope::User ? L"HKCU" : L"HKLM")), 0, wxEXPAND | wxALL, 8);
 		m_lblPresetEmpty = new wxStaticText(panel, wxID_ANY, L"Right-click to import or create a preset. You can also drop ZIP files here.");
 		root->Add(m_lblPresetEmpty, 0, wxEXPAND | wxALL, 8);
-		panel->SetSizer(root); m_notebook->AddPage(panel, L"Preset library");
+		panel->SetSizer(root);
+		// Keep package controls available for imports and other commands without showing a preset page.
+		panel->Hide();
 		m_lstPresetPackages->Bind(wxEVT_LIST_ITEM_ACTIVATED, [this](wxListEvent&) { ApplySelectedPresetPackage(); });
 		m_lstPresetPackages->Bind(wxEVT_CONTEXT_MENU, [this](wxContextMenuEvent& event) { ShowPresetContextMenu(event.GetPosition()); });
 		m_lstPresetPackages->Bind(wxEVT_LIST_COL_CLICK, [this](wxListEvent& event)
@@ -690,19 +759,19 @@ namespace OpenGlass
 		wxMenu menu;
 		if (selected)
 		{
-			menu.Append(Apply, L"Apply"); menu.Append(Update, m_isDirty ? L"Update... (Save or Revert first)" : L"Update..."); menu.Append(Export, L"Export...");
+			menu.Append(Apply, L"Apply"); menu.Append(Update, L"Update..."); menu.Append(Export, L"Export...");
 			menu.Append(Delete, L"Delete..."); menu.AppendSeparator(); menu.Append(Properties, L"Properties...");
 			const auto& package = m_presetPackages[selection];
 			menu.Enable(Apply, package.loadError.empty() && package.trusted);
 			SetMenuDefaultItem(reinterpret_cast<HMENU>(menu.GetHMenu()), Apply, FALSE);
-			menu.Enable(Update, !m_isDirty && package.loadError.empty());
+			menu.Enable(Update, package.loadError.empty());
 			menu.Enable(Export, package.loadError.empty() && package.trusted);
-			menu.SetHelpString(Update, L"Capture saved effective settings. Save or Revert pending changes first.");
+			menu.SetHelpString(Update, L"Capture the currently selected hive, including unsaved changes.");
 		}
 		else
 		{
-			menu.Append(NewPreset, m_isDirty ? L"New preset... (Save or Revert first)" : L"New preset...");
-			menu.Enable(NewPreset, !m_isDirty); menu.SetHelpString(NewPreset, L"Save or Revert pending changes first.");
+			menu.Append(NewPreset, L"New preset...");
+			menu.SetHelpString(NewPreset, L"Capture the currently selected hive, including unsaved changes.");
 			menu.Append(Import, L"Import..."); menu.Append(Refresh, L"Refresh");
 		}
 		const auto point = screenPosition == wxDefaultPosition ? wxDefaultPosition : m_lstPresetPackages->ScreenToClient(screenPosition);
@@ -803,7 +872,7 @@ namespace OpenGlass
 			THROW_HR_IF(HRESULT_FROM_WIN32(ERROR_RETRY), package.digest != selected.digest);
 
 			if (!package.loadError.empty()) { wxMessageBox(package.loadError, L"Preset properties", wxOK | wxICON_ERROR, this); return; }
-			const auto action = ShowPresetPreview(this, package, *m_config, !package.trusted, *m_userConfig, *m_systemConfig);
+			const auto action = ShowPresetPreview(this, package, *m_config, !package.trusted, *m_userConfig);
 			if (!package.trusted && action == PresetPreviewAction::ImportOnly)
 			{
 				const auto verified = PresetPackages::LoadLibraryEntry(package);
@@ -865,7 +934,7 @@ namespace OpenGlass
 				package.assets.clear(); // Load one package's images on demand during review.
 				packages.push_back(std::move(package));
 			}
-			if (!ShowBatchImportPreview(this, packages, *m_config, *m_userConfig, *m_systemConfig)) return;
+			if (!ShowBatchImportPreview(this, packages, *m_config, *m_userConfig)) return;
 			for (const auto& package : packages)
 			{
 				auto verified = PresetPackages::LoadArchive(package.source);
@@ -887,7 +956,7 @@ namespace OpenGlass
 		try
 		{
 			const auto reviewed = PresetPackages::LoadArchive(path);
-			const auto action = ShowPresetPreview(this, reviewed, *m_config, true, *m_userConfig, *m_systemConfig);
+			const auto action = ShowPresetPreview(this, reviewed, *m_config, true, *m_userConfig);
 			if (action == PresetPreviewAction::Cancel) return;
 			const auto verified = PresetPackages::LoadArchive(path);
 			THROW_HR_IF(HRESULT_FROM_WIN32(ERROR_FILE_INVALID), verified.digest != reviewed.digest);
@@ -918,12 +987,16 @@ namespace OpenGlass
 
 	void MainFrame::ApplyPresetPackage(const PresetPackages::Package& inputPackage)
 	{
+
 		try
 		{
 			auto package = PresetPackages::LoadTrusted(inputPackage);
 			const auto prepared = m_resources.Prepare(package, m_editScope);
 			const auto model = PackageModel(package, m_resources, m_editScope);
-			const auto plan = EffectiveConfiguration::Plan(EffectiveConfiguration::Read(*m_userConfig), EffectiveConfiguration::Read(*m_systemConfig), model, m_editScope, package.catalogVersion);
+			const auto local = EffectiveConfiguration::Read(*m_config);
+			const auto plan = EffectiveConfiguration::Plan(m_editScope == Settings::Scope::User ? local : EffectiveConfiguration::Layer{},
+				m_editScope == Settings::Scope::Machine ? local : EffectiveConfiguration::Layer{},
+				model, m_editScope, package.catalogVersion);
 			bool restartRequired{};
 			for (const auto& change : plan)
 				restartRequired |= Settings::Get(change.id).impact == Settings::UpdateImpact::RestartRequired;
@@ -933,8 +1006,7 @@ namespace OpenGlass
 				{
 					THROW_HR_IF(HRESULT_FROM_WIN32(ERROR_RETRY), GetConfigForScope(change.scope)->ReadRaw(change.Name()) != change.before);
 				}
-				THROW_IF_FAILED(m_userConfig->CheckDeleteAccess());
-				THROW_IF_FAILED(m_systemConfig->CheckDeleteAccess());
+				THROW_IF_FAILED(m_config->CheckDeleteAccess());
 				ApplyAccentColor(package.accentColor);
 				m_resources.Install(*prepared);
 				for (const auto& change : plan)
@@ -961,7 +1033,8 @@ namespace OpenGlass
 
 	void MainFrame::CaptureEffectivePreset(PresetPackages::CreateRequest& request, bool accentColor, const PresetPackages::Package* localSource)
 	{
-		const auto model = EffectiveConfiguration::Capture(EffectiveConfiguration::Read(*m_userConfig), EffectiveConfiguration::Read(*m_systemConfig));
+		const auto layer = EffectiveConfiguration::Read(*m_config);
+		const auto model = EffectiveConfiguration::Capture(layer, {});
 		for (const auto& [id, value] : model)
 		{
 			const auto& spec = Settings::Get(id);
@@ -993,11 +1066,7 @@ namespace OpenGlass
 
 	void MainFrame::CreatePresetPackage(bool update)
 	{
-		if (m_isDirty)
-		{
-			wxMessageBox(L"Save or Revert pending changes before creating or updating a preset.", L"New preset", wxOK | wxICON_INFORMATION, this);
-			return;
-		}
+		// Capture the selected hive as it stands, including changes pending Save or Revert.
 		wxString defaultAuthor = m_lastPresetAuthorName;
 		const auto origin = m_presetProvenance.Origin();
 		std::optional<PresetPackages::Package> source = origin;
@@ -1023,7 +1092,7 @@ namespace OpenGlass
 		CreatePresetDialog dialog(this, source ? wxString(source->metadata.authorName) : defaultAuthor,
 			source ? wxString(source->metadata.authorHomepage) : wxString(m_lastPresetAuthorHomepage),
 			source ? !source->licenseText.empty() : m_lastPresetIncludeLicense,
-			wxString::FromUTF8(source ? source->licenseText : m_lastPresetLicenseText), !autoColorization);
+			wxString::FromUTF8(source ? source->licenseText : m_lastPresetLicenseText), !autoColorization, m_editScope);
 		if (update) dialog.SetTitle(L"Update preset");
 		if (source) dialog.SetSource(*source);
 		if (dialog.ShowModal() != wxID_OK) return;

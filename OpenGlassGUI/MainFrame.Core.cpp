@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "MainFrame.hpp"
 #include "WrappingLayout.hpp"
-#include "ColorSwatchButton.hpp"
 #include "Symbols.hpp"
 #include "BlurSettings.hpp"
 #include "ConfigurationMigration.hpp"
@@ -101,6 +100,9 @@ namespace OpenGlass
 
 		GetSizer()->Add(m_notebook, 1, wxEXPAND | wxALL, 5);
 		CreateStatusBar();
+		SetStatusText(m_editScope == Settings::Scope::Machine
+			? wxString(L"Editing HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\DWM (all users; HKCU values take precedence)")
+			: L"Editing HKEY_USERS\\" + m_targetUserSid + L"\\SOFTWARE\\Microsoft\\Windows\\DWM");
 	}
 
 	void MainFrame::CreateBottomControls(wxSizer* parentSizer)
@@ -828,7 +830,6 @@ namespace OpenGlass
 			// a newly selected Custom mode). Whole-configuration operations reload explicitly.
 			UpdateOptionStatusIcons();
 			UpdatePathWarningIcons();
-			UpdateColorizationPresetSelection();
 			if (!m_isDirty) m_presetProvenance.Revert();
 			m_resources.CommitAttempt();
 			if (m_resources.TakeCleanupWarning()) wxMessageBox(L"Configuration was updated, but temporary-file cleanup is pending. It will be retried on the next operation.", L"Configuration cleanup", wxOK | wxICON_INFORMATION, this);
@@ -1109,11 +1110,6 @@ namespace OpenGlass
 	void MainFrame::BindEvents()
 	{
 		Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
-		Bind(wxEVT_ACTIVATE, [this](wxActivateEvent& event)
-		{
-			if (event.GetActive()) QueueColorizationRefresh();
-			event.Skip();
-		});
 		Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& e) {
 			const int keyCode = e.GetKeyCode();
 			if ((e.ControlDown() && (keyCode == 'S' || keyCode == 's')) || keyCode == WXK_F2)
@@ -1623,11 +1619,10 @@ namespace OpenGlass
 			if (sel == 0)
 			{
 				deleteValue(Settings::Id::CaptionTextAliasing);
-				NotifySettingsChange(ChangeType::Theme);
 			}
 			else
 			{
-				updateDword(Settings::Id::CaptionTextAliasing, sel, ChangeType::Theme);
+				updateDword(Settings::Id::CaptionTextAliasing, sel);
 			}
 		});
 		m_chkDisableModernBorders->Bind(wxEVT_CHECKBOX, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {
@@ -1654,81 +1649,48 @@ namespace OpenGlass
 			LoadSettings();
 		});
 
-		for (const auto& [preset, button] : m_presetButtons)
-		{
-			button->Bind(wxEVT_TOGGLEBUTTON, [this, preset](wxCommandEvent& event) {
-				ApplyColorizationPreset(*preset);
-				event.Skip();
+		auto bindColorOverride = [this, updateDword](wxColourPickerCtrl* picker, Settings::Id id, Settings::Id baseId) {
+			picker->Bind(wxEVT_COLOURPICKER_CHANGED, [this, updateDword, id, baseId](wxColourPickerEvent& event) {
+				const auto& color = event.GetColour();
+				const DWORD current = m_config->GetDword(std::wstring(Settings::Get(id).name),
+					m_config->GetDword(std::wstring(Settings::Get(baseId).name), 0xFF000000));
+				updateDword(id, (current & 0xFF000000)
+					| (static_cast<DWORD>(color.Red()) << 16)
+					| (static_cast<DWORD>(color.Green()) << 8)
+					| static_cast<DWORD>(color.Blue()));
 			});
-		}
-
-		for (auto* button : m_automaticColorButtons)
+		};
+		bindColorOverride(m_cpColorizationColor, Settings::Id::ColorizationColorOverride, Settings::Id::ColorizationColor);
+		bindColorOverride(m_cpAfterglow, Settings::Id::ColorizationAfterglowOverride, Settings::Id::ColorizationAfterglow);
+		for (const auto& [slider, id] : {
+			std::pair{ m_slColorBalance, Settings::Id::ColorizationColorBalanceOverride },
+			std::pair{ m_slAfterglowBalance, Settings::Id::ColorizationAfterglowBalanceOverride },
+			std::pair{ m_slBlurBalance, Settings::Id::ColorizationBlurBalanceOverride } })
 		{
-			button->Bind(wxEVT_TOGGLEBUTTON, [this](wxCommandEvent&) {
-				ApplyColorizationColor(std::nullopt, ColorizationPresets::Family::Windows7);
-			});
-		}
-
-		for (auto* button : m_customColorButtons)
-		{
-			button->Bind(wxEVT_TOGGLEBUTTON, [this, button](wxCommandEvent&) {
-				const auto family = m_rbGlassType->GetSelection() == 0
-					? ColorizationPresets::Family::Vista
-					: ColorizationPresets::Family::Windows7;
-				ApplyColorizationColor(button->GetColor(), family);
-			});
-			button->Bind(wxEVT_LEFT_DCLICK, [this, button](wxMouseEvent&) {
-				wxColourData colorData;
-				colorData.SetChooseFull(true);
-				colorData.SetChooseAlpha(false);
-				const DWORD currentValue = button->GetColor();
-				colorData.SetColour(wxColour(
-					(currentValue >> 16) & 0xFF,
-					(currentValue >> 8) & 0xFF,
-					currentValue & 0xFF
-				));
-
-				wxColourDialog dialog(this, &colorData);
-				if (dialog.ShowModal() != wxID_OK)
-				{
-					UpdateColorizationPresetSelection();
-					return;
-				}
-
-				const wxColour selected = dialog.GetColourData().GetColour();
-				const DWORD alpha = ColorizationPresets::CalculateIntensityAlpha(
-					m_slColorIntensity->GetValue()
-				) << 24;
-				const DWORD argb = alpha
-					| (static_cast<DWORD>(selected.Red()) << 16)
-					| (static_cast<DWORD>(selected.Green()) << 8)
-					| static_cast<DWORD>(selected.Blue());
-				const auto family = m_rbGlassType->GetSelection() == 0
-					? ColorizationPresets::Family::Vista
-					: ColorizationPresets::Family::Windows7;
-				button->SetColor(argb);
-				ApplyColorizationColor(argb, family);
+			slider->Bind(wxEVT_SLIDER, [slider, id, updateDword, setSliderTooltipValue](wxCommandEvent& event) {
+				updateDword(id, event.GetInt());
+				setSliderTooltipValue(slider, event.GetInt());
 			});
 		}
 
 		m_chkEnableTransparency->Bind(wxEVT_CHECKBOX, [this](wxCommandEvent& e) {
-			RunPreview([&]
+			if (RunPreview([&]
 			{
 				TrackSettingChange(Settings::Id::ColorizationOpaqueBlend);
 				if (e.IsChecked()) THROW_IF_FAILED(m_config->DeleteValue(L"ColorizationOpaqueBlend"));
 				else THROW_IF_FAILED(m_config->SetDword(L"ColorizationOpaqueBlend", 1));
 				if (m_rbGlassType->GetSelection() == 1) ApplyColorizationBalances(m_slColorIntensity->GetValue());
-			}, Settings::UpdateImpact::Colorization);
+			}, Settings::UpdateImpact::Colorization)) LoadSettings();
 		});
 
 		m_slColorIntensity->Bind(wxEVT_SLIDER, [this](wxCommandEvent& e) {
-			RunPreview([&]
+			if (RunPreview([&]
 			{
 				const DWORD intensity = static_cast<DWORD>(e.GetInt());
 				TrackSettingChange(Settings::Id::GlassOpacity);
 				THROW_IF_FAILED(m_config->SetDword(L"GlassOpacity", intensity));
 				if (m_rbGlassType->GetSelection() == 1) ApplyColorizationBalances(intensity);
-			}, Settings::UpdateImpact::Colorization);
+			}, Settings::UpdateImpact::Colorization)) LoadSettings();
 			m_slColorIntensity->SetToolTip(wxString::Format(L"%d", m_slColorIntensity->GetValue()));
 		});
 

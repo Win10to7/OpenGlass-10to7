@@ -183,6 +183,19 @@ namespace OpenGlass
 
 		m_rbGlassType->SetSelection(std::clamp<int>(m_config->GetDword(L"GlassType", 0), 0, 1));
 		m_chkEnableTransparency->SetValue(m_config->GetDword(L"ColorizationOpaqueBlend", 0) == 0);
+		m_cpColorizationColor->SetColour(dwordToColor(m_config->GetDword(L"ColorizationColorOverride",
+			m_config->GetDword(L"ColorizationColor", 0xFF000000))));
+		m_cpAfterglow->SetColour(dwordToColor(m_config->GetDword(L"ColorizationAfterglowOverride",
+			m_config->GetDword(L"ColorizationAfterglow", 0))));
+		m_slColorBalance->SetValue(std::clamp<DWORD>(m_config->GetDword(L"ColorizationColorBalanceOverride",
+			m_config->GetDword(L"ColorizationColorBalance", 10)), 0, 100));
+		m_slAfterglowBalance->SetValue(std::clamp<DWORD>(m_config->GetDword(L"ColorizationAfterglowBalanceOverride",
+			m_config->GetDword(L"ColorizationAfterglowBalance", 10)), 0, 100));
+		m_slBlurBalance->SetValue(std::clamp<DWORD>(m_config->GetDword(L"ColorizationBlurBalanceOverride",
+			m_config->GetDword(L"ColorizationBlurBalance", 50)), 0, 100));
+		syncSliderTooltip(m_slColorBalance);
+		syncSliderTooltip(m_slAfterglowBalance);
+		syncSliderTooltip(m_slBlurBalance);
 
 		m_slColorIntensity->SetRange(
 			ColorizationPresets::ClassicIntensityMinimum,
@@ -261,17 +274,7 @@ namespace OpenGlass
 		// 0 = Vista blur, 1 = Win7 blur
 		bool isVista = (m_rbGlassType->GetSelection() == 0);
 
-		if (m_colorPresetsGroupSizer)
-		{
-			if (m_vistaPresetSizer)
-			{
-				m_colorPresetsGroupSizer->Show(m_vistaPresetSizer, isVista, true);
-			}
-			if (m_windows7PresetSizer)
-			{
-				m_colorPresetsGroupSizer->Show(m_windows7PresetSizer, !isVista, true);
-			}
-		}
+		m_win7ColorizationSizer->ShowItems(!isVista);
 
 		// IMPORTANT: m_rbGlassType->GetContainingSizer() is the *row* that hosts the radiobox,
 		// not the page root sizer. Use the Glass Colors page for visibility changes.
@@ -282,6 +285,5 @@ namespace OpenGlass
 
 		UpdateOptionStatusIcons();
 		UpdatePathWarningIcons();
-		UpdateColorizationPresetSelection();
 	}
 }

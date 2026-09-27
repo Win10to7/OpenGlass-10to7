@@ -31,11 +31,22 @@ namespace OpenGlass
 		std::vector<std::wstring> argumentStorage;
 		for (int index = 1; index < argc; ++index) argumentStorage.emplace_back(argv[index]);
 		std::vector<std::wstring_view> arguments(argumentStorage.begin(), argumentStorage.end());
-		const auto scope = Settings::ParseEditorScope(arguments);
+		auto scope = Settings::ParseEditorScope(arguments);
 		if (!scope)
 		{
 			wxMessageBox(L"Use --scope=hkcu or --scope=hklm. Conflicting scopes are not allowed.", L"Invalid scope", wxOK | wxICON_ERROR);
 			return false;
+		}
+		if (std::ranges::none_of(arguments, [](std::wstring_view arg) {
+			return arg == L"--scope" || arg.starts_with(L"--scope=");
+		}))
+		{
+			wxArrayString scopes;
+			scopes.Add(L"Current user (HKCU)");
+			scopes.Add(L"Local machine (HKLM)");
+			wxSingleChoiceDialog scopeDialog(nullptr, L"Choose the DWM registry hive to edit.", L"Configuration scope", scopes);
+			if (scopeDialog.ShowModal() != wxID_OK) return false;
+			scope = scopeDialog.GetSelection() == 1 ? Settings::Scope::Machine : Settings::Scope::User;
 		}
 		const auto startup = Elevation::PrepareElevatedStartup(*scope);
 		if (!startup.continueStartup)
