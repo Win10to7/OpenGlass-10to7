@@ -2,6 +2,8 @@
 #include "resource.h"
 #include "HookHelper.hpp"
 #include "dwmcoreProjection.hpp"
+#include "GlassIntegrity.hpp"
+#include "GlassRenderTarget.hpp"
 #include "Util.hpp"
 #include "CaptionTextRealizer.hpp"
 
@@ -378,10 +380,6 @@ HRESULT CaptionTextRealizer::DrawCaptionText(
 	const auto context = d3dDevice->GetImmediateContext();
 	RETURN_HR_IF_NULL(E_FAIL, device);
 	RETURN_HR_IF_NULL(E_FAIL, context);
-	const auto deviceTarget = drawingContext->GetDeviceTarget();
-	RETURN_HR_IF_NULL(E_FAIL, deviceTarget);
-	const auto renderTargetView = deviceTarget->GetRenderTargetView();
-	RETURN_HR_IF_NULL(E_FAIL, renderTargetView);
 
 	RETURN_IF_FAILED(EnsureDeviceResources(device));
 	TextureEntry* texture{ nullptr };
@@ -428,13 +426,17 @@ HRESULT CaptionTextRealizer::DrawCaptionText(
 	// order the D2D-batched glow draw before our raw quad
 	RETURN_IF_FAILED(drawingContext->FlushD2D());
 
-	winrt::com_ptr<ID3D11Resource> renderTargetResource{ nullptr };
-	renderTargetView->GetResource(renderTargetResource.put());
-	winrt::com_ptr<ID3D11Texture2D> renderTargetTexture{ renderTargetResource.try_as<ID3D11Texture2D>() };
-	RETURN_HR_IF_NULL(E_FAIL, renderTargetTexture);
+	const auto d2dContext = d3dDevice->GetD2DContext()->GetDeviceContext();
+	RETURN_HR_IF_NULL(E_FAIL, d2dContext);
+	auto& target = GlassIntegrity::GetRenderTarget();
+	RETURN_IF_FAILED(target.Ensure(d2dContext));
+	const auto renderTargetView = target.GetRenderTargetView();
 	D3D11_TEXTURE2D_DESC renderTargetDesc{};
 	BOOL hwProtectionEnabled = FALSE;
-	RETURN_IF_FAILED(Util::GetDescAndHwProtectionStateFromTexture(renderTargetTexture.get(), renderTargetDesc, hwProtectionEnabled));
+	RETURN_IF_FAILED(Util::GetDescAndHwProtectionStateFromTexture(target.GetTexture(), renderTargetDesc, hwProtectionEnabled));
+	const auto mip = target.GetSubresource() % renderTargetDesc.MipLevels;
+	renderTargetDesc.Width = std::max(1u, renderTargetDesc.Width >> mip);
+	renderTargetDesc.Height = std::max(1u, renderTargetDesc.Height >> mip);
 
 	winrt::com_ptr<ID3D11DeviceContext3> context3{};
 	RETURN_IF_FAILED(context->QueryInterface(context3.put()));
