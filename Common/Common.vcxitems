@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
 	<ClInclude Include="$(MSBuildThisFileDirectory)ApplicationPaths.hpp"><Link>Header Files\ApplicationPaths.hpp</Link></ClInclude>
+	<ClInclude Include="$(MSBuildThisFileDirectory)CaptionButtonGlyphs.hpp"><Link>Header Files\CaptionButtonGlyphs.hpp</Link></ClInclude>
 	<ClInclude Include="$(MSBuildThisFileDirectory)SystemSettings.hpp"><Link>Header Files\SystemSettings.hpp</Link></ClInclude>
 	<ClInclude Include="$(MSBuildThisFileDirectory)ShellColorRefresh.hpp"><Link>Header Files\ShellColorRefresh.hpp</Link></ClInclude>
 	<ClInclude Include="$(MSBuildThisFileDirectory)DesktopWallpaper.hpp"><Link>Header Files\DesktopWallpaper.hpp</Link></ClInclude>

@@ -396,6 +396,14 @@ namespace OpenGlass::uDWM
 		{
 			return CBitmapSource_OutsetMargins.ref(this);
 		}
+		inline const SIZE& GetSourceSize() const
+		{
+			return CBitmapSource_SourceSize.ref(this);
+		}
+		inline const MARGINS& GetContentMargins() const
+		{
+			return CBitmapSource_ContentMargins.ref(this);
+		}
 	};
 	struct CBitmapSourceArray : DynArray<CBitmapSource*> {};
 
@@ -600,6 +608,22 @@ namespace OpenGlass::uDWM
 			OPENGLASS_MUSTTAIL return Projection::Invoke<&CTopLevelWindow::CloneVisualTreeForLivePreview>(this, glassOnly, clonedWindow);
 		}
 		inline static PVOID* vftable{ nullptr };
+		struct WindowFrame
+		{
+			inline const CBitmapSourceArray& GetCloseButtonBitmaps() const
+			{
+				return CTopLevelWindow_WindowFrame_CloseButtonBitmaps.ref(this);
+			}
+			inline const CBitmapSourceArray& GetCloseButtonGlyphBitmaps(unsigned index) const
+			{
+				return CTopLevelWindow_WindowFrame_Glyphs.ref(this)[index][0];
+			}
+		};
+		inline static WindowFrame*** s_rgpwfWindowFrames{ nullptr };
+		static auto GetWindowFrames()
+		{
+			return *s_rgpwfWindowFrames;
+		}
 
 		inline CWindowData* GetData() const
 		{
@@ -608,6 +632,10 @@ namespace OpenGlass::uDWM
 		CAccent* GetAccentVisual() const
 		{
 			return CTopLevelWindow_AccentVisual.read(this);
+		}
+		inline int& GetCaptionButtonGlyphIndex()
+		{
+			return CTopLevelWindow_CaptionButtonGlyphIndex.ref(this);
 		}
 		inline CImage* GetIconVisual() const
 		{
@@ -948,6 +976,7 @@ namespace OpenGlass::uDWM
 	using CTopLevelWindow_UpdateNCAreaPositionsAndSizes_t = HRESULT(*)(CTopLevelWindow*);
 	using CTopLevelWindow_UpdateClientBlur_t = HRESULT(*)(CTopLevelWindow*);
 	using CTopLevelWindow_UpdateWindowVisuals_t = HRESULT(*)(CTopLevelWindow*);
+	using CTopLevelWindow_UpdateButtonVisuals_t = HRESULT(*)(CTopLevelWindow*, const CTopLevelWindow::WindowFrame*);
 	using CTopLevelWindow_Destructor_t = void(*)(CTopLevelWindow*);
 	using CTopLevelWindow_IsShadowNCAreaPart_t = bool(*)(UINT);
 	using SetMargin_t = bool(WINAPI*)(MARGINS*, int, int, int, int, const MARGINS*);

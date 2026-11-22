@@ -35,6 +35,42 @@
         }
       ],
       "notes": "CDrawImageInstruction::Create copies CBitmapSource+16 into its source proxy field."
+    },
+    {
+      "name": "CBitmapSource_SourceSize",
+      "id": "CBitmapSource_SourceSize",
+      "kind": "field",
+      "type": "SIZE",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 24,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "Create stores the cropped source RECT's width and height here. UpdateButtonVisuals consumes the height when testing whether a glyph fits; this is not the visual's destination size."
+    },
+    {
+      "name": "CBitmapSource_ContentMargins",
+      "id": "CBitmapSource_ContentMargins",
+      "kind": "field",
+      "type": "MARGINS",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 64,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "CreateNCButtons copies GetThemeMargins(TMT_CONTENTMARGINS) into every background state. UpdateButtonVisuals adds the first normal close-button state's top and bottom margins to each candidate glyph height. Distinct from sizing and nine-grid destination margins."
     }
   ]
 }

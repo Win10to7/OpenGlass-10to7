@@ -90,6 +90,7 @@ namespace OpenGlass::Settings
 		// Append settings: interrupted-operation records persist these numeric IDs.
 		EnableUxMitigation,
 		CaptionTextAliasing,
+		LegacyCaptionButtonGlyphs,
 		Count
 	};
 
@@ -164,6 +165,7 @@ namespace OpenGlass::Settings
 		{ Id::EnableTransparency, L"EnableTransparency", ValueType::Dword, AssetRole::None, UpdateType::Backdrop, 1, false },
 		{ Id::EnableUxMitigation, L"EnableUxMitigation", ValueType::Dword, AssetRole::None, UpdateType::Backdrop, 3 },
 		{ Id::CaptionTextAliasing, L"CaptionTextAliasing", ValueType::Dword, AssetRole::None, UpdateType::Theme },
+		{ Id::LegacyCaptionButtonGlyphs, L"LegacyCaptionButtonGlyphs", ValueType::Dword, AssetRole::None, UpdateType::Theme, 3 },
 	}};
 
 	consteval bool IsValidCatalog()

@@ -23,6 +23,7 @@ namespace
 		{ "WindowFrameBounds", "WindowFrameBounds.AtlasShadow", &TestAtlasFrameBounds },
 		{ "CaptionText", "CaptionText.DWriteGeometry", &TestDWriteGeometry },
 		{ "CaptionText", "CaptionText.DWriteTrimming", &TestDWriteTrimming },
+		{ "CaptionButtonGlyphs", "CaptionButtonGlyphs.LegacySelection", &TestLegacyCaptionButtonGlyphSelection },
 		{ "EditorScope", "EditorScope.EditorScope", &TestEditorScope },
 		{ "RectF", "RectF.PixelAlign", &TestPixelAlign },
 		{ "RectF", "RectF.Transform2DBounds", &TestTransform2DBounds },

@@ -614,6 +614,14 @@ namespace OpenGlass
 		captionStyles.Add(L"Windows 8 style");
 		m_chCaptionButtons = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, captionStyles);
 		AddProperty(panel, geometryGroup, L"Caption buttons style:", m_chCaptionButtons, Settings::Id::CaptionButtons);
+		{
+			wxBoxSizer* row = new wxBoxSizer(wxHORIZONTAL);
+			m_chkLegacyCaptionButtonGlyphs = new wxCheckBox(panel, wxID_ANY, L"Windows 7/8.x caption-button glyph sizing");
+			row->Add(m_chkLegacyCaptionButtonGlyphs, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+			AddOptionStatus(panel, row, Settings::Id::LegacyCaptionButtonGlyphs);
+			geometryGroup->Add(row, 0, wxEXPAND | wxALL, 2);
+		}
+		m_chkLegacyCaptionButtonGlyphs->SetToolTip(L"Use the largest atlas glyph that fits the caption height and image margins. WindowMetrics and DPI affect glyph selection through the caption metric. This does not replace atlas images or change button layout.");
 
 		// Disable Modern Borders
 		{

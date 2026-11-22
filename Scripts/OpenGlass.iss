@@ -393,7 +393,7 @@ begin
     'ColorizationGlassReflectionParallaxIntensity', 'ColorizationGlassReflectionPolicy',
     'BlurDeviation', 'BlurOptimization', 'RoundRectRadius',
     'CustomThemeMaterial', 'MaterialOpacity', 'UseDirect3DRendering',
-    'CaptionButtons', 'CenterCaption', 'CaptionTextAliasing', 'TextGlowMode', 'CustomThemeAtlas', 'DisableModernBorders',
+    'CaptionButtons', 'LegacyCaptionButtonGlyphs', 'CenterCaption', 'CaptionTextAliasing', 'TextGlowMode', 'CustomThemeAtlas', 'DisableModernBorders',
     'DisableGlassOnBattery', 'DisabledHooks', 'EnableUxMitigation', 'GlassSafetyZoneMode',
     'MINMAXBUTTONGLOWid', 'CLOSEBUTTONGLOWid', 'TOOLCLOSEBUTTONGLOWid'
   ];

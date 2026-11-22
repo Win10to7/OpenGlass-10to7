@@ -53,6 +53,7 @@
     "udwm/layouts/CSecondaryWindowRepresentation.json",
     "udwm/layouts/CText.json",
     "udwm/layouts/CTopLevelWindow.json",
+    "udwm/layouts/CTopLevelWindow_WindowFrame.json",
     "udwm/layouts/CVisual.json",
     "udwm/layouts/CWindowData.json",
     "udwm/layouts/IText.json",

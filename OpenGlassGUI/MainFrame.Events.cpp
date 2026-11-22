@@ -436,6 +436,16 @@ namespace OpenGlass
 				updateDword(Settings::Id::CaptionButtons, sel);
 			}
 		});
+		m_chkLegacyCaptionButtonGlyphs->Bind(wxEVT_CHECKBOX, [updateDword, deleteValue](wxCommandEvent& e) {
+			if (e.IsChecked())
+			{
+				updateDword(Settings::Id::LegacyCaptionButtonGlyphs, 1);
+			}
+			else
+			{
+				deleteValue(Settings::Id::LegacyCaptionButtonGlyphs);
+			}
+		});
 		m_chCenterCaption->Bind(wxEVT_CHOICE, [this, updateDword, deleteValue]([[maybe_unused]] wxCommandEvent& e) {
 			int sel = e.GetSelection();
 			if (sel == 0)

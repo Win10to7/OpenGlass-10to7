@@ -150,7 +150,7 @@
       ],
       "requirement": "required",
       "kind": "raw",
-      "notes": "28000.1/3231: UpdateWindowVisuals retains the window/frame in nonvolatile registers and consumes HRESULT before updating caption accent color. Classify the four button slots after native visual-state assignment."
+      "notes": "28000.1/3231: UpdateWindowVisuals retains the window/frame in nonvolatile registers and consumes HRESULT before updating caption accent color. Classify the four button slots after native visual-state assignment. On 28000.1516 and 28000.2804, UpdateWindowVisuals tests the returned HRESULT before caption-color/text work and reloads subsequent arguments. Its UpdateMarginsAndStyle caller likewise needs no extra volatile-register or flag preservation. UpdateWindowScale invalidates the glyph index before UpdateMarginsAndStyle, so selection must run at UpdateButtonVisuals rather than before ValidateVisual."
     },
     {
       "name": "Symbol_CButton_DrawStateW",

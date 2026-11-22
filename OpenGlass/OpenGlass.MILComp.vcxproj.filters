@@ -228,6 +228,9 @@
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CTopLevelWindow.json">
       <Filter>Projection Schemas</Filter>
     </None>
+    <None Include="ProjectionSchemas\milcomp\udwm\layouts\CTopLevelWindow_WindowFrame.json">
+      <Filter>Projection Schemas</Filter>
+    </None>
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CVisual.json">
       <Filter>Projection Schemas</Filter>
     </None>
@@ -525,6 +528,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CaptionMetrics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptionMetricsTweaker.Shared.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CaptionText.cpp">

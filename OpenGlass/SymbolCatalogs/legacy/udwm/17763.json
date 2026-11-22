@@ -170,6 +170,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x34C20"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x189FC"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x362D4"
@@ -420,6 +424,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35EB0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x249C8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -672,6 +680,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35F60"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x249C8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x18CD8"
@@ -922,6 +934,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x34C50"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x20308"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -1174,6 +1190,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358A0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x25008"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x19338"
@@ -1424,6 +1444,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35C30"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x25358"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -1676,6 +1700,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35C70"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x25398"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x19430"
@@ -1926,6 +1954,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35D90"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x24CE8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -2178,6 +2210,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35E20"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x26F58"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x1AFF0"
@@ -2428,6 +2464,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35E20"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x26F58"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -2680,6 +2720,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35E30"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x26F38"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x1AFD0"
@@ -2930,6 +2974,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35FC0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x270C8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -3182,6 +3230,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35FC0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x270C8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x1AFD0"
@@ -3432,6 +3484,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35D90"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x26F48"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -3684,6 +3740,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35010"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F448"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x1405C"
@@ -3934,6 +3994,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35010"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F448"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -4186,6 +4250,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x356F0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F8B8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x144CC"
@@ -4436,6 +4504,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x356F0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F8B8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -4688,6 +4760,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x356F0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F8B8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x144CC"
@@ -4938,6 +5014,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35800"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F418"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -5190,6 +5270,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35800"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F418"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x1402C"
@@ -5440,6 +5524,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358A0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4B8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -5692,6 +5780,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358A0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4B8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x140CC"
@@ -5942,6 +6034,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358A0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4B8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -6194,6 +6290,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x35890"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4A8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x140BC"
@@ -6444,6 +6544,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358E0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4A8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
@@ -6696,6 +6800,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358E0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4A8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x140BC"
@@ -6947,6 +7055,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358D0"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4A8"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x140BC"
@@ -7197,6 +7309,10 @@
         "CTopLevelWindow::TreatAsActiveWindow": {
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x358D0"
+        },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x1F4A8"
         },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",

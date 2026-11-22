@@ -506,6 +506,14 @@ namespace OpenGlass::uDWM
 		{
 			return CBitmapSource_GetNineGridMargins.ref(this);
 		}
+		inline const SIZE& GetSourceSize() const
+		{
+			return CBitmapSource_SourceSize.ref(this);
+		}
+		inline const MARGINS& GetContentMargins() const
+		{
+			return CBitmapSource_ContentMargins.ref(this);
+		}
 	};
 	struct CBitmapSourceArray : DynArray<CBitmapSource*>
 	{
@@ -912,6 +920,14 @@ namespace OpenGlass::uDWM
 	{
 		struct WindowFrame
 		{
+			inline const CBitmapSourceArray& GetCloseButtonBitmaps() const
+			{
+				return CTopLevelWindow_WindowFrame_CloseButtonBitmaps.ref(this);
+			}
+			inline const CBitmapSourceArray& GetCloseButtonGlyphBitmaps(unsigned index) const
+			{
+				return CTopLevelWindow_WindowFrame_Glyphs.ref(this)[index][0];
+			}
 			inline UINT32& GetCornerRadius()
 			{
 				return *CTopLevelWindow_WindowFrame_GetCornerRadius.address(this);
@@ -986,6 +1002,10 @@ namespace OpenGlass::uDWM
 		inline CWindowData* GetData() const
 		{
 			return *CTopLevelWindow_GetData_Index.address(this);
+		}
+		inline int& GetCaptionButtonGlyphIndex()
+		{
+			return CTopLevelWindow_CaptionButtonGlyphIndex.ref(this);
 		}
 		inline CText* GetTextVisual() const
 		{

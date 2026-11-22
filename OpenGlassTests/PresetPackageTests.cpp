@@ -392,6 +392,23 @@ namespace OpenGlassTests
 			writeRawZip(path, { { L"manifest.json", unsupported.dump() }, { L"LICENSE", request.licenseText } });
 			Check(rejectedArchive(path));
 		}
+		for (const unsigned catalog : { 2u, 3u })
+		{
+			auto manifest = nlohmann::ordered_json::parse(loaded.manifestText);
+			manifest["catalog_version"] = catalog;
+			manifest["settings"]["LegacyCaptionButtonGlyphs"] = 1u;
+			const auto path = directory / (L"glyph-catalog-" + std::to_wstring(catalog) + L".zip");
+			writeRawZip(path, { { L"manifest.json", manifest.dump() }, { L"LICENSE", request.licenseText } });
+			const auto package = PresetPackages::LoadArchive(path);
+			if (catalog == 2)
+			{
+				Check(!package.settings.contains(Settings::Id::LegacyCaptionButtonGlyphs));
+			}
+			else
+			{
+				Check(std::get<DWORD>(package.settings.at(Settings::Id::LegacyCaptionButtonGlyphs)) == 1);
+			}
+		}
 
 		{
 			auto modern = nlohmann::ordered_json::parse(loaded.manifestText);

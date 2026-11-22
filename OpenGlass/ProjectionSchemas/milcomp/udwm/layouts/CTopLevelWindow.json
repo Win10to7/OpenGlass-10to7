@@ -91,6 +91,24 @@
       "notes": "xrefs to CDWriteText::Create"
     },
     {
+      "name": "CTopLevelWindow_CaptionButtonGlyphIndex",
+      "id": "CTopLevelWindow_CaptionButtonGlyphIndex",
+      "kind": "field",
+      "type": "int",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 672,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "UpdateButtonVisuals's -1 test, four-variant atlas indexing, and UpdateWindowScale's independent -1 write identify this member. Bitmap-source layout changes do not identify this CTopLevelWindow field."
+    },
+    {
       "name": "CTopLevelWindow_GetData_Index",
       "id": "CTopLevelWindow_GetData_Index",
       "kind": "field",

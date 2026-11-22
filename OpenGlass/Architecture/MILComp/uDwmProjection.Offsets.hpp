@@ -9,6 +9,7 @@ namespace OpenGlass::uDWM
 	struct CAccent;
 	struct CBaseGeometryProxy;
 	struct CBitmapSource;
+	struct CBitmapSourceArray;
 	struct CCompositor;
 	struct CContainerVisual;
 	struct CGlassColorizationResources;

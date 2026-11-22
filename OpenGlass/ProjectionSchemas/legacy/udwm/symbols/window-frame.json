@@ -12,17 +12,15 @@
               "symbol_names": [
                 "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64"
               ],
-              "min_inclusive": {
-                "build": 22000,
-                "revision": 0
-              },
+              "min_inclusive": null,
               "max_exclusive": null
             }
           ]
         }
       ],
       "requirement": "required",
-      "kind": "projected_function"
+      "kind": "projected_function",
+      "notes": "The glyph index selects four atlas variants, not bitmap scaling. UpdateWindowScale independently invalidates it with -1. On 17763.168, 18362.267, 19041.7663, 20348.143, 22000.282, 22621.608 and 26100.1, UpdateWindowVisuals tests the returned HRESULT and reloads later arguments. Its ValidateVisual/UpdateMarginsAndStyle and SetHolographicCWindowList callers also need no extra volatile-register or flag preservation. In ValidateVisual, eliminate infeasible fallthrough paths after the HRESULT branch before judging nearby ECX/R8 tests."
     },
     {
       "name": "Symbol_CTopLevelWindow_s_rgpwfWindowFrames",

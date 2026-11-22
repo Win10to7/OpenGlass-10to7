@@ -174,6 +174,10 @@
           "name": "private: bool __cdecl CTopLevelWindow::TreatAsActiveWindow(void) __ptr64",
           "rva": "0x1048C"
         },
+        "CTopLevelWindow::UpdateButtonVisuals": {
+          "name": "private: long __cdecl CTopLevelWindow::UpdateButtonVisuals(struct CTopLevelWindow::WindowFrame const * __ptr64) __ptr64",
+          "rva": "0x11994"
+        },
         "CTopLevelWindow::UpdateClientBlur": {
           "name": "private: long __cdecl CTopLevelWindow::UpdateClientBlur(void) __ptr64",
           "rva": "0x173C0"

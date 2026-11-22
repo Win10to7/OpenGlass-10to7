@@ -31,6 +31,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ApplicationPaths.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CaptionButtonGlyphs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BlurSettings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

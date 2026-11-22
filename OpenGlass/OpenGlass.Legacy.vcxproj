@@ -161,6 +161,7 @@
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CText.json" />
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CSecondaryWindowRepresentation.json" />
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CTopLevelWindow.json" />
+    <None Include="ProjectionSchemas\legacy\udwm\layouts\CTopLevelWindow_WindowFrame.json" />
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CVisual.json" />
     <None Include="ProjectionSchemas\legacy\udwm\layouts\CWindowData.json" />
     <None Include="ProjectionSchemas\legacy\udwm\layouts\IText.json" />

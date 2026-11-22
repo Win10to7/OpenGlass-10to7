@@ -62,6 +62,7 @@
 	  <PrecompiledHeader>NotUsing</PrecompiledHeader>
 	</_ExternalClCompile>
     <ClCompile Include="WindowFrameBoundsTests.cpp" />
+    <ClCompile Include="CaptionButtonGlyphsTests.cpp" />
     <ClCompile Include="CaptionTextTests.cpp" />
     <ClCompile Include="RectFTests.cpp" />
     <ClCompile Include="HookHelperTests.cpp" />

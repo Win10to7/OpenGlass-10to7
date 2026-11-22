@@ -131,6 +131,7 @@
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CThemePartPrimitive.json" />
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CSecondaryWindowRepresentation.json" />
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CTopLevelWindow.json" />
+    <None Include="ProjectionSchemas\milcomp\udwm\layouts\CTopLevelWindow_WindowFrame.json" />
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CVisual.json" />
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CVisualProxy.json" />
     <None Include="ProjectionSchemas\milcomp\udwm\layouts\CWindowData.json" />

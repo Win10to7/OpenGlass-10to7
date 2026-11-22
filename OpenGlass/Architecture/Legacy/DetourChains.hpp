@@ -3,6 +3,16 @@
 #include "uDwmProjection.hpp"
 #include "dwmcoreProjection.hpp"
 
+namespace OpenGlass::CaptionMetricsTweaker
+{
+	HRESULT MyCTopLevelWindow_UpdateButtonVisuals(uDWM::CTopLevelWindow* This, const uDWM::CTopLevelWindow::WindowFrame* windowFrame);
+}
+
+namespace OpenGlass::ButtonGlowHandler
+{
+	HRESULT MyCTopLevelWindow_UpdateButtonVisuals(uDWM::CTopLevelWindow* This, const uDWM::CTopLevelWindow::WindowFrame* windowFrame);
+}
+
 namespace OpenGlass::GlassFrameDemodernizer
 {
 	HRESULT MyCTopLevelWindow_ValidateVisual(uDWM::CTopLevelWindow* This);
@@ -69,6 +79,14 @@ namespace OpenGlass::GlassRenderer
 namespace OpenGlass::DetourChains
 {
 	// Replacements are listed in invocation order, not component startup order.
+	using TopLevelWindowUpdateButtonVisuals = Projection::ChainDetour<
+		uDWM::Symbol_CTopLevelWindow_UpdateButtonVisuals,
+		&CaptionMetricsTweaker::MyCTopLevelWindow_UpdateButtonVisuals,
+		&ButtonGlowHandler::MyCTopLevelWindow_UpdateButtonVisuals
+	>;
+	using TopLevelWindowUpdateButtonVisualsMetricsNode = TopLevelWindowUpdateButtonVisuals::Node<0>;
+	using TopLevelWindowUpdateButtonVisualsGlowNode = TopLevelWindowUpdateButtonVisuals::Node<1>;
+
 	using TopLevelWindowValidateVisual = Projection::ChainDetour<
 		uDWM::Symbol_CTopLevelWindow_ValidateVisual,
 		&GlassFrameDemodernizer::MyCTopLevelWindow_ValidateVisual,

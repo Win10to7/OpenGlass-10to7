@@ -67,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BlurEffect.cpp"><Link>Source Files\BlurEffect.cpp</Link></ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BuiltInSymbolCatalog.cpp"><Link>Source Files\BuiltInSymbolCatalog.cpp</Link></ClCompile>
 	<_ExternalClCompile Include="$(MSBuildThisFileDirectory)..\Common\CustomBlurEffect.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></_ExternalClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CaptionMetricsTweaker.Shared.cpp"><Link>Source Files\CaptionMetricsTweaker.Shared.cpp</Link></ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CustomThemeAtlasLoader.cpp"><Link>Source Files\CustomThemeAtlasLoader.cpp</Link></ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)D3DGlassRealizer.cpp"><Link>Source Files\D3DGlassRealizer.cpp</Link></ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dllmain.cpp"><Link>Source Files\dllmain.cpp</Link></ClCompile>

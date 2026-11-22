@@ -274,6 +274,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CaptionMetrics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CaptionMetricsTweaker.Shared.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CaptionText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

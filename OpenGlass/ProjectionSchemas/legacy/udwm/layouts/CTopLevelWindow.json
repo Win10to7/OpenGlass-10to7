@@ -550,6 +550,59 @@
       "notes": "xrefs to CDWriteText::Create"
     },
     {
+      "name": "CTopLevelWindow_CaptionButtonGlyphIndex",
+      "id": "CTopLevelWindow_CaptionButtonGlyphIndex",
+      "kind": "field",
+      "type": "int",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 680,
+              "until": {
+                "build": 19041,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 688,
+              "until": {
+                "build": 20348,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 696,
+              "until": {
+                "build": 22000,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 712,
+              "until": {
+                "build": 22621,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 728,
+              "until": {
+                "build": 26100,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 688,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "UpdateButtonVisuals tests -1 before DPI/fit selection and uses this value as the four-variant atlas index. Cross-check UpdateWindowScale's -1 invalidation and the constructor; do not infer it from the adjacent CWindowData pointer."
+    },
+    {
       "name": "CTopLevelWindow_GetData_Index",
       "id": "CTopLevelWindow_GetData_Index",
       "kind": "field",

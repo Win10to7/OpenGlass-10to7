@@ -1,0 +1,47 @@
+{
+  "layouts": [
+    {
+      "name": "CTopLevelWindow_WindowFrame_CloseButtonBitmaps",
+      "id": "CTopLevelWindow_WindowFrame_CloseButtonBitmaps",
+      "kind": "field",
+      "type": "CBitmapSourceArray",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 136,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "CreateNCButtons populates this state array from normal close-button theme part 7; UpdateButtonVisuals reads its first state's content margins."
+    },
+    {
+      "name": "CTopLevelWindow_WindowFrame_Glyphs",
+      "id": "CTopLevelWindow_WindowFrame_Glyphs",
+      "kind": "field",
+      "type": "std::array<std::array<CBitmapSourceArray, 10>, 4>",
+      "cases": [
+        {
+          "platform": null,
+          "ranges": [
+            {
+              "offset": 216,
+              "until": {
+                "build": 22000,
+                "revision": 0
+              }
+            },
+            {
+              "offset": 200,
+              "otherwise": true
+            }
+          ]
+        }
+      ],
+      "notes": "CreateGlyphsFromAtlas fills four variants, each with ten CBitmapSourceArray entries. The first entry is the close glyph; each array owns four states. UpdateButtonVisuals uses variant stride 320 and reads the first normal frame's close-glyph height. Later themes may use nonconsecutive part IDs, so read the created bitmap sources rather than deriving variants from part numbers."
+    }
+  ]
+}

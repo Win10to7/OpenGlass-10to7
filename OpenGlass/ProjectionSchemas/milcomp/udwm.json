@@ -42,6 +42,7 @@
     "udwm/layouts/CThemePartPrimitive.json",
     "udwm/layouts/CSecondaryWindowRepresentation.json",
     "udwm/layouts/CTopLevelWindow.json",
+    "udwm/layouts/CTopLevelWindow_WindowFrame.json",
     "udwm/layouts/CVisual.json",
     "udwm/layouts/CVisualProxy.json",
     "udwm/layouts/CWindowData.json",

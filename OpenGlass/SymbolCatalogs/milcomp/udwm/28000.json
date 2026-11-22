@@ -254,6 +254,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x151F0"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x114988"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xEA600"
@@ -588,6 +592,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x151F0"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x116A08"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
@@ -924,6 +932,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x151F0"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x1159D8"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xEB600"
@@ -1259,6 +1271,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x151F0"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x1169D8"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xEC600"
@@ -1593,6 +1609,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x15220"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x118AF8"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
@@ -1937,6 +1957,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11B30"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x119A58"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xEE440"
@@ -2279,6 +2303,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11B30"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x119A58"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
@@ -2623,6 +2651,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11A30"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x11AB88"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xEF440"
@@ -2965,6 +2997,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11A30"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x11BB88"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
@@ -3309,6 +3345,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11AA0"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x11BB68"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xF0440"
@@ -3651,6 +3691,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11D00"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x125CB8"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
@@ -3995,6 +4039,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x11D00"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x125CB8"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xF9440"
@@ -4338,6 +4386,10 @@
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x1F7B0"
         },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x125858"
+        },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",
           "rva": "0xFA4E8"
@@ -4680,6 +4732,10 @@
         "CTopLevelWindow::ValidateVisual": {
           "name": "public: virtual long __cdecl CTopLevelWindow::ValidateVisual(void) __ptr64",
           "rva": "0x1F7B0"
+        },
+        "CTopLevelWindow::s_rgpwfWindowFrames": {
+          "name": "private: static class DynArray<struct CTopLevelWindow::WindowFrame * __ptr64,0> CTopLevelWindow::s_rgpwfWindowFrames",
+          "rva": "0x125858"
         },
         "CTopLevelWindow::vftable": {
           "name": "const CTopLevelWindow::`vftable'",

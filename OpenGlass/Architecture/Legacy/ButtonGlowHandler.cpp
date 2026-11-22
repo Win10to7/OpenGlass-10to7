@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ButtonGlowHandler.hpp"
+#include "DetourChains.hpp"
 
 using namespace OpenGlass;
 namespace OpenGlass::ButtonGlowHandler
@@ -73,7 +74,7 @@ namespace OpenGlass::ButtonGlowHandler
 	Projection::Detour<uDWM::Symbol_CAtlasButton_AppendAtlas, &MyCAtlasButton_AppendAtlas> g_CAtlasButton_AppendAtlas_Org{};
 	Projection::Detour<uDWM::Symbol_CAtlasButton_AddApproximateAtlasSize, &MyCAtlasButton_AddApproximateAtlasSize> g_CAtlasButton_AddApproximateAtlasSize_Org{};
 	Projection::Detour<uDWM::Symbol_CButton_DrawStateW, &MyCButton_DrawStateW> g_CButton_DrawStateW_Org{};
-	Projection::Detour<uDWM::Symbol_CTopLevelWindow_UpdateButtonVisuals, &MyCTopLevelWindow_UpdateButtonVisuals> g_CTopLevelWindow_UpdateButtonVisuals_Org{};
+	DetourChains::TopLevelWindowUpdateButtonVisualsGlowNode g_CTopLevelWindow_UpdateButtonVisuals_Org{};
 
 	HRESULT WINAPI MyCTopLevelWindow_CreateGlyphsFromAtlas_Win11(HTHEME hTheme);
 	Projection::Detour<uDWM::Symbol_CTopLevelWindow_CreateGlyphsFromAtlas, &MyCTopLevelWindow_CreateGlyphsFromAtlas_Win11> g_CTopLevelWindow_CreateGlyphsFromAtlas_Win11_Org{};

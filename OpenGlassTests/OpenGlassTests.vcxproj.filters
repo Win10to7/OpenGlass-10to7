@@ -20,6 +20,9 @@
     <ClCompile Include="BlurSettingsTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CaptionButtonGlyphsTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CaptionTextTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
